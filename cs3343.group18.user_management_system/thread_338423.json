@@ -1,0 +1,305 @@
+{
+  "response": {
+    "thread_id": "338423",
+    "cat_id": "8",
+    "title": "[年經]一人幾套你地細個覺得好好睇既卡通片",
+    "user_id": "88134",
+    "user_nickname": "藍可盈老公",
+    "user_gender": "M",
+    "no_of_reply": "1",
+    "like_count": "0",
+    "dislike_count": "0",
+    "reply_like_count": "0",
+    "reply_dislike_count": "0",
+    "max_reply_like_count": "0",
+    "max_reply_dislike_count": "0",
+    "create_time": 1501227494,
+    "last_reply_time": 1501227494,
+    "status": "1",
+    "remark": {
+      "last_reply_count": 1
+    },
+    "last_reply_user_id": "88134",
+    "total_page": 1,
+    "is_adu": false,
+    "category": {
+      "cat_id": "8",
+      "name": "動漫台",
+      "postable": true
+    },
+    "is_bookmarked": false,
+    "user": {
+      "user_id": "88134",
+      "nickname": "藍可盈老公",
+      "level": "10",
+      "gender": "M",
+      "status": "1",
+      "create_time": 1488257239,
+      "level_name": "普通會員",
+      "is_following": false,
+      "is_blocked": false
+    },
+    "item_data": [
+      {
+        "post_id": "9ebfc5bccce6e749438bce558c4174cf155fa51e",
+        "thread_id": "338423",
+        "user_nickname": "藍可盈老公",
+        "user_gender": "M",
+        "reply_time": 1501227494,
+        "msg": "我先，<br />\n棋靈王<br />\n日式麵包王<br />\n外星bb撞地球<br />\n忍者亂太郎<br />\n神鵰俠侶",
+        "status": "1",
+        "user": {
+          "user_id": "88134",
+          "nickname": "藍可盈老公",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1488257239,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "cf33c42adf46a4cbda9493938c2afaa9704330f4",
+        "thread_id": "338423",
+        "user_nickname": "眾人皆醉我獨醒",
+        "user_gender": "F",
+        "reply_time": 1501227571,
+        "msg": "雙子公主",
+        "status": "1",
+        "user": {
+          "user_id": "78149",
+          "nickname": "眾人皆醉我獨醒",
+          "level": "10",
+          "gender": "F",
+          "status": "1",
+          "create_time": 1484983049,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "420a6b22d01cb1530acf04b0f5bb869d84d0fc7d",
+        "thread_id": "338423",
+        "user_nickname": "短髮控",
+        "user_gender": "F",
+        "reply_time": 1501227696,
+        "msg": "RE0",
+        "status": "1",
+        "user": {
+          "user_id": "35667",
+          "nickname": "短髮控",
+          "level": "10",
+          "gender": "F",
+          "status": "1",
+          "create_time": 1480344633,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "848a7a3d76972139fe872e12294814d1dade4222",
+        "thread_id": "338423",
+        "user_nickname": "賽蕾基雅",
+        "user_gender": "F",
+        "reply_time": 1501227829,
+        "msg": "超齡細公主",
+        "status": "1",
+        "user": {
+          "user_id": "105446",
+          "nickname": "賽蕾基雅",
+          "level": "10",
+          "gender": "F",
+          "status": "1",
+          "create_time": 1491898901,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "7c76498c0f9008513b719ce7f1dd848c9429d169",
+        "thread_id": "338423",
+        "user_nickname": "不羈少年",
+        "user_gender": "M",
+        "reply_time": 1501228098,
+        "msg": "白虎亂月 現身<img src=\"/assets/faces/normal/fire.gif\" class=\"hkgmoji\" /><img src=\"/assets/faces/normal/fire.gif\" class=\"hkgmoji\" />",
+        "status": "1",
+        "user": {
+          "user_id": "56160",
+          "nickname": "不羈少年",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1480914942,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "69b16b382b44acf2361132412a74090a432b88bc",
+        "thread_id": "338423",
+        "user_nickname": "淚流某個海.",
+        "user_gender": "F",
+        "reply_time": 1501228141,
+        "msg": "bb保你大<img src=\"/assets/faces/normal/biggrin.gif\" class=\"hkgmoji\" />",
+        "status": "1",
+        "user": {
+          "user_id": "29983",
+          "nickname": "淚流某個海.",
+          "level": "10",
+          "gender": "F",
+          "status": "1",
+          "create_time": 1480242347,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "8fa5c3c181b689371ee99b6a904d5b62308df768",
+        "thread_id": "338423",
+        "user_nickname": "三蚊曲奇餅",
+        "user_gender": "M",
+        "reply_time": 1501229012,
+        "msg": "翼之奇幻旅程<img src=\"/assets/faces/normal/love.gif\" class=\"hkgmoji\" />",
+        "status": "1",
+        "user": {
+          "user_id": "129494",
+          "nickname": "三蚊曲奇餅",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1500379868,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "a4d977183177777d6f5d2164ec22ce17f702ef83",
+        "thread_id": "338423",
+        "user_nickname": "start★fuck",
+        "user_gender": "M",
+        "reply_time": 1501229049,
+        "msg": "田中太朗<img src=\"/assets/faces/normal/censored.gif\" class=\"hkgmoji\" />",
+        "status": "1",
+        "user": {
+          "user_id": "94774",
+          "nickname": "start★fuck",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1490358168,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "7e99692e1946f203b6203a05e53c7672c279710b",
+        "thread_id": "338423",
+        "user_nickname": "雞肉多利亞",
+        "user_gender": "F",
+        "reply_time": 1501229120,
+        "msg": "火影",
+        "status": "1",
+        "user": {
+          "user_id": "24253",
+          "nickname": "雞肉多利亞",
+          "level": "10",
+          "gender": "F",
+          "status": "1",
+          "create_time": 1480155341,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "993744a16603c88ce447fb850f06c8c64c300b31",
+        "thread_id": "338423",
+        "user_nickname": "Leafa",
+        "user_gender": "M",
+        "reply_time": 1501229739,
+        "msg": "叮噹",
+        "status": "1",
+        "user": {
+          "user_id": "57911",
+          "nickname": "Leafa",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1481018546,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "2c8ee461d886c13a942bff8ec6ed6ef93a9898c6",
+        "thread_id": "338423",
+        "user_nickname": "花一生",
+        "user_gender": "M",
+        "reply_time": 1501229930,
+        "msg": "陰毛大戰記",
+        "status": "1",
+        "user": {
+          "user_id": "96829",
+          "nickname": "花一生",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1490404931,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "c0f15330b043167c985734c0da56014ad5468b61",
+        "thread_id": "338423",
+        "user_nickname": "龍游輕煙",
+        "user_gender": "M",
+        "reply_time": 1501229968,
+        "msg": "黃金戰士",
+        "status": "1",
+        "user": {
+          "user_id": "93266",
+          "nickname": "龍游輕煙",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1490082770,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      },
+      {
+        "post_id": "01dad58d0bb2b542f4351ac043023703f18902b0",
+        "thread_id": "338423",
+        "user_nickname": "毒菇BB",
+        "user_gender": "M",
+        "reply_time": 1501230811,
+        "msg": "美少女戰士<br />\n婚紗小天使<br />\n護士小天使<br />\n怪盜st tail",
+        "status": "1",
+        "user": {
+          "user_id": "49391",
+          "nickname": "毒菇BB",
+          "level": "10",
+          "gender": "M",
+          "status": "1",
+          "create_time": 1480598403,
+          "level_name": "普通會員",
+          "is_following": false,
+          "is_blocked": false
+        }
+      }
+    ]
+  }
+}
