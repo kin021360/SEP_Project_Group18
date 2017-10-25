@@ -1,14 +1,22 @@
 package cs3343.group18.user_management_system.data;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 
 public class Supervisor extends User implements ISupervisorInfo{
-    public Supervisor(String n, String pwd, String gen, EnumPosition po, int sID, String em) {
-        super(n, pwd, gen, po, sID, em, null);
+    private HashSet<IUserInfo> subordinates;
+
+    public Supervisor(String userName, String password, String gender, EnumPosition position, int staffId, String email) {
+        super(userName, password, gender, position, staffId, email, null);
+        subordinates=new HashSet<>();
     }
 
     @Override
-    public boolean isMySubordinate(IUserInfo subordinate) {
-        return false;
+    public boolean isMySubordinate(IUserInfo user) {
+        return subordinates.contains(user);
     }
+
+    public void addSubordinate(IUserInfo user){
+        subordinates.add(user);
+    }
+
 }

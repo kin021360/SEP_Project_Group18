@@ -3,7 +3,7 @@ package cs3343.group18.user_management_system.data;
 
 public class User implements IUserInfo {
 
-    private String name;
+    private String userName;
     private String password;
     private String gender;
     EnumPosition position;
@@ -11,19 +11,19 @@ public class User implements IUserInfo {
     private String email;
     private ISupervisorInfo supervisor;
 
-    public User(String n, String pwd, String gen, EnumPosition po, int sID, String em, ISupervisorInfo supervisor) {
-        name = n;
-        password = pwd;
-        gender = gen;
-        position = po;
-        staffId = sID;
-        email = em;
+    public User(String userName, String password, String gender, EnumPosition position, int staffId, String email, ISupervisorInfo supervisor) {
+        this.userName = userName;
+        this.password = password;
+        this.gender = gender;
+        this.position = position;
+        this.staffId = staffId;
+        this.email = email;
         this.supervisor = supervisor;
     }
 
 
     public String getUserName() {
-        return name;
+        return userName;
     }
 
 
