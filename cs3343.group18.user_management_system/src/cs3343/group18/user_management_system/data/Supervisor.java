@@ -11,12 +11,16 @@ public class Supervisor extends User implements ISupervisorInfo{
     }
 
     @Override
-    public boolean isMySubordinate(IUserInfo user) {
-        return subordinates.contains(user);
+    public boolean isMySubordinate(IUserInfo subordinate) {
+        return subordinates.contains(subordinate);
     }
 
-    public void addSubordinate(IUserInfo user){
-        subordinates.add(user);
+    public void addSubordinate(IUserInfo subordinate){
+        subordinates.add(subordinate);
+    }
+
+    public void removeSubordinate(IUserInfo subordinate){
+        subordinates.remove(subordinate);
     }
 
 }

@@ -18,7 +18,7 @@ public class UserDao extends JsonDao {
         BufferedReader br = readJsonFile("thread_338423.json");
 //            JsonObject jsonObject = new JsonParser().parse(br).getAsJsonObject();
         Test t = gson.fromJson(br, Test.class);
-
+        System.out.println();
     }
 
     public void testWrite() {

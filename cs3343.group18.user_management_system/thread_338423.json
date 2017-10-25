@@ -4,6 +4,7 @@
   "gender": "M",
   "create_time": 1488257239,
   "is_blocked": false,
+  "position": "0",
   "item_data": [
     1,
     2,

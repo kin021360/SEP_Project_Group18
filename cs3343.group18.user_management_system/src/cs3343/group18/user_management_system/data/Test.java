@@ -12,4 +12,8 @@ public class Test {
     private int create_time;
     private boolean is_blocked;
     private ArrayList<Integer> item_data;
+    private EnumPosition position;
+    public Test(String d){
+        user_id=d;
+    }
 }
