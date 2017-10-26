@@ -24,6 +24,7 @@ public class User implements IUserInfo {
         this.email = email;
         this.supervisor = supervisor;
         this.isAdmin = isAdmin;
+        this.permissions=new HashSet<>();
     }
 
     @Override
@@ -36,8 +37,17 @@ public class User implements IUserInfo {
         return input.equals(password);
     }
 
+    @Override
+    public String getGender() {
+        return gender;
+    }
+
     public void changePassword(String password) {
         this.password = password;
+    }
+
+    public boolean addPermission(EnumPermission permission){
+        return permissions.add(permission);
     }
 
     @Override
