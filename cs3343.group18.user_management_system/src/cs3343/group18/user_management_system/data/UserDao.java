@@ -13,11 +13,12 @@ import com.google.gson.*;
 public class UserDao extends JsonDao {
 
     public void test() {
-
         Gson gson = new Gson();
-        BufferedReader br = readJsonFile("thread_338423.json");
+        JsonObject userJsonObject = readJsonFile("thread_338423.json");
+
+
 //            JsonObject jsonObject = new JsonParser().parse(br).getAsJsonObject();
-        Test t = gson.fromJson(br, Test.class);
+        Test t = gson.fromJson(userJsonObject, Test2.class);
         System.out.println();
     }
 

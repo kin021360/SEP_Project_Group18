@@ -8,9 +8,9 @@ import java.io.*;
 
 public abstract class JsonDao {
 
-    protected BufferedReader readJsonFile(String filePath) {
+    protected JsonObject readJsonFile(String filePath) {
         try {
-            return new BufferedReader(new FileReader(filePath));
+            return new JsonParser().parse(new BufferedReader(new FileReader(filePath))).getAsJsonObject();
         } catch (Exception e) {
             System.out.println(e.toString());
         }

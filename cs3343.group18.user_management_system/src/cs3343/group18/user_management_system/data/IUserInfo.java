@@ -10,6 +10,8 @@ public interface IUserInfo {
     EnumPosition getPosition();
     String getEmail();
     String showAllPermissions();
+    boolean hasPermission(EnumPermission permission);
     ISupervisorInfo getSupervisorInfo();
+    boolean isAdmin();
     //TODO
 }
