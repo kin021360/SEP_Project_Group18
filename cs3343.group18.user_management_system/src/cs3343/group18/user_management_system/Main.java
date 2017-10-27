@@ -13,6 +13,6 @@ public class Main {
         Hashtable<String, User> users=userdao.loadUsers();
 
 
-        System.out.println();
+        System.out.println(users.get("abc").getUserName());
     }
 }
