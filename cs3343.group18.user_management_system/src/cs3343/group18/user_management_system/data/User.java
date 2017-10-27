@@ -7,7 +7,7 @@ public class User implements IUserInfo {
 
     private String userName;
     private String password;
-    private String gender;
+    private EnumGender gender;
     private EnumPosition position;
     private HashSet<EnumPermission> permissions;
     private int staffId;
@@ -15,7 +15,7 @@ public class User implements IUserInfo {
     private ISupervisorInfo supervisor;
     private boolean isAdmin;
 
-    public User(String userName, String password, String gender, EnumPosition position, int staffId, String email, ISupervisorInfo supervisor, boolean isAdmin) {
+    public User(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.gender = gender;
@@ -38,7 +38,7 @@ public class User implements IUserInfo {
     }
 
     @Override
-    public String getGender() {
+    public EnumGender getGender() {
         return gender;
     }
 

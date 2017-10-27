@@ -1,0 +1,22 @@
+{
+  "users": [
+    {
+      "userName": "acb",
+      "password": "123",
+      "gender": 0,
+      "position": 0,
+      "staffId": 1000020,
+      "email": "a@a.com",
+      "isAdmin": false,
+      "permissions": [
+        0
+      ]
+    }
+  ],
+  "supervisors": [
+    {}
+  ],
+  "userSupervisorMapping": {
+    "abc": "efg"
+  }
+}

@@ -5,8 +5,8 @@ import java.util.HashSet;
 public class Supervisor extends User implements ISupervisorInfo{
     private HashSet<IUserInfo> subordinates;
 
-    public Supervisor(String userName, String password, String gender, EnumPosition position, int staffId, String email) {
-        super(userName, password, gender, position, staffId, email, null);
+    public Supervisor(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email) {
+        super(userName, password, gender, position, staffId, email, null, false);
         subordinates=new HashSet<>();
     }
 

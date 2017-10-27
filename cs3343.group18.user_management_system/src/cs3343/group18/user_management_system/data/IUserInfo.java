@@ -6,7 +6,7 @@ package cs3343.group18.user_management_system.data;
 public interface IUserInfo {
     String getUserName();
     boolean checkPassword(String input);
-    String getGender();
+    EnumGender getGender();
     int getStaffId();
     EnumPosition getPosition();
     String getEmail();
