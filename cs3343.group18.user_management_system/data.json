@@ -5,8 +5,8 @@
       "password": "123",
       "gender": 0,
       "position": 0,
-      "staffId": 1000020,
-      "email": "a@a.com",
+      "staffId": 1000,
+      "email": "abc@abc.com",
       "isAdmin": false,
       "permissions": [
         0
@@ -14,7 +14,18 @@
     }
   ],
   "supervisors": [
-    {}
+    {
+      "userName": "efg",
+      "password": "123",
+      "gender": 0,
+      "position": 0,
+      "staffId": 2000,
+      "email": "efg@efg.com",
+      "isAdmin": false,
+      "permissions": [
+        0
+      ]
+    }
   ],
   "userSupervisorMapping": {
     "abc": "efg"

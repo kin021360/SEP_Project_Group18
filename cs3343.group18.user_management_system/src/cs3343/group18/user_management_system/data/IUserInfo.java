@@ -5,14 +5,23 @@ package cs3343.group18.user_management_system.data;
  */
 public interface IUserInfo {
     String getUserName();
+
     boolean checkPassword(String input);
+
     EnumGender getGender();
+
     int getStaffId();
+
     EnumPosition getPosition();
+
     String getEmail();
+
     String showAllPermissions();
+
     boolean hasPermission(EnumPermission permission);
+
     ISupervisorInfo getSupervisorInfo();
+
     boolean isAdmin();
     //TODO
 }

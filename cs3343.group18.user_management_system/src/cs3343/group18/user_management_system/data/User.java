@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.StringJoiner;
 
 public class User implements IUserInfo {
-
     private String userName;
     private String password;
     private EnumGender gender;
@@ -24,7 +23,7 @@ public class User implements IUserInfo {
         this.email = email;
         this.supervisor = supervisor;
         this.isAdmin = isAdmin;
-        this.permissions=new HashSet<>();
+        this.permissions = new HashSet<>();
     }
 
     @Override
@@ -46,7 +45,7 @@ public class User implements IUserInfo {
         this.password = password;
     }
 
-    public boolean addPermission(EnumPermission permission){
+    public boolean addPermission(EnumPermission permission) {
         return permissions.add(permission);
     }
 
@@ -84,8 +83,32 @@ public class User implements IUserInfo {
         return supervisor;
     }
 
+    public boolean assignSupervisor(ISupervisorInfo supervisor) {
+        if (this.supervisor == null) {
+            this.supervisor = supervisor;
+            return true;
+        }
+        return false;
+    }
+
+    public void unassignSupervisor() {
+        this.supervisor = null;
+    }
+
     @Override
     public boolean isAdmin() {
         return isAdmin;
+    }
+
+    @Override
+    public String toString() {
+        String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).toString();
+        temp += ", Supervisor = ";
+        if (supervisor == null) {
+            temp += "null";
+        } else {
+            temp += supervisor.toString();
+        }
+        return temp;
     }
 }
