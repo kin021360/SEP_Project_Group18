@@ -38,7 +38,7 @@ public class UserDao extends JsonDao {
         writeJsonFile("sssssss.txt", "diuxxxxxxxx");
     }
 
-    private Hashtable<String, User> loadUsers(String filePath) {
+    public Hashtable<String, User> loadUsers() {
         Hashtable<String, User> userList = new Hashtable<>();
         for (JsonElement je : userJArray) {
             User tUser = gson.fromJson(je, User.class);
@@ -47,7 +47,7 @@ public class UserDao extends JsonDao {
         return userList;
     }
 
-    private Hashtable<String, Supervisor> loadSupervisors() {
+    public Hashtable<String, Supervisor> loadSupervisors() {
         Hashtable<String, Supervisor> superviorList = new Hashtable<>();
         for (JsonElement je : supervisorJArray) {
             Supervisor tSupervisor = gson.fromJson(je, Supervisor.class);
