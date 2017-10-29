@@ -12,13 +12,13 @@ public abstract class JsonDao {
     protected JsonParser jsonParser;
 
     public JsonDao() {
-        gson = new Gson();
+        gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().setPrettyPrinting().create();
         jsonParser = new JsonParser();
     }
 
     protected JsonObject readJsonFile(String filePath) {
         try {
-            return new JsonParser().parse(new BufferedReader(new FileReader(filePath))).getAsJsonObject();
+            return jsonParser.parse(new BufferedReader(new FileReader(filePath))).getAsJsonObject();
         } catch (Exception e) {
             System.out.println(e.toString());
         }
@@ -40,12 +40,12 @@ public abstract class JsonDao {
     }
 
     protected void writeJsonFile(String filePath, JsonObject jsonObject) {
-        String tempStr = new Gson().toJson(jsonObject);
+        String tempStr = gson.toJson(jsonObject);
         writeFile(filePath, tempStr);
     }
 
     protected void writeJsonFile(String filePath, Object object) {
-        String tempStr = new Gson().toJson(object);
+        String tempStr = gson.toJson(object);
         writeFile(filePath, tempStr);
     }
 }

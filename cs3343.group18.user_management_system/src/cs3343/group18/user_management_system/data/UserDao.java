@@ -11,20 +11,20 @@ import com.google.gson.*;
 //http://www.jianshu.com/p/2f7755e3d558
 
 //This class handle parsing json object into User object and Supervisor object. Not fully finish yet
-//Currently not support write with new users/supervisors into json file. (only read from json)
 public class UserDao extends JsonDao {
+    private static final String defJsonPath = "./data.json";
     private JsonObject jObject;
     private JsonArray userJArray;
     private JsonArray supervisorJArray;
     private JsonObject userSupervisorMapping;
 
     public UserDao() {
-        this("./data.json");
+        this(defJsonPath);
     }
 
     public UserDao(String customPath) {
         super();
-        jObject = readJsonFile(customPath);
+        jObject = readJsonFile(customPath).getAsJsonObject();
         userJArray = jObject.getAsJsonArray("users");
         supervisorJArray = jObject.getAsJsonArray("supervisors");
         userSupervisorMapping = jObject.getAsJsonObject("userSupervisorMapping");
@@ -55,5 +55,20 @@ public class UserDao extends JsonDao {
             u.assignSupervisor(s);
             s.addSubordinate(u);
         }
+    }
+
+    public void updateAndSave(Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) {
+        userJArray = jsonParser.parse(gson.toJson(users.values())).getAsJsonArray();
+        supervisorJArray = jsonParser.parse(gson.toJson(supervisors.values())).getAsJsonArray();
+        userSupervisorMapping = new JsonObject();
+        for (User u : users.values()) {
+            if (u.getSupervisorInfo() != null) {
+                userSupervisorMapping.addProperty(u.getUserName(), u.getSupervisorInfo().getUserName());
+            }
+        }
+        jObject.add("users", userJArray);
+        jObject.add("supervisors", supervisorJArray);
+        jObject.add("userSupervisorMapping", userSupervisorMapping);
+        writeJsonFile(defJsonPath, jObject);
     }
 }
