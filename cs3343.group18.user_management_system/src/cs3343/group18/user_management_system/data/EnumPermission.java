@@ -7,7 +7,17 @@ import com.google.gson.annotations.SerializedName;
  */
 public enum EnumPermission {
     @SerializedName("0")
-    ViewDocument(0);
+    ViewDocument(0),
+    @SerializedName("1")
+    ListUsers(1),
+    @SerializedName("2")
+    CreateUser(2),
+    @SerializedName("3")
+    DeleteUser(3),
+    @SerializedName("4")
+    GrantPermission(4),
+    @SerializedName("5")
+    ResetPassword(5);
 
     private int permissionId;
 
