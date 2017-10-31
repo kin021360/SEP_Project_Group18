@@ -25,5 +25,9 @@ public class Main {
         //Map User and Supervisor
         userDao.mapUserSupervisor(users, supervisors);
         System.out.println(users.get("abc").toString());
+
+        users.get("abc").changePassword("999999999999999999555");
+        supervisors.get("efg").changePassword("777777777777777");
+        userDao.updateAndSave(users, supervisors);
     }
 }

@@ -1,18 +1,28 @@
 package cs3343.group18.user_management_system.data;
 
+import com.google.gson.annotations.Expose;
+
 import java.util.HashSet;
 import java.util.StringJoiner;
 
 public class User implements IUserInfo {
+    @Expose
     private String userName;
+    @Expose
     private String password;
+    @Expose
     private EnumGender gender;
+    @Expose
     private EnumPosition position;
+    @Expose
     private HashSet<EnumPermission> permissions;
+    @Expose
     private int staffId;
+    @Expose
     private String email;
-    private ISupervisorInfo supervisor;
+    @Expose
     private boolean isAdmin;
+    private ISupervisorInfo supervisor;
 
     public User(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
