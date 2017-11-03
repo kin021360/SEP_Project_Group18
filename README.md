@@ -85,10 +85,10 @@ You may need to create an Atlassian account while installing SourceTree
 
 ### Please keep your feature branch up-to-date with develop
 
-1. Commit all changes on your feature branch and *Push*
-2. Switch to *develop*, then click *Pull*
+1. Commit all changes on your feature branch and **Push**
+2. Switch to **develop**, then click **Pull**
 3. Switch back to your feature branch
-4. Click *Merge*, choose the history which is on *origin/develop origin/HEAD develop*
+4. Click **Merge**, choose the history which is on **origin/develop origin/HEAD develop**
 5. If you see the file conflict, you can try to fix it
 6. If you cannot solve conflict, you can give up this merging by following command
 ```
