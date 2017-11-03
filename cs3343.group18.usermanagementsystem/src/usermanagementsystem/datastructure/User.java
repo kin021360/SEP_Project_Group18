@@ -23,16 +23,19 @@ public class User implements IUserInfo {
     @Expose
     private String email;
     @Expose
+    private EnumDepartment departmentOf;
+    @Expose
     private boolean isAdmin;
     private ISupervisorInfo supervisor;
 
-    public User(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, ISupervisorInfo supervisor, boolean isAdmin) {
+    public User(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.gender = gender;
         this.position = position;
         this.staffId = staffId;
         this.email = email;
+        this.departmentOf = departmentOf;
         this.supervisor = supervisor;
         this.isAdmin = isAdmin;
         this.permissions = new HashSet<>();
@@ -91,6 +94,11 @@ public class User implements IUserInfo {
     }
 
     @Override
+    public EnumDepartment getDepartmentOf() {
+        return departmentOf;
+    }
+
+    @Override
     public ISupervisorInfo getSupervisorInfo() {
         return supervisor;
     }
@@ -114,7 +122,7 @@ public class User implements IUserInfo {
 
     @Override
     public String toString() {
-        String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).toString();
+        String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).add(departmentOf.toString()).toString();
         temp += ", Supervisor = ";
         if (supervisor == null) {
             temp += "null";
