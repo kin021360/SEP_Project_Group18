@@ -22,6 +22,8 @@ public interface IUserInfo {
 
     boolean hasPermission(EnumPermission permission);
 
+    EnumDepartment getDepartmentOf();
+
     ISupervisorInfo getSupervisorInfo();
 
     boolean isAdmin();

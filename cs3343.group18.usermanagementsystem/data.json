@@ -2,29 +2,31 @@
   "users": [
     {
       "userName": "abc",
-      "password": "123",
-      "gender": 0,
-      "position": 0,
+      "password": "999",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0"
+      ],
       "staffId": 1000,
       "email": "abc@abc.com",
-      "isAdmin": false,
-      "permissions": [
-        0
-      ]
+      "departmentOf": "0",
+      "isAdmin": false
     }
   ],
   "supervisors": [
     {
       "userName": "efg",
-      "password": "123",
-      "gender": 0,
-      "position": 0,
+      "password": "777",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0"
+      ],
       "staffId": 2000,
       "email": "efg@efg.com",
-      "isAdmin": false,
-      "permissions": [
-        0
-      ]
+      "departmentOf": "0",
+      "isAdmin": false
     }
   ],
   "userSupervisorMapping": {
