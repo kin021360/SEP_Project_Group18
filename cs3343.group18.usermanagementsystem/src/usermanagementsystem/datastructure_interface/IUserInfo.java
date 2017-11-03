@@ -1,4 +1,6 @@
-package cs3343.group18.user_management_system.data;
+package usermanagementsystem.datastructure_interface;
+
+import usermanagementsystem.datastructure.*;
 
 /**
  * Created by nathanlam on 24/10/2017.

@@ -1,4 +1,4 @@
-package cs3343.group18.user_management_system.data;
+package usermanagementsystem.dataaccess;
 
 import com.google.gson.*;
 

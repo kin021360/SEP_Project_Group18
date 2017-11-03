@@ -1,8 +1,10 @@
-package cs3343.group18.user_management_system.data;
+package usermanagementsystem.dataaccess;
 
 import java.util.Hashtable;
 
 import com.google.gson.*;
+
+import usermanagementsystem.datastructure.*;
 
 /**
  * Created by Nathan Lam on 18/10/2017.

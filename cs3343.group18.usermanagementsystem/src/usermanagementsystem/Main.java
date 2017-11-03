@@ -1,6 +1,7 @@
-package cs3343.group18.user_management_system;
+package usermanagementsystem;
 
-import cs3343.group18.user_management_system.data.*;
+import usermanagementsystem.dataaccess.*;
+import usermanagementsystem.datastructure.*;
 
 import java.util.Hashtable;
 

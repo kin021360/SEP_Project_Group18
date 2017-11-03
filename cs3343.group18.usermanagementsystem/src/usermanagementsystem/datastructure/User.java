@@ -1,9 +1,11 @@
-package cs3343.group18.user_management_system.data;
+package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.Expose;
 
 import java.util.HashSet;
 import java.util.StringJoiner;
+
+import usermanagementsystem.datastructure_interface.*;
 
 public class User implements IUserInfo {
     @Expose

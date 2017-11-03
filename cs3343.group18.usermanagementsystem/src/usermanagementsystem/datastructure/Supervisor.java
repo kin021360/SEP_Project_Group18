@@ -1,6 +1,8 @@
-package cs3343.group18.user_management_system.data;
+package usermanagementsystem.datastructure;
 
 import java.util.HashSet;
+
+import usermanagementsystem.datastructure_interface.*;
 
 public class Supervisor extends User implements ISupervisorInfo {
     private HashSet<IUserInfo> subordinates;
