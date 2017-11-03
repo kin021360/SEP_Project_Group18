@@ -46,6 +46,18 @@ You may need to create an Atlassian account while installing SourceTree
 3. Choose develop (Mean create your feature branch which is copied from develop)
 <img src="/img/10.png"><br/>
 
+#### Import the project into eclipse
+1. Choose the root folder "SEP_Project_Group18" as the Workspace
+<img src="/img/13.png"><br/>
+2. Click "File">"Import..."
+<img src="/img/14.png"><br/>
+3. Choose "General">"Existing Projects into Workspace
+<img src="/img/15.png"><br/>
+4. Choose the folder "cs3343.group18.usermanagementsystem"
+<img src="/img/16.png"><br/>
+5. Done
+<img src="/img/17.png"><br/>
+
 #### Pull request (Merge your finished feature branch into develop)
 Edit later
 
