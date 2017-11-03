@@ -1,6 +1,7 @@
 package usermanagementsystem;
 
-import usermanagementsystem.data.*;
+import usermanagementsystem.dataaccess.*;
+import usermanagementsystem.datastructure.*;
 
 import java.util.Hashtable;
 
