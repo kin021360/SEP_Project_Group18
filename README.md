@@ -83,8 +83,33 @@ You may need to create an Atlassian account while installing SourceTree
 <kbd><img src="/img/17.png"></kbd>
 
 
+### Please keep your feature branch up-to-date with develop
+
+1. Commit all changes on your feature branch and *Push*
+2. Switch to *develop*, then click *Pull*
+3. Switch back to your feature branch
+4. Click *Merge*, choose the history which is on *origin/develop origin/HEAD develop*
+5. If you see the file conflict, you can try to fix it
+6. If you cannot solve conflict, you can give up this merging by following command
+```
+(Click Terminal and enter):
+    git merge --abort
+```
+
 ### Pull request (Merge your finished feature branch into develop)
-Edit later
+
+1. After finishing your feature branch, your want to merge into develop. Goto github you will see this and click "Compare & pull request"
+
+<kbd><img src="/img/18.png"></kbd>
+
+2. Add your command for pull request if necessary and choose the *reviewers* to help you *approve your changes*
+
+<kbd><img src="/img/19.png"></kbd>
+
+3. In the pull request, you can see all the files changes and "Review changes" for reviewers
+
+<kbd><img src="/img/20.png"></kbd>
+
 
 ### WinMerge (Code different compare and view)
 http://winmerge.org<br/>
