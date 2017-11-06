@@ -1,20 +1,34 @@
 package usermanagementsystem.user_login;
 
 import usermanagementsystem.dataaccess.*;
+import usermanagementsystem.datastructure.Supervisor;
+import usermanagementsystem.datastructure.User;
+import usermanagementsystem.datastructure_interface.IUserInfo;
+
+import java.util.Hashtable;
 
 public class UserLogin {
-    private boolean loggedin;
+    private Hashtable<String, User> users;
+    private Hashtable<String, Supervisor> supervisors;
+    private boolean isLoggedIn;
     private UserDao userDao;
     //only keep username as login user will not enter username again
     //and it is key for select info from hash table
-    private String username;
+//    private String username;
+    private User loggedInUser;
 
     private static UserLogin instance = new UserLogin();
 
     private UserLogin() {
-        this.loggedin = false;
+        this.isLoggedIn = false;
+        this.loggedInUser = null;
         //load users based on data.json
         this.userDao = new UserDao();
+        //load User and Supervisor list(Hashtable) without mapping their Supervisor or Subordinate yet
+        this.users = userDao.loadUsersWithoutSupervisor();
+        this.supervisors = userDao.loadSupervisorsWithoutUser();
+        //Map User's Supervisor and Supervisor's Subordinate
+        this.userDao.mapUserSupervisor(users, supervisors);
     }
 
     public static UserLogin getInstance() {
@@ -22,24 +36,23 @@ public class UserLogin {
     }
 
     public boolean getLoginStatus() {
-        return loggedin;
+        return isLoggedIn;
     }
 
     public void setLoginStatus(boolean loginStatus) {
-        this.loggedin = loginStatus;
+        this.isLoggedIn = loginStatus;
     }
 
-    public UserDao getUserDao() {
-        return userDao;
+    public String getLoggedinUsername() {
+        if(isLoggedIn) {
+            return loggedInUser.getUserName();
+        }
+        return "";
     }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
+//    public void setUsername(String username) {
+//        this.username = username;
+//    }
 
     public String logoutProcess(String choice) {
         switch (choice) {
@@ -51,5 +64,24 @@ public class UserLogin {
             default:
                 return "Please enter \"Y\" or \"N\"!\n";
         }
+    }
+
+    public boolean login(String username, String password) {
+        User tempUser = users.get(username);
+        Supervisor tempSupervisor = supervisors.get(username);
+        if (tempUser != null && tempUser.checkPassword(password)) {
+            loggedInUser = tempUser;
+            isLoggedIn = true;
+            return true;
+        } else if (tempSupervisor != null && tempSupervisor.checkPassword(password)) {
+            loggedInUser = tempSupervisor;
+            isLoggedIn = true;
+            return true;
+        }
+        return false;
+    }
+
+    public IUserInfo getLoggedInUserInfo() {
+        return loggedInUser;
     }
 }

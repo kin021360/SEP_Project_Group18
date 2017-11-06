@@ -1,11 +1,8 @@
 package usermanagementsystem;
 
 import usermanagementsystem.Menu.Menus;
-import usermanagementsystem.dataaccess.*;
-import usermanagementsystem.datastructure.*;
 import usermanagementsystem.user_login.UserLogin;
 
-import java.util.Hashtable;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -15,11 +12,6 @@ public class Main {
 
         //login status and get user information
         UserLogin loginObject = UserLogin.getInstance();
-        UserDao userDao = loginObject.getUserDao();
-
-        //load User and Supervisor list(Hashtable) without mapping their Supervisor or Subordinate yet
-        Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
-        Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
 
         //interface (menu and options)
         Menus menu = new Menus();
@@ -40,9 +32,9 @@ public class Main {
                 password = scannerObj.next();
 
                 try {
-                    if (users.get(username).checkPassword(password)) {
-                        loginObject.setLoginStatus(true);
-                        loginObject.setUsername(username);
+                    if (loginObject.login(username, password)) {
+//                        loginObject.setLoginStatus(true);
+//                        loginObject.setUsername(username);
                         menu.printHeader();
                     } else {
                         System.out.println("Invalid username or password!\n");
@@ -54,7 +46,7 @@ public class Main {
 
             //after login
             if (loginObject.getLoginStatus()) {
-                isAdmin = users.get(username).isAdmin();
+                isAdmin = loginObject.getLoggedInUserInfo().isAdmin();
 
                 menu.printHomeMenu();
                 if (isAdmin) {
