@@ -28,4 +28,8 @@ public class Supervisor extends User implements ISupervisorInfo {
         subordinates.remove(subordinate);
     }
 
+    @Override
+    public boolean isSupervisor() {
+        return true;
+    }
 }

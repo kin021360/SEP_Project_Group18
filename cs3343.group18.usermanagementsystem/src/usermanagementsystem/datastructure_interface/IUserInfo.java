@@ -27,5 +27,7 @@ public interface IUserInfo {
     ISupervisorInfo getSupervisorInfo();
 
     boolean isAdmin();
+
+    boolean isSupervisor();
     //TODO
 }
