@@ -10,6 +10,13 @@ https://drive.google.com/drive/folders/0B2znpjlXrr9jV3VGT0RqYUZTYlE
 * Do not pull(merge) master into your feature branch because it is older than develop branch. Imagine that master branch is a production version (It should only contain the statble code).
 * You could google **git flow** development practice.
 
+## Important
+
+### Choose **Ancestor Order** in SourceTree to show the correct order of history
+
+<kbd><img src="/img/21.png"></kbd>
+
+
 ## Tools
 
 ### SourceTree - the gui git management program
