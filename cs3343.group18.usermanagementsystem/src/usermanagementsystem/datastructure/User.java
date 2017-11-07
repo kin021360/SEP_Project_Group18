@@ -121,6 +121,11 @@ public class User implements IUserInfo {
     }
 
     @Override
+    public boolean isSupervisor() {
+        return false;
+    }
+
+    @Override
     public String toString() {
         String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).add(departmentOf.toString()).toString();
         temp += ", Supervisor = ";

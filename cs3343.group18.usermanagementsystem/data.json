@@ -12,6 +12,19 @@
       "email": "abc@abc.com",
       "departmentOf": "0",
       "isAdmin": false
+    },
+    {
+      "userName": "james",
+      "password": "104",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0"
+      ],
+      "staffId": 104,
+      "email": "james@james.com",
+      "departmentOf": "0",
+      "isAdmin": true
     }
   ],
   "supervisors": [
