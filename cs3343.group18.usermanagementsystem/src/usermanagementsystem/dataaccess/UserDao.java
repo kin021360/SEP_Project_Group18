@@ -15,6 +15,7 @@ import usermanagementsystem.datastructure.*;
 //This class handle parsing json object into User object and Supervisor object. Not fully finish yet
 public class UserDao extends JsonDao {
     private static final String defJsonPath = "./data.json";
+    private String currentJsonPath;
     private JsonObject jObject;
     private JsonArray userJArray;
     private JsonArray supervisorJArray;
@@ -26,7 +27,8 @@ public class UserDao extends JsonDao {
 
     public UserDao(String customPath) {
         super();
-        jObject = readJsonFile(customPath).getAsJsonObject();
+        currentJsonPath = customPath;
+        jObject = readJsonFile(currentJsonPath).getAsJsonObject();
         userJArray = jObject.getAsJsonArray("users");
         supervisorJArray = jObject.getAsJsonArray("supervisors");
         userSupervisorMapping = jObject.getAsJsonObject("userSupervisorMapping");
@@ -71,6 +73,6 @@ public class UserDao extends JsonDao {
         jObject.add("users", userJArray);
         jObject.add("supervisors", supervisorJArray);
         jObject.add("userSupervisorMapping", userSupervisorMapping);
-        writeJsonFile(defJsonPath, jObject);
+        writeJsonFile(currentJsonPath, jObject);
     }
 }
