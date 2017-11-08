@@ -1,7 +1,6 @@
 package usermanagementsystem.test;
 
 import com.google.gson.*;
-import com.google.gson.internal.Excluder;
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -10,6 +9,7 @@ import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.*;
 
 import java.io.FileReader;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -47,6 +47,16 @@ public class TestDataAccess extends TestCase {
     }
 
     @Test
+    public void testDefaultUserDao() {
+        UserDao userDao = new UserDao();
+        Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
+        Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
+        userDao.mapUserSupervisor(users, supervisors);
+        boolean result = users.get("abc").getSupervisorInfo().equals(supervisors.get("efg")) && supervisors.get("efg").isMySubordinate(users.get("abc"));
+        assertEquals(true, result);
+    }
+
+    @Test
     public void testMapUserSupervisor() {
         UserDao userDao = new UserDao("dataTest.json");
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
@@ -57,7 +67,7 @@ public class TestDataAccess extends TestCase {
     }
 
     @Test
-    public void testUpdateAndSave() {
+    public void testUpdateAndSave() throws IOException {
         UserDao userDao = new UserDao("dataTestWrite.json");
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
@@ -68,14 +78,9 @@ public class TestDataAccess extends TestCase {
         supervisors.get("testSupervisor").changePassword(nPassword);
         userDao.updateAndSave(users, supervisors);
         JsonParser jParser = new JsonParser();
-        boolean result = false;
-        try {
-            JsonObject jo = jParser.parse(new FileReader("dataTestWrite.json")).getAsJsonObject();
-            result = jo.get("users").getAsJsonArray().get(0).getAsJsonObject().get("password").getAsString().equals(nPassword) &&
-                    jo.get("supervisors").getAsJsonArray().get(0).getAsJsonObject().get("password").getAsString().equals(nPassword);
-        } catch (Exception e) {
-
-        }
+        JsonObject jo = jParser.parse(new FileReader("dataTestWrite.json")).getAsJsonObject();
+        boolean result = jo.get("users").getAsJsonArray().get(0).getAsJsonObject().get("password").getAsString().equals(nPassword) &&
+                jo.get("supervisors").getAsJsonArray().get(0).getAsJsonObject().get("password").getAsString().equals(nPassword);
         assertEquals(true, result);
     }
 }

@@ -2,7 +2,7 @@
   "users": [
     {
       "userName": "testUser",
-      "password": "20171108141552",
+      "password": "20171108221317",
       "gender": "0",
       "position": "0",
       "permissions": [
@@ -17,7 +17,7 @@
   "supervisors": [
     {
       "userName": "testSupervisor",
-      "password": "20171108141552",
+      "password": "20171108221317",
       "gender": "0",
       "position": "0",
       "permissions": [
