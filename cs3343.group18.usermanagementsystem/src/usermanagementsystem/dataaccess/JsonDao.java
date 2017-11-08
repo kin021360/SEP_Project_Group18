@@ -43,9 +43,4 @@ public abstract class JsonDao {
         String tempStr = gson.toJson(jsonObject);
         writeFile(filePath, tempStr);
     }
-
-    protected void writeJsonFile(String filePath, Object object) {
-        String tempStr = gson.toJson(object);
-        writeFile(filePath, tempStr);
-    }
 }

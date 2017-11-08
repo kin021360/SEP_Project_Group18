@@ -1,0 +1,35 @@
+{
+  "users": [
+    {
+      "userName": "testUser",
+      "password": "20171108141552",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0"
+      ],
+      "staffId": 111,
+      "email": "testUser@testUser.com",
+      "departmentOf": "0",
+      "isAdmin": false
+    }
+  ],
+  "supervisors": [
+    {
+      "userName": "testSupervisor",
+      "password": "20171108141552",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0"
+      ],
+      "staffId": 222,
+      "email": "testSupervisor@testSupervisor.com",
+      "departmentOf": "0",
+      "isAdmin": false
+    }
+  ],
+  "userSupervisorMapping": {
+    "testUser": "testSupervisor"
+  }
+}
