@@ -28,7 +28,8 @@ public class UserDao extends JsonDao {
     public UserDao(String customPath) {
         super();
         currentJsonPath = customPath;
-        jObject = readJsonFile(currentJsonPath).getAsJsonObject();
+        jObject = readJsonFile(currentJsonPath);
+        if (jObject == null) throw new RuntimeException("Cannot load the json file.");
         userJArray = jObject.getAsJsonArray("users");
         supervisorJArray = jObject.getAsJsonArray("supervisors");
         userSupervisorMapping = jObject.getAsJsonObject("userSupervisorMapping");

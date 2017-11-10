@@ -67,7 +67,7 @@ public class TestDataAccess extends TestCase {
     }
 
     @Test
-    public void testUpdateAndSave() throws IOException {
+    public void testUpdateAndSave() throws Exception {
         UserDao userDao = new UserDao("dataTestWrite.json");
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
@@ -82,5 +82,16 @@ public class TestDataAccess extends TestCase {
         boolean result = jo.get("users").getAsJsonArray().get(0).getAsJsonObject().get("password").getAsString().equals(nPassword) &&
                 jo.get("supervisors").getAsJsonArray().get(0).getAsJsonObject().get("password").getAsString().equals(nPassword);
         assertEquals(true, result);
+    }
+
+    @Test
+    public void testJsonFileNotFound() throws Exception {
+        UserDao userDao = null;
+        try {
+            userDao = new UserDao("xlihhhoix.json");
+        } catch (Exception e) {
+
+        }
+        assertEquals(null, userDao);
     }
 }

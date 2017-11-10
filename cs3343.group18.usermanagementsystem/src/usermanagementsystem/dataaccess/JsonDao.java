@@ -20,7 +20,7 @@ public abstract class JsonDao {
         try {
             return jsonParser.parse(new BufferedReader(new FileReader(filePath))).getAsJsonObject();
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.getMessage());
         }
         return null;
     }
