@@ -12,9 +12,6 @@ public class UserLogin {
     private Hashtable<String, Supervisor> supervisors;
     private boolean isLoggedIn;
     private UserDao userDao;
-    //only keep username as login user will not enter username again
-    //and it is key for select info from hash table
-//    private String username;
     private User loggedInUser;
 
     private static UserLogin instance = new UserLogin();
@@ -41,6 +38,7 @@ public class UserLogin {
 
     public void setLoginStatus(boolean loginStatus) {
         this.isLoggedIn = loginStatus;
+        this.loggedInUser = null;
     }
 
     public String getLoggedinUsername() {
@@ -49,10 +47,6 @@ public class UserLogin {
         }
         return "";
     }
-
-//    public void setUsername(String username) {
-//        this.username = username;
-//    }
 
     public String logoutProcess(String choice) {
         switch (choice) {

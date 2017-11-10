@@ -33,8 +33,6 @@ public class Main {
 
                 try {
                     if (loginObject.login(username, password)) {
-//                        loginObject.setLoginStatus(true);
-//                        loginObject.setUsername(username);
                         menu.printHeader();
                     } else {
                         System.out.println("Invalid username or password!\n");
