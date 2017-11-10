@@ -20,7 +20,7 @@ public abstract class JsonDao {
         try {
             return jsonParser.parse(new BufferedReader(new FileReader(filePath))).getAsJsonObject();
         } catch (Exception e) {
-            System.out.println(e.toString());
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -35,17 +35,12 @@ public abstract class JsonDao {
         }
     }
 
-    protected void writeJsonFile(String filePath, String jsonString) {
-        writeFile(filePath, jsonString);
-    }
+//    protected void writeJsonFile(String filePath, String jsonString) {
+//        writeFile(filePath, jsonString);
+//    }
 
     protected void writeJsonFile(String filePath, JsonObject jsonObject) {
         String tempStr = gson.toJson(jsonObject);
-        writeFile(filePath, tempStr);
-    }
-
-    protected void writeJsonFile(String filePath, Object object) {
-        String tempStr = gson.toJson(object);
         writeFile(filePath, tempStr);
     }
 }
