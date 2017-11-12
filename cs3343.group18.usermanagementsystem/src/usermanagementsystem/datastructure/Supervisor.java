@@ -32,4 +32,11 @@ public class Supervisor extends User implements ISupervisorInfo {
     public boolean isSupervisor() {
         return true;
     }
+
+    public static class SupervisorBuilder extends UserBuilder {
+        @Override
+        public Supervisor build() {
+            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, isAdmin);
+        }
+    }
 }

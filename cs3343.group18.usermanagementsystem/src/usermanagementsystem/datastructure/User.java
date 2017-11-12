@@ -5,6 +5,7 @@ import com.google.gson.annotations.Expose;
 import java.util.HashSet;
 import java.util.StringJoiner;
 
+import com.sun.deploy.util.StringUtils;
 import usermanagementsystem.datastructure_interface.*;
 
 public class User implements IUserInfo {
@@ -135,5 +136,69 @@ public class User implements IUserInfo {
             temp += supervisor.toString();
         }
         return temp;
+    }
+
+    //https://codereview.stackexchange.com/questions/127391/simple-builder-pattern-implementation-for-building-immutable-objects
+    //http://www.cnblogs.com/techyc/p/3538359.html
+    public static class UserBuilder {
+        String userName;
+        String password;
+        int staffId;
+        String email;
+        EnumGender gender;
+        EnumPosition position;
+        EnumDepartment departmentOf;
+        boolean isAdmin;
+        ISupervisorInfo supervisor = null;
+
+        public UserBuilder userName(String userName) {
+            this.userName = userName;
+            return this;
+        }
+
+        public UserBuilder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public UserBuilder staffId(int staffId) {
+            this.staffId = staffId;
+            return this;
+        }
+
+        public UserBuilder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public UserBuilder gender(EnumGender gender) {
+            this.gender = gender;
+            return this;
+        }
+
+        public UserBuilder position(EnumPosition position) {
+            this.position = position;
+            return this;
+        }
+
+        public UserBuilder departmentOf(EnumDepartment departmentOf) {
+            this.departmentOf = departmentOf;
+            return this;
+        }
+
+        public UserBuilder isAdmin(boolean isAdmin) {
+            this.isAdmin = isAdmin;
+            return this;
+        }
+
+        public UserBuilder supervisor(ISupervisorInfo supervisor) {
+            this.supervisor = supervisor;
+            return this;
+        }
+
+        public User build() {
+            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+        }
+        //System.out.println(Calendar.getInstance().getTimeInMillis());
     }
 }
