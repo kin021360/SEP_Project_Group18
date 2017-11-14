@@ -126,6 +126,10 @@ public class User implements IUserInfo {
         return false;
     }
 
+    public Supervisor toSupervisor() {
+        return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+    }
+
     @Override
     public String toString() {
         String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).add(departmentOf.toString()).toString();

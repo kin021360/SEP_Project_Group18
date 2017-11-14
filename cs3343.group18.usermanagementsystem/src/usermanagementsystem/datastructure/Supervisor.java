@@ -7,8 +7,8 @@ import usermanagementsystem.datastructure_interface.*;
 public class Supervisor extends User implements ISupervisorInfo {
     private HashSet<IUserInfo> subordinates;
 
-    public Supervisor(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, EnumDepartment departmentOf, boolean isAdmin) {
-        super(userName, password, gender, position, staffId, email, departmentOf, null, isAdmin);
+    public Supervisor(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
+        super(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         subordinates = new HashSet<>();
     }
 
@@ -33,10 +33,15 @@ public class Supervisor extends User implements ISupervisorInfo {
         return true;
     }
 
+    @Override
+    public Supervisor toSupervisor() {
+        return null;
+    }
+
     public static class SupervisorBuilder extends UserBuilder {
         @Override
         public Supervisor build() {
-            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, isAdmin);
+            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         }
     }
 }
