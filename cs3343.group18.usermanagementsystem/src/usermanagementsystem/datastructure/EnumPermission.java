@@ -21,7 +21,7 @@ public enum EnumPermission {
         return permissionId;
     }
 
-    public EnumPermission parse(String eString) {
+    public static EnumPermission parse(String eString) {
         try {
             return EnumPermission.valueOf(eString);
         } catch (Exception e) {

@@ -21,7 +21,7 @@ public enum EnumPosition {
         return positionId;
     }
 
-    public EnumPosition parse(String eString) {
+    public static EnumPosition parse(String eString) {
         try {
             return EnumPosition.valueOf(eString);
         } catch (Exception e) {

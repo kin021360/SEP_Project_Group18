@@ -23,7 +23,7 @@ public enum EnumDepartment {
         return departmentId;
     }
 
-    public EnumDepartment parse(String eString) {
+    public static EnumDepartment parse(String eString) {
         try {
             return EnumDepartment.valueOf(eString);
         } catch (Exception e) {
