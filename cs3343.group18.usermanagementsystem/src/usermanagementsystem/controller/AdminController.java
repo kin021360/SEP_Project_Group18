@@ -23,16 +23,32 @@ public class AdminController extends UserController {
         return null;
     }
 
-    public boolean createUserAndAdd(String userName, String password, String gender, String position, String staffId, String email, String departmentOf, String isAdmin) {
+    public boolean createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) {
         if (!users.containsKey(userName)) {
-
+            User.UserBuilder builder = new User.UserBuilder();
+            builder.userName(userName)
+                    .password(password)
+                    .gender(EnumGender.parse(gender))
+                    .position(EnumPosition.parse(position))
+                    .email(email)
+                    .departmentOf(EnumDepartment.parse(departmentOf))
+                    .isAdmin(Boolean.valueOf(isAdmin));
+            users.put(userName, builder.build());
         }
         return false;
     }
 
-    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String staffId, String email, String departmentOf, String isAdmin) {
+    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) {
         if (!supervisors.containsKey(userName)) {
-
+            Supervisor.SupervisorBuilder builder = new Supervisor.SupervisorBuilder();
+            builder.userName(userName)
+                    .password(password)
+                    .gender(EnumGender.parse(gender))
+                    .position(EnumPosition.parse(position))
+                    .email(email)
+                    .departmentOf(EnumDepartment.parse(departmentOf))
+                    .isAdmin(Boolean.valueOf(isAdmin));
+            supervisors.put(userName, builder.build());
         }
         return false;
     }
