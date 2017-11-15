@@ -41,21 +41,17 @@ public class AdminController extends UserController {
         if (users.containsKey(userName) && !supervisors.containsKey(userName)) {
             User u = users.get(userName);
             users.remove(userName);
-//            supervisors.put(u.toSupervisor());
+            supervisors.put(userName, u.toSupervisor());
         }
         return false;
     }
 
     public boolean addPermissionToUser(String userName, String permission) {
         User u = getUserOrSupervisor(userName);
-        if (u != null) {
-            try {
-                EnumPermission p = EnumPermission.valueOf(permission);
-                u.addPermission(p);
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
+        EnumPermission p = EnumPermission.parse(permission);
+        if (u != null && p != null) {
+            u.addPermission(p);
+            return true;
         }
         return false;
     }
