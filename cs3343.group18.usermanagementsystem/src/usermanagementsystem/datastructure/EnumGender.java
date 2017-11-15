@@ -21,7 +21,7 @@ public enum EnumGender {
         return genderId;
     }
 
-    public EnumGender parse(String eString) {
+    public static EnumGender parse(String eString) {
         try {
             return EnumGender.valueOf(eString);
         } catch (Exception e) {
