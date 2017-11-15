@@ -20,4 +20,12 @@ public enum EnumGender {
     public int getGenderIdId() {
         return genderId;
     }
+
+    public static EnumGender parse(String eString) {
+        try {
+            return EnumGender.valueOf(eString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

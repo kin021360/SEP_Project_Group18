@@ -20,4 +20,12 @@ public enum EnumPermission {
     public int getPermissionId() {
         return permissionId;
     }
+
+    public static EnumPermission parse(String eString) {
+        try {
+            return EnumPermission.valueOf(eString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }

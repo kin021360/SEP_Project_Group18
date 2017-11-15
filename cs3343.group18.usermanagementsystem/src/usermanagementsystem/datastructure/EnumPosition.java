@@ -20,4 +20,12 @@ public enum EnumPosition {
     public int getPositionId() {
         return positionId;
     }
+
+    public static EnumPosition parse(String eString) {
+        try {
+            return EnumPosition.valueOf(eString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
