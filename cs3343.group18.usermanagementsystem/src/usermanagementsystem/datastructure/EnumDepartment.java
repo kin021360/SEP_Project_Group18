@@ -22,4 +22,12 @@ public enum EnumDepartment {
     public int getDepartmentId() {
         return departmentId;
     }
+
+    public EnumDepartment parse(String eString) {
+        try {
+            return EnumDepartment.valueOf(eString);
+        } catch (Exception e) {
+            return null;
+        }
+    }
 }
