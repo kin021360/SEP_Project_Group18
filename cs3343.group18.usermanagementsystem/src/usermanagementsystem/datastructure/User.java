@@ -2,6 +2,7 @@ package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.Expose;
 
+import java.util.Calendar;
 import java.util.HashSet;
 import java.util.StringJoiner;
 
@@ -20,7 +21,7 @@ public class User implements IUserInfo {
     @Expose
     private HashSet<EnumPermission> permissions;
     @Expose
-    private int staffId;
+    private long staffId;
     @Expose
     private String email;
     @Expose
@@ -29,7 +30,7 @@ public class User implements IUserInfo {
     private boolean isAdmin;
     private ISupervisorInfo supervisor;
 
-    public User(String userName, String password, EnumGender gender, EnumPosition position, int staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
+    public User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.gender = gender;
@@ -66,7 +67,7 @@ public class User implements IUserInfo {
     }
 
     @Override
-    public int getStaffId() {
+    public long getStaffId() {
         return staffId;
     }
 
@@ -147,7 +148,7 @@ public class User implements IUserInfo {
     public static class UserBuilder {
         String userName;
         String password;
-        int staffId;
+        long staffId;
         String email;
         EnumGender gender;
         EnumPosition position;
@@ -162,11 +163,6 @@ public class User implements IUserInfo {
 
         public UserBuilder password(String password) {
             this.password = password;
-            return this;
-        }
-
-        public UserBuilder staffId(int staffId) {
-            this.staffId = staffId;
             return this;
         }
 
@@ -201,8 +197,7 @@ public class User implements IUserInfo {
         }
 
         public User build() {
-            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+            return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);
         }
-        //System.out.println(Calendar.getInstance().getTimeInMillis());
     }
 }

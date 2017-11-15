@@ -12,7 +12,7 @@ public interface IUserInfo {
 
     EnumGender getGender();
 
-    int getStaffId();
+    long getStaffId();
 
     EnumPosition getPosition();
 
