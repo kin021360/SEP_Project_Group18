@@ -9,6 +9,7 @@ public class UserController {
     protected User currentUser;
 
     public UserController(User user) {
+        if (user == null) throw new RuntimeException("Input user cannot be null!");
         currentUser = user;
     }
 
@@ -20,8 +21,8 @@ public class UserController {
         return currentUser.hasPermission(permission);
     }
 
-    public boolean changeMyPassword(String oldPassword, String newPassword){
-        if (currentUser.checkPassword(oldPassword)){
+    public boolean changeMyPassword(String oldPassword, String newPassword) {
+        if (currentUser.checkPassword(oldPassword)) {
             currentUser.changePassword(newPassword);
             return true;
         }

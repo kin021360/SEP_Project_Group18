@@ -17,10 +17,12 @@ public class TestController {
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
         UserController userController = new SupervisorController(supervisors.get("efg"));
-        System.out.println(userController.getMyDetails());
+//        System.out.println(userController.getMyDetails());
 
-        AdminController adminController=new AdminController(supervisors.get("efg"),users,supervisors);
-        System.out.println(adminController.getUserDetails("abco"));
+        AdminController adminController = new AdminController(users.get("james"), users, supervisors);
+        adminController.createUserAndAdd("qqq", "111", "Male", EnumPosition.Programmer.toString(), "qqqq@q.com", EnumDepartment.Technology.toString(), "false");
+
+        System.out.println(adminController.getAllResult());
     }
 
 }

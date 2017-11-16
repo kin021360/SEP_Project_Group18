@@ -96,8 +96,14 @@ public class AdminController extends UserController {
     }
 
     public String getAllResult() {
-
-        return "";
+        String resultList = "";
+        for (User u : users.values()) {
+            resultList += u.toString() + "\n";
+        }
+        for (User u : supervisors.values()) {
+            resultList += u.toString() + "\n";
+        }
+        return resultList;
     }
 
     public String getUserDetails(String userName) {
