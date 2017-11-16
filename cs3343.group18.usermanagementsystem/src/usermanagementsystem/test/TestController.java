@@ -19,7 +19,8 @@ public class TestController {
         UserController userController = new SupervisorController(supervisors.get("efg"));
         System.out.println(userController.getMyDetails());
 
-
+        AdminController adminController=new AdminController(supervisors.get("efg"),users,supervisors);
+        System.out.println(adminController.getUserDetails("abco"));
     }
 
 }

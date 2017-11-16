@@ -9,7 +9,7 @@ public class AdminController extends UserController {
     private Hashtable<String, Supervisor> supervisors;
 
     public AdminController(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) {
-        super(admin);
+        super(admin.isAdmin() ? admin : null);
         this.users = users;
         this.supervisors = supervisors;
     }
@@ -53,6 +53,19 @@ public class AdminController extends UserController {
         return false;
     }
 
+    public boolean removeUserOrSupervisor(String userName) {
+        User u = getUserOrSupervisor(userName);
+        if (u != null) {
+            if (u.isSupervisor()) {
+                supervisors.remove(userName);
+            } else {
+                users.remove(userName);
+            }
+            return true;
+        }
+        return false;
+    }
+
     public boolean upgradeToSupervisor(String userName) {
         if (users.containsKey(userName) && !supervisors.containsKey(userName)) {
             User u = users.get(userName);
@@ -85,5 +98,13 @@ public class AdminController extends UserController {
     public String getAllResult() {
 
         return "";
+    }
+
+    public String getUserDetails(String userName) {
+        User u = getUserOrSupervisor(userName);
+        if (u != null) {
+            return u.toString();
+        }
+        return "User not found!";
     }
 }
