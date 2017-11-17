@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.StringJoiner;
 
-import com.sun.deploy.util.StringUtils;
 import usermanagementsystem.datastructure_interface.*;
 
 public class User implements IUserInfo {
