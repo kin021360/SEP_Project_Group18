@@ -5,6 +5,7 @@ import org.junit.Test;
 import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.*;
 import usermanagementsystem.controller.*;
+import usermanagementsystem.exception.ExControllerInitWithNull;
 
 import java.util.Hashtable;
 
@@ -12,7 +13,7 @@ import java.util.Hashtable;
  * Created by Nathan Lam on 12/11/2017.
  */
 public class TestController {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         UserDao userDao = new UserDao("data.json");
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
