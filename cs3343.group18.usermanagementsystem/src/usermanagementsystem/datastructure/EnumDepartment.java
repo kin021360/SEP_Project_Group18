@@ -1,6 +1,8 @@
 package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.SerializedName;
+import usermanagementsystem.exception.ExInvaildEnumValue;
+import usermanagementsystem.exception.ExInvalidDepartment;
 
 /**
  * Created by Nathan Lam on 3/11/2017.
@@ -23,11 +25,11 @@ public enum EnumDepartment {
         return departmentId;
     }
 
-    public static EnumDepartment parse(String eString) {
+    public static EnumDepartment parse(String eString) throws ExInvaildEnumValue {
         try {
             return EnumDepartment.valueOf(eString);
         } catch (Exception e) {
-            return null;
+            throw new ExInvalidDepartment(eString);
         }
     }
 }

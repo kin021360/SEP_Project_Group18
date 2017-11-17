@@ -1,6 +1,8 @@
 package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.SerializedName;
+import usermanagementsystem.exception.ExInvaildEnumValue;
+import usermanagementsystem.exception.ExInvalidPosition;
 
 /**
  * Created by nathanlam on 24/10/2017.
@@ -21,11 +23,11 @@ public enum EnumPosition {
         return positionId;
     }
 
-    public static EnumPosition parse(String eString) {
+    public static EnumPosition parse(String eString) throws ExInvaildEnumValue {
         try {
             return EnumPosition.valueOf(eString);
         } catch (Exception e) {
-            return null;
+            throw new ExInvalidPosition(eString);
         }
     }
 }

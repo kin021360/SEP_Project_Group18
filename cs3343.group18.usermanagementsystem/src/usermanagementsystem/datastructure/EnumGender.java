@@ -1,6 +1,8 @@
 package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.SerializedName;
+import usermanagementsystem.exception.ExInvaildEnumValue;
+import usermanagementsystem.exception.ExInvalidGender;
 
 /**
  * Created by Nathan on 27/10/2017.
@@ -21,11 +23,11 @@ public enum EnumGender {
         return genderId;
     }
 
-    public static EnumGender parse(String eString) {
+    public static EnumGender parse(String eString) throws ExInvaildEnumValue {
         try {
             return EnumGender.valueOf(eString);
         } catch (Exception e) {
-            return null;
+            throw new ExInvalidGender(eString);
         }
     }
 }
