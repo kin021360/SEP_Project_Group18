@@ -191,10 +191,10 @@ public class User implements IUserInfo {
             return this;
         }
 
-        public UserBuilder supervisor(ISupervisorInfo supervisor) {
-            this.supervisor = supervisor;
-            return this;
-        }
+//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
+//            this.supervisor = supervisor;
+//            return this;
+//        }
 
         public User build() {
             return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);

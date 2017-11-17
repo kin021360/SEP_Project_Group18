@@ -1,6 +1,7 @@
 package usermanagementsystem.controller;
 
 import usermanagementsystem.datastructure.*;
+import usermanagementsystem.exception.ExControllerInitWithNull;
 
 /**
  * Created by Nathan Lam on 11/11/2017.
@@ -8,8 +9,8 @@ import usermanagementsystem.datastructure.*;
 public class UserController {
     protected User currentUser;
 
-    public UserController(User user) {
-        if (user == null) throw new RuntimeException("Input user cannot be null!");
+    public UserController(User user) throws ExControllerInitWithNull {
+        if (user == null) throw new ExControllerInitWithNull();
         currentUser = user;
     }
 

@@ -1,6 +1,8 @@
 package usermanagementsystem.controller;
 
 import usermanagementsystem.datastructure.*;
+import usermanagementsystem.exception.ExControllerInitWithNull;
+import usermanagementsystem.exception.ExInvaildEnumValue;
 
 import java.util.Hashtable;
 
@@ -8,7 +10,7 @@ public class AdminController extends UserController {
     private Hashtable<String, User> users;
     private Hashtable<String, Supervisor> supervisors;
 
-    public AdminController(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) {
+    public AdminController(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) throws ExControllerInitWithNull {
         super(admin.isAdmin() ? admin : null);
         this.users = users;
         this.supervisors = supervisors;
@@ -23,7 +25,7 @@ public class AdminController extends UserController {
         return null;
     }
 
-    public boolean createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) {
+    public boolean createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue {
         if (!users.containsKey(userName)) {
             User.UserBuilder builder = new User.UserBuilder();
             builder.userName(userName)
@@ -38,7 +40,7 @@ public class AdminController extends UserController {
         return false;
     }
 
-    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) {
+    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue {
         if (!supervisors.containsKey(userName)) {
             Supervisor.SupervisorBuilder builder = new Supervisor.SupervisorBuilder();
             builder.userName(userName)
@@ -75,11 +77,10 @@ public class AdminController extends UserController {
         return false;
     }
 
-    public boolean addPermissionToUser(String userName, String permission) {
+    public boolean addPermissionToUser(String userName, String permission) throws ExInvaildEnumValue {
         User u = getUserOrSupervisor(userName);
-        EnumPermission p = EnumPermission.parse(permission);
-        if (u != null && p != null) {
-            u.addPermission(p);
+        if (u != null) {
+            u.addPermission(EnumPermission.parse(permission));
             return true;
         }
         return false;
