@@ -24,6 +24,8 @@ public class TestController {
         adminController.createUserAndAdd("qqq", "111", "Male", EnumPosition.Programmer.toString(), "qqqq@q.com", EnumDepartment.Technology.toString(), "false");
 
         System.out.println(adminController.getAllResult());
-    }
 
+        ViewDocController v = ViewDocController.getInstance();
+        System.out.println(v.viewAllDocument(users.get("abc")));
+    }
 }
