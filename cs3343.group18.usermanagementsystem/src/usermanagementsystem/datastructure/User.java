@@ -7,8 +7,9 @@ import java.util.HashSet;
 import java.util.StringJoiner;
 
 import usermanagementsystem.datastructure_interface.*;
+import usermanagementsystem.exception.ExIsNullOrEmpty;
 
-public class User implements IUserInfo {
+public class User implements IUserInfo, Comparable<User> {
     @Expose
     private String userName;
     @Expose
@@ -142,6 +143,11 @@ public class User implements IUserInfo {
         return temp;
     }
 
+    @Override
+    public int compareTo(User another) {
+        return this.userName.compareTo(another.userName);
+    }
+
     //https://codereview.stackexchange.com/questions/127391/simple-builder-pattern-implementation-for-building-immutable-objects
     //http://www.cnblogs.com/techyc/p/3538359.html
     public static class UserBuilder {
@@ -155,17 +161,26 @@ public class User implements IUserInfo {
         boolean isAdmin;
         ISupervisorInfo supervisor = null;
 
-        public UserBuilder userName(String userName) {
+        private void strIsNullOrEmpty(String paramName, String value) throws ExIsNullOrEmpty {
+            if (value == null || value.equals("")) {
+                throw new ExIsNullOrEmpty(paramName);
+            }
+        }
+
+        public UserBuilder userName(String userName) throws ExIsNullOrEmpty {
+            strIsNullOrEmpty(Thread.currentThread().getStackTrace()[1].getMethodName(), userName);
             this.userName = userName;
             return this;
         }
 
-        public UserBuilder password(String password) {
+        public UserBuilder password(String password) throws ExIsNullOrEmpty {
+            strIsNullOrEmpty(Thread.currentThread().getStackTrace()[1].getMethodName(), password);
             this.password = password;
             return this;
         }
 
-        public UserBuilder email(String email) {
+        public UserBuilder email(String email) throws ExIsNullOrEmpty {
+            strIsNullOrEmpty(Thread.currentThread().getStackTrace()[1].getMethodName(), email);
             this.email = email;
             return this;
         }

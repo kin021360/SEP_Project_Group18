@@ -3,6 +3,7 @@ package usermanagementsystem.controller;
 import usermanagementsystem.datastructure.*;
 import usermanagementsystem.exception.ExControllerInitWithNull;
 import usermanagementsystem.exception.ExInvaildEnumValue;
+import usermanagementsystem.exception.ExIsNullOrEmpty;
 
 import java.util.Hashtable;
 
@@ -17,6 +18,7 @@ public class AdminController extends UserController {
     }
 
     private User getUserOrSupervisor(String userName) {
+        if (userName == null) return null;
         if (users.containsKey(userName)) {
             return users.get(userName);
         } else if (supervisors.containsKey(userName)) {
@@ -25,8 +27,8 @@ public class AdminController extends UserController {
         return null;
     }
 
-    public boolean createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue {
-        if (!users.containsKey(userName)) {
+    public boolean createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
+        if (userName != null && !users.containsKey(userName)) {
             User.UserBuilder builder = new User.UserBuilder();
             builder.userName(userName)
                     .password(password)
@@ -40,8 +42,8 @@ public class AdminController extends UserController {
         return false;
     }
 
-    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue {
-        if (!supervisors.containsKey(userName)) {
+    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
+        if (userName != null && !supervisors.containsKey(userName)) {
             Supervisor.SupervisorBuilder builder = new Supervisor.SupervisorBuilder();
             builder.userName(userName)
                     .password(password)
@@ -69,7 +71,7 @@ public class AdminController extends UserController {
     }
 
     public boolean upgradeToSupervisor(String userName) {
-        if (users.containsKey(userName) && !supervisors.containsKey(userName)) {
+        if (userName != null && users.containsKey(userName) && !supervisors.containsKey(userName)) {
             User u = users.get(userName);
             users.remove(userName);
             supervisors.put(userName, u.toSupervisor());
