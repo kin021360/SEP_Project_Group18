@@ -19,15 +19,36 @@ public enum EnumGender {
         this.genderId = id;
     }
 
-    public int getGenderIdId() {
+    public int getId() {
         return genderId;
     }
 
     public static EnumGender parse(String eString) throws ExInvaildEnumValue {
         try {
-            return EnumGender.valueOf(eString);
+            int id = Integer.parseInt(eString);
+            return parse(id);
         } catch (Exception e) {
-            throw new ExInvalidGender(eString);
+            try {
+                return EnumGender.valueOf(eString);
+            } catch (Exception ex) {
+                throw new ExInvalidGender(eString);
+            }
         }
+    }
+
+    public static EnumGender parse(int id) throws ExInvaildEnumValue {
+        EnumGender[] e = EnumGender.values();
+        if (id > -1 && id < e.length) {
+            return e[id];
+        }
+        throw new ExInvalidGender("Gender id " + id);
+    }
+
+    public static String listAll() {
+        String temp = "Name of Gender       Id\n";
+        for (EnumGender e : EnumGender.values()) {
+            temp += String.format("%14s  ---  %2d\n", e.toString(), e.getId());
+        }
+        return temp;
     }
 }
