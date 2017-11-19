@@ -4,6 +4,7 @@ import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.Supervisor;
 import usermanagementsystem.datastructure.User;
 import usermanagementsystem.datastructure_interface.IUserInfo;
+import usermanagementsystem.user_info.UserInfo;
 
 import java.util.Hashtable;
 
@@ -77,5 +78,47 @@ public class UserLogin {
 
     public IUserInfo getLoggedInUserInfo() {
         return loggedInUser;
+    }
+    
+    public void updateAndSave() {
+    	userDao.updateAndSave(users, supervisors);
+    }
+    
+    public boolean checkUserExist(String username) {
+    	User tempUser = users.get(username);
+        Supervisor tempSupervisor = supervisors.get(username);
+        if (tempUser != null || tempSupervisor != null) {
+            return true;
+        }
+        return false;
+    }
+    
+    public void changeMyPw (String password, String newPw, String confirmNewPw) {    	
+    	UserInfo.changePw(loggedInUser, loggedInUser.checkPassword(password), newPw, confirmNewPw);
+    	updateAndSave();
+    }
+            
+    public void changeUserPw (String username, String newPw, String confirmNewPw) {
+    	User tempUser = users.get(username);
+        Supervisor tempSupervisor = supervisors.get(username);
+        if(tempUser != null) {
+        	UserInfo.changePw(tempUser, newPw, confirmNewPw);
+        }
+        else if(tempSupervisor != null) {
+        	UserInfo.changePw(tempSupervisor, newPw, confirmNewPw);
+        }
+    	updateAndSave();
+    }
+    
+    public void getUserInfo (String username) {
+    	User tempUser = users.get(username);
+        Supervisor tempSupervisor = supervisors.get(username);
+    	UserInfo.getUserInfo(tempUser, tempSupervisor);
+    }
+    
+    public void userPermission (String username) {
+    	User tempUser = users.get(username);
+        Supervisor tempSupervisor = supervisors.get(username);
+    	UserInfo.userPermission(tempUser, tempSupervisor);
     }
 }

@@ -2,7 +2,7 @@
   "users": [
     {
       "userName": "abc",
-      "password": "999",
+      "password": "99",
       "gender": "0",
       "position": "0",
       "permissions": [
@@ -15,11 +15,12 @@
     },
     {
       "userName": "james",
-      "password": "104",
+      "password": "123",
       "gender": "0",
       "position": "0",
       "permissions": [
-        "0"
+        "0",
+        "1"
       ],
       "staffId": 104,
       "email": "james@james.com",
@@ -30,7 +31,7 @@
   "supervisors": [
     {
       "userName": "efg",
-      "password": "777",
+      "password": "666",
       "gender": "0",
       "position": "0",
       "permissions": [

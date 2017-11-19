@@ -3,6 +3,7 @@ package usermanagementsystem;
 import usermanagementsystem.Menu.Menus;
 import usermanagementsystem.user_login.UserLogin;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -16,7 +17,7 @@ public class Main {
         //interface (menu and options)
         Menus menu = new Menus();
 
-        String username = "", password = "", choice = "";
+        String username = "", password = "", newPw = "", confirmNewPw = "", choice = "", input = "";
         int option;
         boolean isAdmin, invalidOption = false;
         Scanner scannerObj = new Scanner(System.in);
@@ -26,6 +27,7 @@ public class Main {
 
             //before login
             if (!loginObject.getLoginStatus()) {
+            	System.out.println("User Management System Login");
                 System.out.print("Username: ");
                 username = scannerObj.next();
                 System.out.print("Password: ");
@@ -61,7 +63,14 @@ public class Main {
 
                             break;
                         case 2:
-
+                        	System.out.print("Enter old password: ");
+                        	password = scannerObj.next();
+                        	System.out.print("Enter new password: ");
+                        	newPw = scannerObj.next();
+                        	System.out.print("Confirm new password: ");
+                        	confirmNewPw = scannerObj.next();
+                        	loginObject.changeMyPw(password, newPw, confirmNewPw);
+                        	System.in.read();                        	
                             break;
                         case 3:
 
@@ -91,16 +100,37 @@ public class Main {
                     }
 
                     //admin options
-                    if (isAdmin && invalidOption) {
+                    if (isAdmin) {
+                    	invalidOption = false;
                         switch (option) {
                             case 11:
-
+                            	System.out.print("Please enter username: ");
+                            	username = scannerObj.next();
+                            	loginObject.getUserInfo(username);
+                            	System.in.read();
                                 break;
                             case 12:
-
+                            	System.out.print("Please enter username: ");
+                            	username = scannerObj.next();
+                            	loginObject.userPermission(username);
+                            	menu.printPermissionMenu();
+                            	
+                            	System.out.print("Option: ");
+                            	option = scannerObj.nextInt();                            	
+                            	
+                            	System.in.read();
                                 break;
                             case 13:
-
+                            	System.out.print("Please enter username: ");
+                            	username = scannerObj.next();
+                            	if(loginObject.checkUserExist(username)) {
+                            		System.out.print("Enter new password: ");
+                            		newPw = scannerObj.next();
+                                	System.out.print("Confirm new password: ");
+                                	confirmNewPw = scannerObj.next();
+                                	loginObject.changeUserPw(username, newPw, confirmNewPw);
+                            	}
+                            	System.in.read();
                                 break;
                             case 14:
 
@@ -119,7 +149,7 @@ public class Main {
                         System.out.println("Invalid option!");
                     }
 
-                } catch (InputMismatchException e) {
+                } catch (InputMismatchException | IOException e) {
                     //clear scanner for next option input
                     scannerObj.nextLine();
                     System.out.println("Invalid option!");
