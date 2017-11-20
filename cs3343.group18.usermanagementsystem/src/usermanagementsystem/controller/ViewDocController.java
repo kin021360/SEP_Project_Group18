@@ -9,7 +9,7 @@ import usermanagementsystem.datastructure_interface.IUserInfo;
 /**
  * Created by Nathan Lam on 18/11/2017.
  */
-public class ViewDocController {
+class ViewDocController {
     private static ViewDocController instance = new ViewDocController();
     private static EnumPermission requiredPermission = EnumPermission.ViewDocument;
     private JsonDao jsonDao;
@@ -20,7 +20,7 @@ public class ViewDocController {
         document = jsonDao.readJsonFile("document.json");
     }
 
-    public static ViewDocController getInstance() {
+    static ViewDocController getInstance() {
         return instance;
     }
 
@@ -32,15 +32,20 @@ public class ViewDocController {
         return null;
     }
 
-    public String viewAllDocument(IUserInfo user) {
+    String getDepartmentDoc(IUserInfo user, String docName) {
         if (user.hasPermission(requiredPermission)) {
             JsonObject docObject = getObjectByDepartment(user.getDepartmentOf());
             if (docObject != null && docObject.keySet().size() > 0) {
-                String temp = "\nThe following documents are belonging to your department.\n";
-                for (String key : docObject.keySet()) {
-                    temp += "Document content --- '" + key + "':\n" + docObject.get(key).getAsString() + "\n\n";
+                if (docName == null || docName.equals("")) {
+                    String temp = "\nThe following documents are belonging to your department.\n";
+                    for (String key : docObject.keySet()) {
+                        temp += "Document content --- '" + key + "':\n" + docObject.get(key).getAsString() + "\n\n";
+                    }
+                    return temp;
+                } else if (docObject.has(docName)) {
+                    return "Document content --- '" + docName + "':\n" + docObject.get(docName).getAsString() + "\n\n";
                 }
-                return temp;
+                return "Document '" + docName + "' not found in your department!";
             } else {
                 return "Your department does not have any document!";
             }

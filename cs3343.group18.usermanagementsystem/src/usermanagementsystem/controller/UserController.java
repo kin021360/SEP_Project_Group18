@@ -8,10 +8,12 @@ import usermanagementsystem.exception.ExControllerInitWithNull;
  */
 public class UserController {
     protected User currentUser;
+    private ViewDocController viewDocController;
 
     public UserController(User user) throws ExControllerInitWithNull {
         if (user == null) throw new ExControllerInitWithNull();
         currentUser = user;
+        viewDocController = ViewDocController.getInstance();
     }
 
     public String getMyDetails() {
@@ -28,5 +30,9 @@ public class UserController {
             return true;
         }
         return false;
+    }
+
+    public String getDepartmentDoc(String optionalDocName) {
+        return viewDocController.getDepartmentDoc(currentUser, optionalDocName);
     }
 }

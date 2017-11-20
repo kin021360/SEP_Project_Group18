@@ -1,11 +1,8 @@
 package usermanagementsystem.test;
 
-import org.junit.Test;
-
 import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.*;
 import usermanagementsystem.controller.*;
-import usermanagementsystem.exception.ExControllerInitWithNull;
 
 import java.util.Hashtable;
 
@@ -25,7 +22,6 @@ public class TestController {
 
         System.out.println(adminController.getAllResult());
 
-        ViewDocController v = ViewDocController.getInstance();
-        System.out.println(v.viewAllDocument(users.get("abc")));
+        System.out.println(adminController.getDepartmentDoc("qqq"));
     }
 }
