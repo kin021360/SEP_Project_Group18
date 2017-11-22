@@ -35,4 +35,8 @@ public class UserController {
     public String getDepartmentDoc(String optionalDocName) {
         return viewDocController.getDepartmentDoc(currentUser, optionalDocName);
     }
+
+    public void destroy() {
+        currentUser = null;
+    }
 }
