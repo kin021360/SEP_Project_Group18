@@ -92,7 +92,7 @@ public class TestEnumDepartmen {
         for (EnumDepartment expected : EnumDepartment.values()) {
             result += String.format("%18s  ---  %2d\n", expected.toString(), expected.getId());
         }
-		System.out.println(result);
+
 		assertEquals(EnumDepartment.listAll(), result);
 	}
 	
