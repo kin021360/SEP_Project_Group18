@@ -116,4 +116,11 @@ public class AdminController extends UserController {
         }
         return "User not found!";
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        users = null;
+        supervisors = null;
+    }
 }

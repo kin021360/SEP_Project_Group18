@@ -7,7 +7,7 @@ import java.io.*;
 //https://stackoverflow.com/questions/2885173/how-do-i-create-a-file-and-write-to-it-in-java
 
 //This class handle read-write json file. Not fully finish yet
-public abstract class JsonDao {
+public class JsonDao {
     protected Gson gson;
     protected JsonParser jsonParser;
 
@@ -16,7 +16,7 @@ public abstract class JsonDao {
         jsonParser = new JsonParser();
     }
 
-    protected JsonObject readJsonFile(String filePath) {
+    public JsonObject readJsonFile(String filePath) {
         try {
             return jsonParser.parse(new BufferedReader(new FileReader(filePath))).getAsJsonObject();
         } catch (Exception e) {
@@ -39,7 +39,7 @@ public abstract class JsonDao {
 //        writeFile(filePath, jsonString);
 //    }
 
-    protected void writeJsonFile(String filePath, JsonObject jsonObject) {
+    public void writeJsonFile(String filePath, JsonObject jsonObject) {
         String tempStr = gson.toJson(jsonObject);
         writeFile(filePath, tempStr);
     }
