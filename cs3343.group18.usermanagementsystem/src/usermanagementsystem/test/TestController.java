@@ -1,11 +1,8 @@
 package usermanagementsystem.test;
 
-import org.junit.Test;
-
 import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.*;
 import usermanagementsystem.controller.*;
-import usermanagementsystem.exception.ExControllerInitWithNull;
 
 import java.util.Hashtable;
 
@@ -24,6 +21,7 @@ public class TestController {
         adminController.createUserAndAdd("qqq", "111", "Male", EnumPosition.Programmer.toString(), "qqqq@q.com", EnumDepartment.Technology.toString(), "false");
 
         System.out.println(adminController.getAllResult());
-    }
 
+        System.out.println(adminController.getDepartmentDoc("qqq"));
+    }
 }

@@ -15,4 +15,10 @@ public class SupervisorController extends UserController {
     public boolean isMySubordinate(IUserInfo userInfo) {
         return currentSupervisor.isMySubordinate(userInfo);
     }
+
+    @Override
+    public void destroy() {
+        super.destroy();
+        currentSupervisor = null;
+    }
 }
