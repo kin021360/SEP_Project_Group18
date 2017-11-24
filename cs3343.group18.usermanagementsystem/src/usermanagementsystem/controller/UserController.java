@@ -24,13 +24,14 @@ public class UserController {
         return currentUser.hasPermission(permission);
     }
 
-    public boolean changeMyPassword(String oldPassword, String newPassword) {
-        if (currentUser.checkPassword(oldPassword)) {
-            currentUser.changePassword(newPassword);
-            return true;
-        }
-        return false;
-    }
+    //comment for modify this function below
+//    public boolean changeMyPassword(String oldPassword, String newPassword) {
+//        if (currentUser.checkPassword(oldPassword)) {
+//            currentUser.changePassword(newPassword);
+//            return true;
+//        }
+//        return false;
+//    }
 
     public String getDepartmentDoc(String optionalDocName) {
         return viewDocController.getDepartmentDoc(currentUser, optionalDocName);
@@ -39,4 +40,20 @@ public class UserController {
     public void destroy() {
         currentUser = null;
     }
+    
+    
+    //move user function from UserInfo to UserController
+    public String changeMyPassword(String oldPassword, String newPassword, String confirmNewPassword) {
+		if (currentUser.checkPassword(oldPassword)) {
+			if (newPassword.equals(confirmNewPassword)) {
+				currentUser.changePassword(newPassword);
+				return "Password changed!";
+			} else {
+				return "New password and confirm new password are different!";
+			}
+		} else {
+			return "Old password is invalid!";
+		}
+	}
+    //move user function from UserInfo to UserController
 }

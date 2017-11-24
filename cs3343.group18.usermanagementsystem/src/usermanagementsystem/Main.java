@@ -70,7 +70,7 @@ public class Main {
 						newPw = scannerObj.next();
 						System.out.print("Confirm new password: ");
 						confirmNewPw = scannerObj.next();
-						loginObject.changeMyPw(password, newPw, confirmNewPw);
+//						loginObject.changeMyPw(password, newPw, confirmNewPw); //change current user password
 						System.in.read();
 						break;
 					case 3:
@@ -104,38 +104,38 @@ public class Main {
 					if (isAdmin) {
 						invalidOption = false;
 						switch (option) {
-						case 11:
+						case 11: // 
 							System.out.print("Please enter username: ");
 							username = scannerObj.next();
-							loginObject.getUserInfo(username);
+//							loginObject.getUserInfo(username); //list a user info
 							System.in.read();
 							break;
 						case 12:
 							System.out.print("Please enter username: ");
 							username = scannerObj.next();
-							loginObject.listCurrentUserPermission(username);
+//							loginObject.listCurrentUserPermission(username); //list a user permission, can add or remove permission
 							if (loginObject.checkUserExist(username)) {
 								menu.printPermissionMenu();
 
 								System.out.print("Option: ");
 								option = scannerObj.nextInt();
-								loginObject.editUserPermission(option);
+//								loginObject.editUserPermission(option); //check any invalid option
 								if (option == 1) {
-									try {
-										System.out.print("Enter permission id to add: ");
-										option = scannerObj.nextInt();
-										loginObject.addUserPermission(username, option);
-									} catch (ExInvaildEnumValue e) {
-										System.out.print(e.toString());
-									}
+//									try { //add permission
+//										System.out.print("Enter permission id to add: ");
+//										option = scannerObj.nextInt();
+//										loginObject.addUserPermission(username, option);
+//									} catch (ExInvaildEnumValue e) {
+//										System.out.print(e.toString());
+//									}
 								} else if (option == 2) {
-									try {
-										System.out.print("Enter permission id to remove: ");
-										option = scannerObj.nextInt();
-										loginObject.removeUserPermission(username, option);
-									} catch (ExInvaildEnumValue e) {
-										System.out.print(e.toString());
-									}
+//									try { //remove permission
+//										System.out.print("Enter permission id to remove: ");
+//										option = scannerObj.nextInt();
+//										loginObject.removeUserPermission(username, option);
+//									} catch (ExInvaildEnumValue e) {
+//										System.out.print(e.toString());
+//									}
 								}
 							}
 							System.in.read();
@@ -148,7 +148,7 @@ public class Main {
 								newPw = scannerObj.next();
 								System.out.print("Confirm new password: ");
 								confirmNewPw = scannerObj.next();
-								loginObject.changeUserPw(username, newPw, confirmNewPw);
+//								loginObject.changeUserPw(username, newPw, confirmNewPw); //change a user password
 							}
 							System.in.read();
 							break;

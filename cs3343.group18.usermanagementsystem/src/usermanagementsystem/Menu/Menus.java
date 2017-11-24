@@ -16,7 +16,7 @@ public class Menus {
 	public void printHomeMenu() {
 		System.out.println();
 		System.out.println("User Options");
-		System.out.println("1) ");
+		System.out.println("1) View Document");
 		System.out.println("2) Change My Password");
 		System.out.println("0) Logout");
 		System.out.println();
@@ -28,8 +28,8 @@ public class Menus {
 		System.out.println("11) List User Infomation");
 		System.out.println("12) User Permission");
 		System.out.println("13) Change User Password");
-		System.out.println("14) ");// Create User
-		System.out.println("15) ");// Delete User
+		System.out.println("14) Create User");
+		System.out.println("15) Delete User");
 		System.out.println();
 	}
 

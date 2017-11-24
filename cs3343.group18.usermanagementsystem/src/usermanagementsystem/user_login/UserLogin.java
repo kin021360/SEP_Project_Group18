@@ -95,65 +95,69 @@ public class UserLogin {
 		return false;
 	}
 
-	public void changeMyPw(String password, String newPw, String confirmNewPw) {
-		UserInfo.changePw(loggedInUser, loggedInUser.checkPassword(password), newPw, confirmNewPw);
-		updateAndSave();
-	}
-
-	public void changeUserPw(String username, String newPw, String confirmNewPw) {
-		User tempUser = users.get(username);
-		Supervisor tempSupervisor = supervisors.get(username);
-		if (tempUser != null) {
-			UserInfo.changePw(tempUser, newPw, confirmNewPw);
-		} else if (tempSupervisor != null) {
-			UserInfo.changePw(tempSupervisor, newPw, confirmNewPw);
-		}
-		updateAndSave();
-	}
-
-	public void getUserInfo(String username) {
-		User tempUser = users.get(username);
-		Supervisor tempSupervisor = supervisors.get(username);		
-		if (tempUser != null) {
-			UserInfo.getUserInfo(tempUser);
-		} else if (tempSupervisor != null) {
-			UserInfo.getUserInfo(tempSupervisor);
-		}
-	}
-
-	public void listCurrentUserPermission(String username) {
-		User tempUser = users.get(username);
-		Supervisor tempSupervisor = supervisors.get(username);
-		if (tempUser != null) {
-			UserInfo.listCurrentUserPermission(tempUser);
-		} else if (tempSupervisor != null) {
-			UserInfo.listCurrentUserPermission(tempSupervisor);
-		}
-	}
-
-	public void editUserPermission(int option) {
-		UserInfo.editUserPermission(option);
-	}
-
-	public void addUserPermission(String username, int permissionId) throws ExInvaildEnumValue {
-		User tempUser = users.get(username);
-		Supervisor tempSupervisor = supervisors.get(username);
-		if (tempUser != null) {
-			UserInfo.addUserPermission(tempUser, permissionId);
-		} else if (tempSupervisor != null) {
-			UserInfo.addUserPermission(tempSupervisor, permissionId);
-		}
-		updateAndSave();
-	}
-
-	public void removeUserPermission(String username, int permissionId) throws ExInvaildEnumValue {
-		User tempUser = users.get(username);
-		Supervisor tempSupervisor = supervisors.get(username);
-		if (tempUser != null) {
-			UserInfo.removeUserPermission(tempUser, permissionId);
-		} else if (tempSupervisor != null) {
-			UserInfo.removeUserPermission(tempSupervisor, permissionId);
-		}
-		updateAndSave();
-	}
+	
+	//comment for move all user info function to user controller
+//	public void changeMyPw(String password, String newPw, String confirmNewPw) {
+//		UserInfo.changePw(loggedInUser, loggedInUser.checkPassword(password), newPw, confirmNewPw);
+//		updateAndSave();
+//	}
+//
+//	public void changeUserPw(String username, String newPw, String confirmNewPw) {
+//		User tempUser = users.get(username);
+//		Supervisor tempSupervisor = supervisors.get(username);
+//		if (tempUser != null) {
+//			UserInfo.changePw(tempUser, newPw, confirmNewPw);
+//		} else if (tempSupervisor != null) {
+//			UserInfo.changePw(tempSupervisor, newPw, confirmNewPw);
+//		}
+//		updateAndSave();
+//	}
+//
+//	public void getUserInfo(String username) {
+//		User tempUser = users.get(username);
+//		Supervisor tempSupervisor = supervisors.get(username);		
+//		if (tempUser != null) {
+//			UserInfo.getUserInfo(tempUser);
+//		} else if (tempSupervisor != null) {
+//			UserInfo.getUserInfo(tempSupervisor);
+//		}
+//	}
+//
+//	public void listCurrentUserPermission(String username) {
+//		User tempUser = users.get(username);
+//		Supervisor tempSupervisor = supervisors.get(username);
+//		if (tempUser != null) {
+//			UserInfo.listCurrentUserPermission(tempUser);
+//		} else if (tempSupervisor != null) {
+//			UserInfo.listCurrentUserPermission(tempSupervisor);
+//		}
+//	}
+//
+//	public void editUserPermission(int option) {
+//		UserInfo.editUserPermission(option);
+//	}
+//
+//	public void addUserPermission(String username, int permissionId) throws ExInvaildEnumValue {
+//		User tempUser = users.get(username);
+//		Supervisor tempSupervisor = supervisors.get(username);
+//		if (tempUser != null) {
+//			UserInfo.addUserPermission(tempUser, permissionId);
+//		} else if (tempSupervisor != null) {
+//			UserInfo.addUserPermission(tempSupervisor, permissionId);
+//		}
+//		updateAndSave();
+//	}
+//
+//	public void removeUserPermission(String username, int permissionId) throws ExInvaildEnumValue {
+//		User tempUser = users.get(username);
+//		Supervisor tempSupervisor = supervisors.get(username);
+//		if (tempUser != null) {
+//			UserInfo.removeUserPermission(tempUser, permissionId);
+//		} else if (tempSupervisor != null) {
+//			UserInfo.removeUserPermission(tempSupervisor, permissionId);
+//		}
+//		updateAndSave();
+//	}
+	//comment for move all user info function to user controller
+	
 }

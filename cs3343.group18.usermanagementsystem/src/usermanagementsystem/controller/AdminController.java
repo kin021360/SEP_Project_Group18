@@ -109,13 +109,14 @@ public class AdminController extends UserController {
         return resultList;
     }
 
-    public String getUserDetails(String userName) {
-        User u = getUserOrSupervisor(userName);
-        if (u != null) {
-            return u.toString();
-        }
-        return "User not found!";
-    }
+    //comment for modify this function below
+//    public String getUserDetails(String userName) {
+//        User u = getUserOrSupervisor(userName);
+//        if (u != null) {
+//            return u.toString();
+//        }
+//        return "User not found!";
+//    }
 
     @Override
     public void destroy() {
@@ -123,4 +124,65 @@ public class AdminController extends UserController {
         users = null;
         supervisors = null;
     }
+    
+    
+    //move admin function from UserInfo to AdminController
+    public String changeUserPassword(String userName, String newPassword, String confirmNewPassword) {
+    	User u = getUserOrSupervisor(userName);
+    	if (u != null) {
+	    	if (newPassword.equals(confirmNewPassword)) {
+				u.changePassword(newPassword);
+				return "Password changed!";
+			} else {
+				return "New password and confirm new password are different!";
+			}
+    	}
+    	return "User not found!";
+	}
+    
+    public String getUserDetails(String userName) {
+    	User u = getUserOrSupervisor(userName);
+    	if(u != null) {
+    		String[] userInfoArr = u.toString().split("-");
+    		String[] departmentSupervisor = userInfoArr[5].split(", Supervisor = ");
+    		return String.format("Username: %s\n Password: %s\n Sex: %s\n Email: %s\n Position: %s\n Department: %s\n Supervisor: %s\n", 
+    				userInfoArr[0], userInfoArr[3], userInfoArr[1], userInfoArr[4], userInfoArr[2], departmentSupervisor[0], departmentSupervisor[1]);
+    	}
+    	return "User not found!";
+	}
+    
+    public String listCurrentUserPermission(String userName) {
+    	User u = getUserOrSupervisor(userName);		
+		if (u != null) {
+			String[] userPermissionArr = u.showAllPermissions().split(",");
+			int permissionId = 0;
+			String temp = "Current Permission: \n Name of Permission       Id\n";
+			for (String e : userPermissionArr) {
+				temp += String.format("%18s  ---  %2d\n", e, permissionId);
+				permissionId++;
+			}
+			return temp;
+		}
+		return "User not found!";
+	}
+    
+    public String editUserPermission(int option) {
+		if (option == 1) {
+			return "Available Permission: \n" + EnumPermission.listAll();
+		} else if (option == 0) {
+			return "Back to main menu!";
+		} else {
+			return "Invalid option!";
+		}
+	}
+    
+    public String removeUserPermission(String userName, int permissionId) throws ExInvaildEnumValue {
+    	User u = getUserOrSupervisor(userName);		
+		if (u != null) {		
+			u.removePermission(EnumPermission.parse(permissionId));
+			return "Permission removed!";
+		}
+		return "User not found!";
+	}
+    //move admin function from UserInfo to AdminController
 }
