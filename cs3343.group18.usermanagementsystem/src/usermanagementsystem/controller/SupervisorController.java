@@ -5,20 +5,20 @@ import usermanagementsystem.datastructure_interface.*;
 import usermanagementsystem.exception.ExControllerInitWithNull;
 
 public class SupervisorController extends UserController {
-    private Supervisor currentSupervisor;
+    private static SupervisorController instance = new SupervisorController();
 
-    public SupervisorController(Supervisor supervisor) throws ExControllerInitWithNull {
-        super(supervisor);
-        currentUser = supervisor;
+    private SupervisorController() {
+        super();
+        funcChoicesDescriptions.add("ssssssss");
+    }
+
+    public static SupervisorController getInstance(Supervisor user) throws ExControllerInitWithNull {
+        if (user == null) throw new ExControllerInitWithNull();
+        instance.currentUser = user;
+        return instance;
     }
 
     public boolean isMySubordinate(IUserInfo userInfo) {
-        return currentSupervisor.isMySubordinate(userInfo);
-    }
-
-    @Override
-    public void destroy() {
-        super.destroy();
-        currentSupervisor = null;
+        return ((Supervisor) currentUser).isMySubordinate(userInfo);
     }
 }

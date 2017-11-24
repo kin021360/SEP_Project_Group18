@@ -14,14 +14,17 @@ public class TestController {
         UserDao userDao = new UserDao("data.json");
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
-        UserController userController = new SupervisorController(supervisors.get("efg"));
+        UserController userController = SupervisorController.getInstance(supervisors.get("efg"));
 //        System.out.println(userController.getMyDetails());
 
-        AdminController adminController = new AdminController(users.get("james"), users, supervisors);
+        AdminController adminController = AdminController.getInstance(users.get("james"), users, supervisors);
         adminController.createUserAndAdd("qqq", "111", "Male", EnumPosition.Programmer.toString(), "qqqq@q.com", EnumDepartment.Technology.toString(), "false");
 
         System.out.println(adminController.getAllResult());
 
         System.out.println(adminController.getDepartmentDoc("qqq"));
+
+        System.out.println(userController.getAllFunctionsDesc());
+        System.out.println(adminController.getAllFunctionsDesc());
     }
 }

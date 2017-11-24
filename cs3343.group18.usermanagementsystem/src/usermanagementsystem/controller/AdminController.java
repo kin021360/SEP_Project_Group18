@@ -10,11 +10,20 @@ import java.util.Hashtable;
 public class AdminController extends UserController {
     private Hashtable<String, User> users;
     private Hashtable<String, Supervisor> supervisors;
+    private static AdminController instance = new AdminController();
 
-    public AdminController(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) throws ExControllerInitWithNull {
-        super(admin.isAdmin() ? admin : null);
-        this.users = users;
-        this.supervisors = supervisors;
+    private AdminController() {
+        super();
+        funcChoicesDescriptions.add("aaaaaa");
+    }
+
+    public static AdminController getInstance(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) throws ExControllerInitWithNull {
+        if (admin == null) throw new ExControllerInitWithNull();
+        if (users == null || supervisors == null) throw new ExControllerInitWithNull();
+        instance.currentUser = admin;
+        instance.users = users;
+        instance.supervisors = supervisors;
+        return instance;
     }
 
     private User getUserOrSupervisor(String userName) {
@@ -118,8 +127,8 @@ public class AdminController extends UserController {
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
+    public void clear() {
+        super.clear();
         users = null;
         supervisors = null;
     }
