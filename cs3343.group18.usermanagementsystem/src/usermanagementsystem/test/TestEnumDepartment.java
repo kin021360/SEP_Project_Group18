@@ -7,7 +7,7 @@ import org.junit.Test;
 import usermanagementsystem.datastructure.EnumDepartment;
 import usermanagementsystem.exception.ExInvaildEnumValue;
 
-public class TestEnumDepartmen {
+public class TestEnumDepartment {
 
 	@Test
 	public void testEnumDepartment_Parse_int1() throws ExInvaildEnumValue {
