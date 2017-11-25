@@ -1,24 +1,49 @@
 package usermanagementsystem.controller;
 
 import usermanagementsystem.datastructure.*;
-import usermanagementsystem.datastructure_interface.*;
 import usermanagementsystem.exception.ExControllerInitWithNull;
+import usermanagementsystem.exception.ExInvalidChoice;
 
 public class SupervisorController extends UserController {
-    private Supervisor currentSupervisor;
+    private static SupervisorController instance = new SupervisorController();
+    private int numOfBaseFunc;
 
-    public SupervisorController(Supervisor supervisor) throws ExControllerInitWithNull {
-        super(supervisor);
-        currentUser = supervisor;
+    private SupervisorController() {
+        super();
+        numOfBaseFunc = funcChoicesDescriptions.size();
+        funcChoicesDescriptions.add("Check a user who is my subordinate or not.");
     }
 
-    public boolean isMySubordinate(IUserInfo userInfo) {
-        return currentSupervisor.isMySubordinate(userInfo);
+    public static SupervisorController getInstance(User user) throws ExControllerInitWithNull {
+        if (user == null) throw new ExControllerInitWithNull();
+        instance.currentUser = user;
+        return instance;
+    }
+
+    private String isMySubordinate(String userName) {
+        if (((Supervisor) currentUser).isMySubordinate(userName)) {
+            return userName + " is your subordinate.";
+        }
+        return userName + " is not your subordinate.";
     }
 
     @Override
-    public void destroy() {
-        super.destroy();
-        currentSupervisor = null;
+    public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
+        int ch = Integer.parseInt(choice);
+        switch (ch - numOfBaseFunc) {
+            case 0:
+                return "Please enter the user name:";
+        }
+        return super.validateChoiceGetFuncDetail(choice);
+    }
+
+    @Override
+    public String choiceHandler(String choice, String... values) throws Exception {
+        int ch = Integer.parseInt(choice);
+        switch (ch - numOfBaseFunc) {
+            case 0:
+                return isMySubordinate(values[0]);
+        }
+        return super.choiceHandler(choice, values);
     }
 }

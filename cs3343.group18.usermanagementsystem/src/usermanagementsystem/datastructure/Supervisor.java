@@ -1,31 +1,31 @@
 package usermanagementsystem.datastructure;
 
-import java.util.HashSet;
+import java.util.Hashtable;
 
 import usermanagementsystem.datastructure_interface.*;
 
 public class Supervisor extends User implements ISupervisorInfo {
-    private HashSet<IUserInfo> subordinates;
+    private Hashtable<String, IUserInfo> subordinates;
 
     public Supervisor(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
         super(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
-        subordinates = new HashSet<>();
+        subordinates = new Hashtable<>();
     }
 
     @Override
-    public boolean isMySubordinate(IUserInfo subordinate) {
-        return subordinates.contains(subordinate);
+    public boolean isMySubordinate(String subordinateName) {
+        return subordinates.containsKey(subordinateName);
     }
 
     public void addSubordinate(IUserInfo subordinate) {
         if (subordinates == null) {
-            subordinates = new HashSet<>();
+            subordinates = new Hashtable<>();
         }
-        subordinates.add(subordinate);
+        subordinates.put(subordinate.getUserName(), subordinate);
     }
 
-    public void removeSubordinate(IUserInfo subordinate) {
-        subordinates.remove(subordinate);
+    public void removeSubordinate(String subordinateName) {
+        subordinates.remove(subordinateName);
     }
 
     @Override
