@@ -36,7 +36,7 @@ public class AdminController extends UserController {
         return null;
     }
 
-    public boolean createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
+    public String createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
         if (userName != null && !users.containsKey(userName)) {
             User.UserBuilder builder = new User.UserBuilder();
             builder.userName(userName)
@@ -47,11 +47,12 @@ public class AdminController extends UserController {
                     .departmentOf(EnumDepartment.parse(departmentOf))
                     .isAdmin(Boolean.valueOf(isAdmin));
             users.put(userName, builder.build());
+            return "Create User successfully!";
         }
-        return false;
+        return "User is already existed!";
     }
 
-    public boolean createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
+    public String createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
         if (userName != null && !supervisors.containsKey(userName)) {
             Supervisor.SupervisorBuilder builder = new Supervisor.SupervisorBuilder();
             builder.userName(userName)
@@ -62,11 +63,12 @@ public class AdminController extends UserController {
                     .departmentOf(EnumDepartment.parse(departmentOf))
                     .isAdmin(Boolean.valueOf(isAdmin));
             supervisors.put(userName, builder.build());
+            return "Create Supervisor successfully!";
         }
-        return false;
+        return "Supervisor is already existed!";
     }
 
-    public boolean removeUserOrSupervisor(String userName) {
+    public String removeUserOrSupervisor(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
             if (u.isSupervisor()) {
@@ -74,27 +76,37 @@ public class AdminController extends UserController {
             } else {
                 users.remove(userName);
             }
-            return true;
+            return "Remove User successfully!";
         }
-        return false;
+        return "User not found!";
     }
 
-    public boolean upgradeToSupervisor(String userName) {
+    public String upgradeToSupervisor(String userName) {
         if (userName != null && users.containsKey(userName) && !supervisors.containsKey(userName)) {
             User u = users.get(userName);
             users.remove(userName);
             supervisors.put(userName, u.toSupervisor());
+            return "Upgrade User to Supervisor successfully!";
         }
-        return false;
+        return "User not found!";
     }
 
-    public boolean addPermissionToUser(String userName, String permission) throws ExInvaildEnumValue {
+    public String addUserPermission(String userName, String permission) throws ExInvaildEnumValue {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
             u.addPermission(EnumPermission.parse(permission));
-            return true;
+            return "Permission added!";
         }
-        return false;
+        return "User not found!";
+    }
+
+    public String removeUserPermission(String userName, String permission) throws ExInvaildEnumValue {
+        User u = getUserOrSupervisor(userName);
+        if (u != null) {
+            u.removePermission(EnumPermission.parse(permission));
+            return "Permission removed!";
+        }
+        return "User not found!";
     }
 
     public String getUserListResult() {
@@ -118,10 +130,47 @@ public class AdminController extends UserController {
         return resultList;
     }
 
+    //comment for modify this function below -- modify later---
+//    public String getUserDetails(String userName) {
+//        User u = getUserOrSupervisor(userName);
+//        if (u != null) {
+//            return u.toString();
+//        }
+//        return "User not found!";
+//    }
+
     public String getUserDetails(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
-            return u.toString();
+            String[] userInfoArr = u.toString().split("-");
+            String[] departmentSupervisor = userInfoArr[5].split(", Supervisor = ");
+            return String.format("Username: %s\n Password: %s\n Sex: %s\n Email: %s\n Position: %s\n Department: %s\n Supervisor: %s\n",
+                    userInfoArr[0], userInfoArr[3], userInfoArr[1], userInfoArr[4], userInfoArr[2], departmentSupervisor[0], departmentSupervisor[1]);
+        }
+        return "User not found!";
+    }
+
+    public String listAUserPermission(String userName) {
+        User u = getUserOrSupervisor(userName);
+        if (u != null) {
+            String[] userPermissionArr = u.showAllPermissions().split(",");
+            int permissionId = 0;
+            String temp = "Current Permission: \n Name of Permission       Id\n";
+            for (String e : userPermissionArr) {
+                temp += String.format("%18s  ---  %2d\n", e, permissionId);
+                permissionId++;
+            }
+            return temp;
+        }
+        return "User not found!";
+    }
+    //modify later---
+
+    public String resetUserPassword(String userName) {
+        User u = getUserOrSupervisor(userName);
+        if (u != null) {
+            u.changePassword("123456");
+            return u.getUserName() + "'s password have reset to 123456. Please notify the user to change their password.";
         }
         return "User not found!";
     }
