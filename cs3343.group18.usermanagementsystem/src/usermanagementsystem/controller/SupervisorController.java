@@ -1,7 +1,6 @@
 package usermanagementsystem.controller;
 
 import usermanagementsystem.datastructure.*;
-import usermanagementsystem.datastructure_interface.*;
 import usermanagementsystem.exception.ExControllerInitWithNull;
 import usermanagementsystem.exception.ExInvalidChoice;
 
@@ -15,13 +14,13 @@ public class SupervisorController extends UserController {
         funcChoicesDescriptions.add("Check a user who is my subordinate or not.");
     }
 
-    public static SupervisorController getInstance(Supervisor user) throws ExControllerInitWithNull {
+    public static SupervisorController getInstance(User user) throws ExControllerInitWithNull {
         if (user == null) throw new ExControllerInitWithNull();
         instance.currentUser = user;
         return instance;
     }
 
-    public String isMySubordinate(String userName) {
+    private String isMySubordinate(String userName) {
         if (((Supervisor) currentUser).isMySubordinate(userName)) {
             return userName + " is your subordinate.";
         }

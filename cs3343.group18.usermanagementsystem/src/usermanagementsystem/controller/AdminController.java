@@ -21,12 +21,17 @@ public class AdminController extends UserController {
         funcChoicesDescriptions.add("Create new supervisor.");
         funcChoicesDescriptions.add("Remove user or supervisor.");
         funcChoicesDescriptions.add("Upgrade existing user to supervisor.");
-        funcChoicesDescriptions.add("Add a new permission to user");
-        funcChoicesDescriptions.add("Remove the permission from user");
-        funcChoicesDescriptions.add("Reset user password");
-        funcChoicesDescriptions.add("Print all normal users details");
-        funcChoicesDescriptions.add("Print all supervisors details");
-        funcChoicesDescriptions.add("Print all people details");
+        funcChoicesDescriptions.add("Add a new permission to user.");
+        funcChoicesDescriptions.add("Remove the permission from user.");
+        funcChoicesDescriptions.add("Reset user password.");
+        funcChoicesDescriptions.add("Print all normal users details.");
+        funcChoicesDescriptions.add("Print all supervisors details.");
+        funcChoicesDescriptions.add("Print all people details.");
+        funcChoicesDescriptions.add("View a user details.");
+        funcChoicesDescriptions.add("View all permissions of a user.");
+        funcChoicesDescriptions.add("List all available Departments.");
+        funcChoicesDescriptions.add("List all available Permissions.");
+        funcChoicesDescriptions.add("List all available Positions.");
     }
 
     public static AdminController getInstance(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) throws ExControllerInitWithNull {
@@ -64,7 +69,7 @@ public class AdminController extends UserController {
         return "User is already existed!";
     }
 
-    public String createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
+    private String createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
         if (userName != null && !supervisors.containsKey(userName)) {
             Supervisor.SupervisorBuilder builder = new Supervisor.SupervisorBuilder();
             builder.userName(userName)
@@ -80,7 +85,7 @@ public class AdminController extends UserController {
         return "Supervisor is already existed!";
     }
 
-    public String removeUserOrSupervisor(String userName) {
+    private String removeUserOrSupervisor(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
             if (u.isSupervisor()) {
@@ -93,7 +98,7 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
-    public String upgradeToSupervisor(String userName) {
+    private String upgradeToSupervisor(String userName) {
         if (userName != null && users.containsKey(userName) && !supervisors.containsKey(userName)) {
             User u = users.get(userName);
             users.remove(userName);
@@ -103,7 +108,7 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
-    public String addUserPermission(String userName, String permission) throws ExInvaildEnumValue {
+    private String addUserPermission(String userName, String permission) throws ExInvaildEnumValue {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
             u.addPermission(EnumPermission.parse(permission));
@@ -112,7 +117,7 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
-    public String removeUserPermission(String userName, String permission) throws ExInvaildEnumValue {
+    private String removeUserPermission(String userName, String permission) throws ExInvaildEnumValue {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
             u.removePermission(EnumPermission.parse(permission));
@@ -121,7 +126,7 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
-    public String getAllUserDetails() {
+    private String getAllUserDetails() {
         String detailList = "All users details:\nUser Name      Gender   Email                   Position        My Department        My Supervisor\n";
         for (User u : users.values()) {
             detailList += u.toString() + "\n";
@@ -129,7 +134,7 @@ public class AdminController extends UserController {
         return detailList;
     }
 
-    public String getAllSupervisorDetails() {
+    private String getAllSupervisorDetails() {
         String detailList = "All supervisors details:\nUser Name      Gender   Email                   Position        My Department        My Supervisor\n";
         for (User u : supervisors.values()) {
             detailList += u.toString() + "\n";
@@ -137,47 +142,27 @@ public class AdminController extends UserController {
         return detailList;
     }
 
-    public String getAllPeopleDetails() {
+    private String getAllPeopleDetails() {
         return getAllUserDetails() + "\n" + getAllSupervisorDetails();
     }
-
-    //modify later---
-//    public String getUserDetails(String userName) {
-//        User u = getUserOrSupervisor(userName);
-//        if (u != null) {
-//            return u.toString();
-//        }
-//        return "User not found!";
-//    }
 
     public String getUserDetails(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
-            String[] userInfoArr = u.toString().split("-");
-            String[] departmentSupervisor = userInfoArr[5].split(", Supervisor = ");
-            return String.format("Username: %s\n Password: %s\n Sex: %s\n Email: %s\n Position: %s\n Department: %s\n Supervisor: %s\n",
-                    userInfoArr[0], userInfoArr[3], userInfoArr[1], userInfoArr[4], userInfoArr[2], departmentSupervisor[0], departmentSupervisor[1]);
+            return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + u.toString();
         }
         return "User not found!";
     }
 
-    public String listAUserPermission(String userName) {
+    public String viewAUserPermission(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
-            String[] userPermissionArr = u.showAllPermissions().split(",");
-            int permissionId = 0;
-            String temp = "Current Permission: \n Name of Permission       Id\n";
-            for (String e : userPermissionArr) {
-                temp += String.format("%18s  ---  %2d\n", e, permissionId);
-                permissionId++;
-            }
-            return temp;
+            return "Current Permission: \nName of Permission       Id\n" + u.showAllPermissions();
         }
         return "User not found!";
     }
-    //modify later---
 
-    public String resetUserPassword(String userName) {
+    private String resetUserPassword(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
             u.changePassword("123456");
@@ -210,6 +195,16 @@ public class AdminController extends UserController {
                 return "";
             case 9:
                 return "";
+            case 10:
+                return "Please enter the user name";
+            case 11:
+                return "Please enter the user name";
+            case 12:
+                return "";
+            case 13:
+                return "";
+            case 14:
+                return "";
         }
         return super.validateChoiceGetFuncDetail(choice);
     }
@@ -238,6 +233,16 @@ public class AdminController extends UserController {
                 return getAllSupervisorDetails();
             case 9:
                 return getAllPeopleDetails();
+            case 10:
+                return getUserDetails(values[0]);
+            case 11:
+                return viewAUserPermission(values[0]);
+            case 12:
+                return EnumDepartment.listAll();
+            case 13:
+                return EnumPermission.listAll();
+            case 14:
+                return EnumPosition.listAll();
         }
         return super.choiceHandler(choice, values);
     }

@@ -27,9 +27,9 @@ public class TestController {
 
         System.out.println(adminController.getAllFunctionsDesc());
         String[] r = new String[]{"abc"};
-        System.out.println(adminController.choiceHandler("10","abc"));
+        System.out.println(adminController.choiceHandler("10", "abc"));
 
-//        Scanner stdin = new Scanner(new BufferedInputStream(System.in));
+//        Scanner stdin = new Scanner(System.in);
 //        while (stdin.hasNext()) {
 //            System.out.println(stdin.next());
 //        }

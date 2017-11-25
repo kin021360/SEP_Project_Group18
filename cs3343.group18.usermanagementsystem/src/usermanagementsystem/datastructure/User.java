@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.StringJoiner;
 
 import usermanagementsystem.datastructure_interface.*;
 import usermanagementsystem.exception.ExIsNullOrEmpty;
@@ -87,11 +86,11 @@ public class User implements IUserInfo, Comparable<User> {
 
     @Override
     public String showAllPermissions() {
-        StringJoiner stringJoiner = new StringJoiner(",");
+        String temp = "";
         for (EnumPermission permission : permissions) {
-            stringJoiner.add(permission.toString());
+            temp += String.format("%18s  ---  %2d\n", permission.name(), permission.getId());
         }
-        return stringJoiner.toString();
+        return temp;
     }
 
     @Override

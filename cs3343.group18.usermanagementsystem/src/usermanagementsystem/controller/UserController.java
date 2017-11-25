@@ -15,7 +15,7 @@ public class UserController implements IController {
     private static UserController instance = new UserController();
     protected ArrayList<String> funcChoicesDescriptions;
 
-    public UserController() {
+    protected UserController() {
         currentUser = null;
         viewDocController = ViewDocController.getInstance();
         funcChoicesDescriptions = new ArrayList<>();
@@ -31,7 +31,7 @@ public class UserController implements IController {
         return instance;
     }
 
-    public String getMyDetails() {
+    private String getMyDetails() {
         return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + currentUser.toString();
     }
 
@@ -42,7 +42,7 @@ public class UserController implements IController {
 //        return "No, you don't have this permission";
 //    }
 
-    public String changeMyPassword(String oldPassword, String newPassword, String confirmNewPassword) {
+    private String changeMyPassword(String oldPassword, String newPassword, String confirmNewPassword) {
         if (currentUser.checkPassword(oldPassword)) {
             if (newPassword.equals(confirmNewPassword)) {
                 currentUser.changePassword(newPassword);
@@ -91,7 +91,7 @@ public class UserController implements IController {
     public String getAllFunctionsDesc() {
         String temp = "";
         for (int i = 0; i < funcChoicesDescriptions.size(); i++) {
-            temp += "\t " + i + " --- " + funcChoicesDescriptions.get(i) + "\n";
+            temp += "\t " + i + ") --- " + funcChoicesDescriptions.get(i) + "\n";
         }
         return temp;
     }
