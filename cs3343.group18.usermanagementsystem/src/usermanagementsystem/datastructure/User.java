@@ -65,6 +65,10 @@ public class User implements IUserInfo, Comparable<User> {
     public boolean addPermission(EnumPermission permission) {
         return permissions.add(permission);
     }
+    
+    public boolean removePermission(EnumPermission permission) {
+        return permissions.remove(permission);
+    }
 
     @Override
     public long getStaffId() {

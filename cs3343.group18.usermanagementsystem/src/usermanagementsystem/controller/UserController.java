@@ -24,12 +24,15 @@ public class UserController {
         return currentUser.hasPermission(permission);
     }
 
-    public boolean changeMyPassword(String oldPassword, String newPassword) {
+    public String changeMyPassword(String oldPassword, String newPassword, String confirmNewPassword) {
         if (currentUser.checkPassword(oldPassword)) {
-            currentUser.changePassword(newPassword);
-            return true;
+            if (newPassword.equals(confirmNewPassword)) {
+                currentUser.changePassword(newPassword);
+                return "Password changed!";
+            }
+            return "New password and confirm new password are different!";
         }
-        return false;
+        return "Old password is incorrect!";
     }
 
     public String getDepartmentDoc(String optionalDocName) {

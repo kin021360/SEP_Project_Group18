@@ -19,12 +19,13 @@ public class UserLogin {
     private UserLogin() {
         this.isLoggedIn = false;
         this.loggedInUser = null;
-        //load users based on data.json
+        // load users based on data.json
         this.userDao = new UserDao();
-        //load User and Supervisor list(Hashtable) without mapping their Supervisor or Subordinate yet
+        // load User and Supervisor list(Hashtable) without mapping their Supervisor or
+        // Subordinate yet
         this.users = userDao.loadUsersWithoutSupervisor();
         this.supervisors = userDao.loadSupervisorsWithoutUser();
-        //Map User's Supervisor and Supervisor's Subordinate
+        // Map User's Supervisor and Supervisor's Subordinate
         this.userDao.mapUserSupervisor(users, supervisors);
     }
 
@@ -42,7 +43,7 @@ public class UserLogin {
     }
 
     public String getLoggedinUsername() {
-        if(isLoggedIn) {
+        if (isLoggedIn) {
             return loggedInUser.getUserName();
         }
         return "";
@@ -52,6 +53,7 @@ public class UserLogin {
         switch (choice) {
             case "y":
                 setLoginStatus(false);
+                updateAndSave();
                 return "Logged out!\n";
             case "n":
                 return "";
@@ -77,5 +79,18 @@ public class UserLogin {
 
     public IUserInfo getLoggedInUserInfo() {
         return loggedInUser;
+    }
+
+    private void updateAndSave() {
+        userDao.updateAndSave(users, supervisors);
+    }
+
+    public boolean checkUserExist(String username) {
+        User tempUser = users.get(username);
+        Supervisor tempSupervisor = supervisors.get(username);
+        if (tempUser != null || tempSupervisor != null) {
+            return true;
+        }
+        return false;
     }
 }
