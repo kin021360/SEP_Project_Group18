@@ -36,7 +36,7 @@ class ViewDocController {
         if (user.hasPermission(requiredPermission)) {
             JsonObject docObject = getObjectByDepartment(user.getDepartmentOf());
             if (docObject != null && docObject.keySet().size() > 0) {
-                if (docName == null || docName.equals("")) {
+                if (docName == null || docName.equals("all")) {
                     String temp = "\nThe following documents are belonging to your department.\n";
                     for (String key : docObject.keySet()) {
                         temp += "Document content --- '" + key + "':\n" + docObject.get(key).getAsString() + "\n\n";

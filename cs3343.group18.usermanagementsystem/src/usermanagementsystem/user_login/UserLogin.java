@@ -1,9 +1,14 @@
 package usermanagementsystem.user_login;
 
+import usermanagementsystem.controller.AdminController;
+import usermanagementsystem.controller.IController;
+import usermanagementsystem.controller.SupervisorController;
+import usermanagementsystem.controller.UserController;
 import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.Supervisor;
 import usermanagementsystem.datastructure.User;
 import usermanagementsystem.datastructure_interface.IUserInfo;
+import usermanagementsystem.exception.ExControllerInitWithNull;
 
 import java.util.Hashtable;
 
@@ -13,6 +18,7 @@ public class UserLogin {
     private boolean isLoggedIn;
     private UserDao userDao;
     private User loggedInUser;
+    private IController controller;
 
     private static UserLogin instance = new UserLogin();
 
@@ -21,8 +27,7 @@ public class UserLogin {
         this.loggedInUser = null;
         // load users based on data.json
         this.userDao = new UserDao();
-        // load User and Supervisor list(Hashtable) without mapping their Supervisor or
-        // Subordinate yet
+        // load User and Supervisor list(Hashtable) without mapping their Supervisor or Subordinate yet
         this.users = userDao.loadUsersWithoutSupervisor();
         this.supervisors = userDao.loadSupervisorsWithoutUser();
         // Map User's Supervisor and Supervisor's Subordinate
@@ -33,12 +38,22 @@ public class UserLogin {
         return instance;
     }
 
+    private User getUserOrSupervisor(String userName) {
+        if (userName == null) return null;
+        if (users.containsKey(userName)) {
+            return users.get(userName);
+        } else if (supervisors.containsKey(userName)) {
+            return supervisors.get(userName);
+        }
+        return null;
+    }
+
     public boolean getLoginStatus() {
         return isLoggedIn;
     }
 
-    public void setLoginStatus(boolean loginStatus) {
-        this.isLoggedIn = loginStatus;
+    private void clearLoginStatus() {
+        this.isLoggedIn = false;
         this.loggedInUser = null;
     }
 
@@ -52,8 +67,10 @@ public class UserLogin {
     public String logoutProcess(String choice) {
         switch (choice) {
             case "y":
-                setLoginStatus(false);
+                clearLoginStatus();
                 updateAndSave();
+                controller.clear();
+                controller = null;
                 return "Logged out!\n";
             case "n":
                 return "";
@@ -62,19 +79,23 @@ public class UserLogin {
         }
     }
 
-    public boolean login(String username, String password) {
-        User tempUser = users.get(username);
-        Supervisor tempSupervisor = supervisors.get(username);
+    public IController login(String username, String password) {
+        User tempUser = getUserOrSupervisor(username);
         if (tempUser != null && tempUser.checkPassword(password)) {
             loggedInUser = tempUser;
             isLoggedIn = true;
-            return true;
-        } else if (tempSupervisor != null && tempSupervisor.checkPassword(password)) {
-            loggedInUser = tempSupervisor;
-            isLoggedIn = true;
-            return true;
+            try {
+                if (tempUser.isAdmin()) {
+                    return AdminController.getInstance(loggedInUser, users, supervisors);
+                } else if (tempUser.isSupervisor()) {
+                    return SupervisorController.getInstance(loggedInUser);
+                }
+                return UserController.getInstance(loggedInUser);
+            } catch (ExControllerInitWithNull e) {
+                return null;
+            }
         }
-        return false;
+        return null;
     }
 
     public IUserInfo getLoggedInUserInfo() {
@@ -86,11 +107,7 @@ public class UserLogin {
     }
 
     public boolean checkUserExist(String username) {
-        User tempUser = users.get(username);
-        Supervisor tempSupervisor = supervisors.get(username);
-        if (tempUser != null || tempSupervisor != null) {
-            return true;
-        }
-        return false;
+        User tempUser = getUserOrSupervisor(username);
+        return tempUser != null;
     }
 }
