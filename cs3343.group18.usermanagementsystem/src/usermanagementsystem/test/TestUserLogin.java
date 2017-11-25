@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 import usermanagementsystem.user_login.*;
+import usermanagementsystem.controller.AdminController;
 
 public class TestUserLogin {
 
@@ -19,7 +20,7 @@ public class TestUserLogin {
 	public void test_UserLogin02() throws Exception {
 		UserLogin user = UserLogin.getInstance();
 		boolean login = user.login("abc", "999");
-		assertEquals(true, login);
+		assertEquals(, login);
 	}
 	
 	@Test
