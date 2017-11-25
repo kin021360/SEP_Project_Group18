@@ -64,19 +64,11 @@ public class UserLogin {
         return "";
     }
 
-    public String logoutProcess(String choice) {
-        switch (choice) {
-            case "y":
-                clearLoginStatus();
-                updateAndSave();
-                controller.clear();
-                controller = null;
-                return "Logged out!\n";
-            case "n":
-                return "";
-            default:
-                return "Please enter \"Y\" or \"N\"!\n";
-        }
+    public void logoutProcess() {
+        clearLoginStatus();
+        updateAndSave();
+        controller.clear();
+        controller = null;
     }
 
     public IController login(String username, String password) {
@@ -98,16 +90,7 @@ public class UserLogin {
         return null;
     }
 
-    public IUserInfo getLoggedInUserInfo() {
-        return loggedInUser;
-    }
-
     private void updateAndSave() {
         userDao.updateAndSave(users, supervisors);
-    }
-
-    public boolean checkUserExist(String username) {
-        User tempUser = getUserOrSupervisor(username);
-        return tempUser != null;
     }
 }
