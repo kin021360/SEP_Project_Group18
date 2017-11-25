@@ -9,7 +9,7 @@ import java.util.ArrayList;
 /**
  * Created by Nathan Lam on 11/11/2017.
  */
-public class UserController {
+public class UserController implements IController {
     protected User currentUser;
     private ViewDocController viewDocController;
     private static UserController instance = new UserController();
@@ -19,7 +19,10 @@ public class UserController {
         currentUser = null;
         viewDocController = ViewDocController.getInstance();
         funcChoicesDescriptions = new ArrayList<>();
-        funcChoicesDescriptions.add("uuuuuuu");
+        funcChoicesDescriptions.add("Print all supported operations.");
+        funcChoicesDescriptions.add("Print my details.");
+        funcChoicesDescriptions.add("Change my password.");
+        funcChoicesDescriptions.add("View my department document.");
     }
 
     public static UserController getInstance(User user) throws ExControllerInitWithNull {
@@ -29,12 +32,15 @@ public class UserController {
     }
 
     public String getMyDetails() {
-        return currentUser.toString();
+        return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + currentUser.toString();
     }
 
-    public boolean canIDo(EnumPermission permission) {
-        return currentUser.hasPermission(permission);
-    }
+//    public String canIDo(EnumPermission permission) {
+//        if (currentUser.hasPermission(permission)){
+//            return "Yes, you can!";
+//        }
+//        return "No, you don't have this permission";
+//    }
 
     public String changeMyPassword(String oldPassword, String newPassword, String confirmNewPassword) {
         if (currentUser.checkPassword(oldPassword)) {
@@ -51,34 +57,41 @@ public class UserController {
         return viewDocController.getDepartmentDoc(currentUser, optionalDocName);
     }
 
-    public String validateChoiceGetFuncDetail(int choice) throws ExInvalidChoice {
-        if (choice > 0 && choice <= funcChoicesDescriptions.size()) {
-            switch (choice) {
-                case 1:
-                    break;
-                case 2:
-                    break;
-            }
-        }
-        return "";
-    }
-
-    public String choiceHandler(int choice, String[] values) throws Exception {
+    @Override
+    public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
         switch (choice) {
-            case 0:
-                return getAllFunctionsDesc();
-            case 1:
-                break;
-            case 2:
-                break;
+            case "0":
+                return "";
+            case "1":
+                return "";
+            case "2":
+                return "Please enter your 'old-password', 'new-password' and 'confirm-new-password':";
+            case "3":
+                return "Please enter the document name or enter 'all' to show all documents:";
         }
         throw new ExInvalidChoice();
     }
 
+    @Override
+    public String choiceHandler(String choice, String... values) throws Exception {
+        switch (choice) {
+            case "0":
+                return getAllFunctionsDesc();
+            case "1":
+                return getMyDetails();
+            case "2":
+                return changeMyPassword(values[0], values[1], values[2]);
+            case "3":
+                return viewDocController.getDepartmentDoc(currentUser, values.length == 0 ? null : values[0]);
+        }
+        throw new ExInvalidChoice();
+    }
+
+    @Override
     public String getAllFunctionsDesc() {
-        String temp = "\t 0 --- Print All Functions\n";
-        for (int i = 1; i <= funcChoicesDescriptions.size(); i++) {
-            temp += "\t " + i + " --- " + funcChoicesDescriptions.get(i - 1) + "\n";
+        String temp = "";
+        for (int i = 0; i < funcChoicesDescriptions.size(); i++) {
+            temp += "\t " + i + " --- " + funcChoicesDescriptions.get(i) + "\n";
         }
         return temp;
     }

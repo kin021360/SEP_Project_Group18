@@ -65,7 +65,7 @@ public class User implements IUserInfo, Comparable<User> {
     public boolean addPermission(EnumPermission permission) {
         return permissions.add(permission);
     }
-    
+
     public boolean removePermission(EnumPermission permission) {
         return permissions.remove(permission);
     }
@@ -137,14 +137,7 @@ public class User implements IUserInfo, Comparable<User> {
 
     @Override
     public String toString() {
-        String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).add(departmentOf.toString()).toString();
-        temp += ", Supervisor = ";
-        if (supervisor == null) {
-            temp += "null";
-        } else {
-            temp += supervisor.toString();
-        }
-        return temp;
+        return String.format("%-15s%-9s%-24s%-16s%-21s%s", userName, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? null : supervisor.getUserName());
     }
 
     @Override

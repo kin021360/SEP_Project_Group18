@@ -4,7 +4,9 @@ import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.*;
 import usermanagementsystem.controller.*;
 
+import java.io.BufferedInputStream;
 import java.util.Hashtable;
+import java.util.Scanner;
 
 /**
  * Created by Nathan Lam on 12/11/2017.
@@ -14,17 +16,22 @@ public class TestController {
         UserDao userDao = new UserDao("data.json");
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
+        userDao.mapUserSupervisor(users, supervisors);
         UserController userController = SupervisorController.getInstance(supervisors.get("efg"));
 //        System.out.println(userController.getMyDetails());
 
         AdminController adminController = AdminController.getInstance(users.get("james"), users, supervisors);
         adminController.createUserAndAdd("qqq", "111", "Male", EnumPosition.Programmer.toString(), "qqqq@q.com", EnumDepartment.Technology.toString(), "false");
 
-        System.out.println(adminController.getAllResult());
-
         System.out.println(adminController.getDepartmentDoc("qqq"));
 
-        System.out.println(userController.getAllFunctionsDesc());
         System.out.println(adminController.getAllFunctionsDesc());
+        String[] r = new String[]{"abc"};
+        System.out.println(adminController.choiceHandler("10","abc"));
+
+//        Scanner stdin = new Scanner(new BufferedInputStream(System.in));
+//        while (stdin.hasNext()) {
+//            System.out.println(stdin.next());
+//        }
     }
 }
