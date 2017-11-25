@@ -29,7 +29,7 @@ public class User implements IUserInfo, Comparable<User> {
     private boolean isAdmin;
     private ISupervisorInfo supervisor;
 
-    public User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
+    protected User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.gender = gender;
