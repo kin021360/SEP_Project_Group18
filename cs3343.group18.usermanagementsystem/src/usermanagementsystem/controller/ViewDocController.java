@@ -6,9 +6,6 @@ import usermanagementsystem.datastructure.EnumDepartment;
 import usermanagementsystem.datastructure.EnumPermission;
 import usermanagementsystem.datastructure_interface.IUserInfo;
 
-/**
- * Created by Nathan Lam on 18/11/2017.
- */
 class ViewDocController {
     private static ViewDocController instance = new ViewDocController();
     private static EnumPermission requiredPermission = EnumPermission.ViewDocument;

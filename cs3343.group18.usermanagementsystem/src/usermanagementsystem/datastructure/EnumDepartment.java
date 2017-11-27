@@ -5,10 +5,6 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExInvalidDepartment;
 
 /**
- * Created by Nathan Lam on 3/11/2017.
- */
-
-/**
  * The Enum of Department
  */
 public enum EnumDepartment {

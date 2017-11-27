@@ -5,7 +5,7 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExInvalidGender;
 
 /**
- * Created by Nathan on 27/10/2017.
+ * The Enum of Gender
  */
 public enum EnumGender {
     @SerializedName("0")

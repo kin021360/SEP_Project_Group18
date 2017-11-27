@@ -3,10 +3,6 @@ package usermanagementsystem.datastructure_interface;
 import usermanagementsystem.datastructure.*;
 
 /**
- * Created by nathanlam on 24/10/2017.
- */
-
-/**
  * The interface for <b>User</b> . Provide general get access for <b>User</b>
  */
 public interface IUserInfo {

@@ -3,10 +3,6 @@ package usermanagementsystem.controller;
 import usermanagementsystem.exception.ExInvalidChoice;
 
 /**
- * Created by Nathan Lam on 24/11/2017.
- */
-
-/**
  * Provide general method access for controller class
  */
 public interface IController {

@@ -8,6 +8,9 @@ import usermanagementsystem.exception.ExIsNullOrEmpty;
 
 import java.util.Hashtable;
 
+/**
+ * The Controller class for administrator.
+ */
 public class AdminController extends UserController {
     private Hashtable<String, User> users;
     private Hashtable<String, Supervisor> supervisors;
@@ -171,6 +174,13 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * Validate the choice and get choice detail
+     *
+     * @param choice string number, 0 based
+     * @return string description for the choice, can be empty string
+     * @throws ExInvalidChoice no existing choice in controller
+     */
     @Override
     public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
         int ch = Integer.parseInt(choice);
@@ -209,6 +219,14 @@ public class AdminController extends UserController {
         return super.validateChoiceGetFuncDetail(choice);
     }
 
+    /**
+     * Involve the action based on the choice
+     *
+     * @param choice string number, 0 based
+     * @param values for the choice, in string array / string array param
+     * @return string message
+     * @throws Exception include the message that the action cannot be executed
+     */
     @Override
     public String choiceHandler(String choice, String... values) throws Exception {
         int ch = Integer.parseInt(choice);
@@ -247,6 +265,9 @@ public class AdminController extends UserController {
         return super.choiceHandler(choice, values);
     }
 
+    /**
+     * Clear current user session in controller
+     */
     @Override
     public void clear() {
         super.clear();

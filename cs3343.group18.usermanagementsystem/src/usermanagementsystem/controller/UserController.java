@@ -30,6 +30,7 @@ public class UserController implements IController {
 
     /**
      * Singleton UserController
+     *
      * @param user User
      * @return instance UserController
      * @throws ExControllerInitWithNull the input param cannot be null
@@ -51,6 +52,14 @@ public class UserController implements IController {
 //        return "No, you don't have this permission";
 //    }
 
+    /**
+     * Change current user's password
+     *
+     * @param oldPassword        old password
+     * @param newPassword        new password
+     * @param confirmNewPassword re-enter password
+     * @return change password result message
+     */
     private String changeMyPassword(String oldPassword, String newPassword, String confirmNewPassword) {
         if (currentUser.checkPassword(oldPassword)) {
             if (newPassword.equals(confirmNewPassword)) {
@@ -62,10 +71,21 @@ public class UserController implements IController {
         return "Old password is incorrect!";
     }
 
+    /**
+     * @param optionalDocName (with value 'all' the get all document
+     * @return document content
+     */
     public String getDepartmentDoc(String optionalDocName) {
         return viewDocController.getDepartmentDoc(currentUser, optionalDocName);
     }
 
+    /**
+     * Validate the choice and get choice detail
+     *
+     * @param choice string number, 0 based
+     * @return string description for the choice, can be empty string
+     * @throws ExInvalidChoice no existing choice in controller
+     */
     @Override
     public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
         switch (choice) {
@@ -81,6 +101,14 @@ public class UserController implements IController {
         throw new ExInvalidChoice();
     }
 
+    /**
+     * Involve the action based on the choice
+     *
+     * @param choice string number, 0 based
+     * @param values for the choice, in string array / string array param
+     * @return string message
+     * @throws Exception include the message that the action cannot be executed
+     */
     @Override
     public String choiceHandler(String choice, String... values) throws Exception {
         switch (choice) {
@@ -96,6 +124,9 @@ public class UserController implements IController {
         throw new ExInvalidChoice();
     }
 
+    /**
+     * @return all supported choices function description
+     */
     @Override
     public String getAllFunctionsDesc() {
         String temp = "";
@@ -105,6 +136,9 @@ public class UserController implements IController {
         return temp;
     }
 
+    /**
+     * Clear current user session in controller
+     */
     public void clear() {
         currentUser = null;
     }

@@ -6,10 +6,6 @@ import com.google.gson.*;
 
 import usermanagementsystem.datastructure.*;
 
-/**
- * Created by Nathan Lam on 18/10/2017.
- */
-
 //http://www.jianshu.com/p/2f7755e3d558
 
 /**

@@ -5,7 +5,7 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExInvalidPermission;
 
 /**
- * Created by nathanlam on 26/10/2017.
+ * The Enum of Permission
  */
 public enum EnumPermission {
     @SerializedName("0")

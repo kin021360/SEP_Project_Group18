@@ -5,7 +5,7 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExInvalidPosition;
 
 /**
- * Created by nathanlam on 24/10/2017.
+ * The Enum of Position
  */
 public enum EnumPosition {
     @SerializedName("0")
