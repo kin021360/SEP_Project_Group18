@@ -7,7 +7,7 @@ import usermanagementsystem.exception.ExInvalidChoice;
 import java.util.ArrayList;
 
 /**
- * Created by Nathan Lam on 11/11/2017.
+ * The base Controller class for normal user.
  */
 public class UserController implements IController {
     protected User currentUser;
@@ -15,6 +15,9 @@ public class UserController implements IController {
     private static UserController instance = new UserController();
     protected ArrayList<String> funcChoicesDescriptions;
 
+    /**
+     * The constructor init the ViewDocController ref and choices description list.
+     */
     protected UserController() {
         currentUser = null;
         viewDocController = ViewDocController.getInstance();
@@ -25,6 +28,12 @@ public class UserController implements IController {
         funcChoicesDescriptions.add("View my department document.");
     }
 
+    /**
+     * Singleton UserController
+     * @param user User
+     * @return instance UserController
+     * @throws ExControllerInitWithNull the input param cannot be null
+     */
     public static UserController getInstance(User user) throws ExControllerInitWithNull {
         if (user == null) throw new ExControllerInitWithNull();
         instance.currentUser = user;
