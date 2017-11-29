@@ -17,7 +17,7 @@ public class SupervisorController extends UserController {
     private SupervisorController() {
         super();
         numOfBaseFunc = funcChoicesDescriptions.size();
-        funcChoicesDescriptions.add("Check a user who is my subordinate or not.");
+        ControllerHelper.initSupervisorChoicesDescriptions(funcChoicesDescriptions);
     }
 
     /**

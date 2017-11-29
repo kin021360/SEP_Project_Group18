@@ -22,10 +22,7 @@ public class UserController implements IController {
         currentUser = null;
         viewDocController = ViewDocController.getInstance();
         funcChoicesDescriptions = new ArrayList<>();
-        funcChoicesDescriptions.add("Print all supported operations.");
-        funcChoicesDescriptions.add("Print my details.");
-        funcChoicesDescriptions.add("Change my password.");
-        funcChoicesDescriptions.add("View my department document.");
+        ControllerHelper.initUserChoicesDescriptions(funcChoicesDescriptions);
     }
 
     /**

@@ -20,21 +20,7 @@ public class AdminController extends UserController {
     private AdminController() {
         super();
         numOfBaseFunc = funcChoicesDescriptions.size();
-        funcChoicesDescriptions.add("Create new user.");
-        funcChoicesDescriptions.add("Create new supervisor.");
-        funcChoicesDescriptions.add("Remove user or supervisor.");
-        funcChoicesDescriptions.add("Upgrade existing user to supervisor.");
-        funcChoicesDescriptions.add("Add a new permission to user.");
-        funcChoicesDescriptions.add("Remove the permission from user.");
-        funcChoicesDescriptions.add("Reset user password.");
-        funcChoicesDescriptions.add("Print all normal users details.");
-        funcChoicesDescriptions.add("Print all supervisors details.");
-        funcChoicesDescriptions.add("Print all people details.");
-        funcChoicesDescriptions.add("View a user details.");
-        funcChoicesDescriptions.add("View all permissions of a user.");
-        funcChoicesDescriptions.add("List all available Departments.");
-        funcChoicesDescriptions.add("List all available Permissions.");
-        funcChoicesDescriptions.add("List all available Positions.");
+        ControllerHelper.initAdminChoicesDescriptions(funcChoicesDescriptions);
     }
 
     public static AdminController getInstance(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) throws ExControllerInitWithNull {
