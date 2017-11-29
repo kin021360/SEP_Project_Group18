@@ -60,8 +60,8 @@ public class UserController implements IController {
     @Override
     public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
         switch (choice) {
-            case "0":
-                return "";
+//            case "0":
+//                return "";
             case "1":
                 return "";
             case "2":
@@ -75,8 +75,8 @@ public class UserController implements IController {
     @Override
     public String choiceHandler(String choice, String... values) throws Exception {
         switch (choice) {
-            case "0":
-                return getAllFunctionsDesc();
+//            case "0":
+//                return getAllFunctionsDesc();
             case "1":
                 return getMyDetails();
             case "2":
@@ -90,7 +90,7 @@ public class UserController implements IController {
     @Override
     public String getAllFunctionsDesc() {
         String temp = "";
-        for (int i = 0; i < funcChoicesDescriptions.size(); i++) {
+        for (int i = 1; i < funcChoicesDescriptions.size(); i++) {
             temp += "\t " + i + ") --- " + funcChoicesDescriptions.get(i) + "\n";
         }
         return temp;
