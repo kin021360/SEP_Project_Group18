@@ -52,7 +52,7 @@ public class TestDataAccess extends TestCase {
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
         userDao.mapUserSupervisor(users, supervisors);
-        boolean result = users.get("abc").getSupervisorInfo().equals(supervisors.get("efg")) && supervisors.get("efg").isMySubordinate(users.get("abc"));
+        boolean result = users.get("abc").getSupervisorInfo().equals(supervisors.get("efg")) && supervisors.get("efg").isMySubordinate(users.get("abc").getUserName());
         assertEquals(true, result);
     }
 
@@ -62,7 +62,7 @@ public class TestDataAccess extends TestCase {
         Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
         Hashtable<String, Supervisor> supervisors = userDao.loadSupervisorsWithoutUser();
         userDao.mapUserSupervisor(users, supervisors);
-        boolean result = users.get("testUser").getSupervisorInfo().equals(supervisors.get("testSupervisor")) && supervisors.get("testSupervisor").isMySubordinate(users.get("testUser"));
+        boolean result = users.get("testUser").getSupervisorInfo().equals(supervisors.get("testSupervisor")) && supervisors.get("testSupervisor").isMySubordinate(users.get("testUser").getUserName());
         assertEquals(true, result);
     }
 

@@ -4,7 +4,6 @@ import com.google.gson.annotations.Expose;
 
 import java.util.Calendar;
 import java.util.HashSet;
-import java.util.StringJoiner;
 
 import usermanagementsystem.datastructure_interface.*;
 import usermanagementsystem.exception.ExIsNullOrEmpty;
@@ -30,7 +29,7 @@ public class User implements IUserInfo, Comparable<User> {
     private boolean isAdmin;
     private ISupervisorInfo supervisor;
 
-    public User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
+    protected User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.gender = gender;
@@ -65,7 +64,7 @@ public class User implements IUserInfo, Comparable<User> {
     public boolean addPermission(EnumPermission permission) {
         return permissions.add(permission);
     }
-    
+
     public boolean removePermission(EnumPermission permission) {
         return permissions.remove(permission);
     }
@@ -87,11 +86,11 @@ public class User implements IUserInfo, Comparable<User> {
 
     @Override
     public String showAllPermissions() {
-        StringJoiner stringJoiner = new StringJoiner(",");
+        String temp = "";
         for (EnumPermission permission : permissions) {
-            stringJoiner.add(permission.toString());
+            temp += String.format("%18s  ---  %2d\n", permission.name(), permission.getId());
         }
-        return stringJoiner.toString();
+        return temp;
     }
 
     @Override
@@ -137,14 +136,7 @@ public class User implements IUserInfo, Comparable<User> {
 
     @Override
     public String toString() {
-        String temp = new StringJoiner("-").add(userName).add(gender.toString()).add(position.toString()).add("" + staffId).add(email).add(departmentOf.toString()).toString();
-        temp += ", Supervisor = ";
-        if (supervisor == null) {
-            temp += "null";
-        } else {
-            temp += supervisor.toString();
-        }
-        return temp;
+        return String.format("%-15s%-9s%-24s%-16s%-21s%s", userName, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? null : supervisor.getUserName());
     }
 
     @Override
