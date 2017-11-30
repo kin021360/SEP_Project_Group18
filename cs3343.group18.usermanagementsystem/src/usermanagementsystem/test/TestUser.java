@@ -67,6 +67,7 @@ public class TestUser {
         assertEquals(true, expected);
 
     }
+
     @Test
     public void testUserRemovePermission() {
         User userTest;
@@ -77,5 +78,18 @@ public class TestUser {
         boolean expected = userTest.hasPermission(EnumPermission.ListUsers);
         assertEquals(false, expected);
 
+    }
+
+    @Test
+    public void testUserShowAllPermission() {
+        User userTest;
+        String expected;
+        User.UserBuilder builder = new User.UserBuilder();
+        userTest = builder.build();
+        userTest.addPermission(EnumPermission.ListUsers);
+        expected = userTest.showAllPermissions();
+        System.out.println(userTest.showAllPermissions());
+        String result = "         ListUsers  ---   1" + "\n";
+        assertEquals(result, expected);
     }
 }
