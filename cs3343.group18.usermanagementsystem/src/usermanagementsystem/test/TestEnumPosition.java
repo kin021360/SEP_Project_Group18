@@ -9,80 +9,45 @@ import static org.junit.Assert.assertEquals;
 public class TestEnumPosition {
     @Test
     public void testEnumPosition_Parse_int1() throws ExInvaildEnumValue {
-        EnumPosition expected = null;
-        try {
-            expected = EnumPosition.parse(0);
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
+        EnumPosition expected = EnumPosition.parse(0);
         assertEquals(EnumPosition.Programmer, expected);
-
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void testEnumPosition_Parse_int2() throws ExInvaildEnumValue {
-        EnumPosition expected = null;
-        try {
-            expected = EnumPosition.parse(-2);
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(null, expected);
-
+        EnumPosition.parse(-2);
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void testEnumPosition_Parse_int3() throws ExInvaildEnumValue {
-        EnumPosition expected = null;
-        try {
-            expected = EnumPosition.parse(9);
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(null, expected);
-
+        EnumPosition.parse(1000);
     }
 
     @Test
     public void testEnumPosition_Parse_string1() throws ExInvaildEnumValue {
-        EnumPosition expected = null;
-        try {
-            expected = EnumPosition.parse("2");
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
+        EnumPosition expected = EnumPosition.parse("Engineer");
         assertEquals(EnumPosition.Engineer, expected);
-
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void testEnumPosition_Parse_string2() throws ExInvaildEnumValue {
-        EnumPosition expected = null;
-        try {
-            expected = EnumPosition.parse("-2");
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(null, expected);
-
+        EnumPosition.parse("XXXX");
     }
 
     @Test
     public void testEnumPosition_Parse_string3() throws ExInvaildEnumValue {
-        EnumPosition expected = null;
-        try {
-            expected = EnumPosition.parse("9");
+        EnumPosition expected = EnumPosition.parse("0");
+        assertEquals(EnumPosition.Programmer, expected);
+    }
 
-        } catch (ExInvaildEnumValue e) {
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumPosition_Parse_string4() throws ExInvaildEnumValue {
+        EnumPosition.parse("-2");
+    }
 
-        }
-        assertEquals(null, expected);
-
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumPosition_Parse_string5() throws ExInvaildEnumValue {
+        EnumPosition.parse("1000");
     }
 
     @Test
