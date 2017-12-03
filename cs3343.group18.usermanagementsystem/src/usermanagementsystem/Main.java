@@ -3,6 +3,7 @@ package usermanagementsystem;
 import usermanagementsystem.controller.IController;
 import usermanagementsystem.user_login.UserLogin;
 
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Main {
@@ -14,7 +15,7 @@ public class Main {
         System.out.println("+-----------------------------------+");
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         // login status and get user information
         UserLogin loginObject = UserLogin.getInstance();
 
@@ -24,10 +25,16 @@ public class Main {
         while (true) {
             // before login
             if (!loginObject.getLoginStatus()) {
-                System.out.println("User Management System Login");
-                System.out.print("Username (Enter -1 to exit): ");
+                System.out.println("Welcome To User Management System!");
+                System.out.println("Please enter your choice:");
+                System.out.println("\t0) --- Login");
+                System.out.println("\t1) --- Exit");
+                String temp = scannerObj.next();
+                if (temp.equals("1")) break;
+                if (!temp.equals("0")) continue;
+
+                System.out.print("Username: ");
                 String username = scannerObj.next();
-                if (username.equals("-1")) break;
                 System.out.print("Password: ");
                 String password = scannerObj.next();
 
@@ -55,12 +62,17 @@ public class Main {
                                 }
                             } catch (ArrayIndexOutOfBoundsException arrayEx) {
                                 System.out.println("Your input is missing some value. Please try again.");
+                            } catch (NumberFormatException numEx) {
+                                System.out.println("Invalid choice!");
                             } catch (Exception ex) {
                                 System.out.println(ex.getMessage());
                             }
-//                        System.out.println(controller.getAllFunctionsDesc());
+                            System.out.println("\nPlease press Enter to continue...");
+                            System.in.read();
+                            System.out.println("\t-1) --- Logout");
+                            System.out.println(controller.getAllFunctionsDesc());
                         } else {
-                            System.out.print("Logout(Y/N)? ");
+                            System.out.print("Logout(Y)? ");
                             if (scannerObj.next().matches("^[y|Y]$")) {
                                 loginObject.logoutProcess();
                                 System.out.println("Logged out!\n");
