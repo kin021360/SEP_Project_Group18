@@ -6,13 +6,12 @@ import com.google.gson.*;
 
 import usermanagementsystem.datastructure.*;
 
-/**
- * Created by Nathan Lam on 18/10/2017.
- */
-
 //http://www.jianshu.com/p/2f7755e3d558
 
-//This class handle parsing json object into User object and Supervisor object. Not fully finish yet
+/**
+ * The class helps to parse the .json file. Inherits <b>JsonDao</b>
+ * into <b>User Hashtable list</b> and <b>Supervisor Hashtable list</b>
+ */
 public class UserDao extends JsonDao {
     private static final String defJsonPath = "./data.json";
     private String currentJsonPath;
@@ -21,10 +20,19 @@ public class UserDao extends JsonDao {
     private JsonArray supervisorJArray;
     private JsonObject userSupervisorMapping;
 
+    /**
+     * Default constructor will init with <b>data.json</b> in the project
+     */
     public UserDao() {
         this(defJsonPath);
     }
 
+    /**
+     * The constructor will init with .json file.
+     * If .json file is invalid or not found, it will throw <b>RuntimeException</b>
+     *
+     * @param customPath the .json file location
+     */
     public UserDao(String customPath) {
         super();
         currentJsonPath = customPath;
@@ -35,6 +43,11 @@ public class UserDao extends JsonDao {
         userSupervisorMapping = jObject.getAsJsonObject("userSupervisorMapping");
     }
 
+    /**
+     * Parse json data into <b>User</b> object and create Hashtable
+     *
+     * @return <b>User Hashtable list</b>
+     */
     public Hashtable<String, User> loadUsersWithoutSupervisor() {
         Hashtable<String, User> userList = new Hashtable<>();
         for (JsonElement je : userJArray) {
@@ -44,6 +57,11 @@ public class UserDao extends JsonDao {
         return userList;
     }
 
+    /**
+     * Parse json data into <b>Supervisor</b> object and create Hashtable
+     *
+     * @return <b>Supervisor Hashtable list</b>
+     */
     public Hashtable<String, Supervisor> loadSupervisorsWithoutUser() {
         Hashtable<String, Supervisor> supervisorList = new Hashtable<>();
         for (JsonElement je : supervisorJArray) {
@@ -53,6 +71,12 @@ public class UserDao extends JsonDao {
         return supervisorList;
     }
 
+    /**
+     * Map User and Supervisor with Subordinate relationship from json data
+     *
+     * @param users       User Hashtable list
+     * @param supervisors Supervisor Hashtable list
+     */
     public void mapUserSupervisor(Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) {
         for (String key : userSupervisorMapping.keySet()) {
             User u = users.get(key);
@@ -62,6 +86,12 @@ public class UserDao extends JsonDao {
         }
     }
 
+    /**
+     * Based on this two Hashtable and write data back into json file
+     *
+     * @param users       User Hashtable list
+     * @param supervisors Supervisor Hashtable list
+     */
     public void updateAndSave(Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) {
         userJArray = jsonParser.parse(gson.toJson(users.values())).getAsJsonArray();
         supervisorJArray = jsonParser.parse(gson.toJson(supervisors.values())).getAsJsonArray();
