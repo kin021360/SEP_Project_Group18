@@ -1,19 +1,22 @@
 package usermanagementsystem;
 
-import usermanagementsystem.Menu.Menus;
 import usermanagementsystem.controller.IController;
 import usermanagementsystem.user_login.UserLogin;
 
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] args) {
+    static void printHeader(String userName) {
+        System.out.println("+-----------------------------------+");
+        System.out.println("|                                   |");
+        System.out.println("|           Welcome ! " + String.format("%-14s|", userName));
+        System.out.println("|                                   |");
+        System.out.println("+-----------------------------------+");
+    }
 
+    public static void main(String[] args) {
         // login status and get user information
         UserLogin loginObject = UserLogin.getInstance();
-
-        // interface (menu and options)
-        Menus menu = new Menus();
 
         Scanner scannerObj = new Scanner(System.in);
 
@@ -30,7 +33,7 @@ public class Main {
 
                 IController controller = loginObject.login(username, password);
                 if (controller != null) {
-                    menu.printHeader(loginObject.getLoggedInUsername());
+                    printHeader(loginObject.getLoggedInUsername());
                     System.out.println("\t-1) --- Logout");
                     System.out.println(controller.getAllFunctionsDesc());
                     while (scannerObj.hasNext()) {

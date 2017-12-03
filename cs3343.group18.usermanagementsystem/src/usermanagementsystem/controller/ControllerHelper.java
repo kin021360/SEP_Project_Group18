@@ -2,7 +2,15 @@ package usermanagementsystem.controller;
 
 import java.util.ArrayList;
 
+/**
+ * The helper class include the centralized methods for Controller classes to use
+ */
 class ControllerHelper {
+    /**
+     * For UserController initialization
+     *
+     * @param descriptionList ArrayList object
+     */
     static void initUserChoicesDescriptions(ArrayList<String> descriptionList) {
         descriptionList.add("Print all supported operations.");
         descriptionList.add("Print my details.");
@@ -10,10 +18,20 @@ class ControllerHelper {
         descriptionList.add("View my department document.");
     }
 
+    /**
+     * For SupervisorController initialization
+     *
+     * @param descriptionList ArrayList object
+     */
     static void initSupervisorChoicesDescriptions(ArrayList<String> descriptionList) {
         descriptionList.add("Check a user who is my subordinate or not.");
     }
 
+    /**
+     * For AdminController initialization
+     *
+     * @param descriptionList ArrayList object
+     */
     static void initAdminChoicesDescriptions(ArrayList<String> descriptionList) {
         descriptionList.add("Create new user.");
         descriptionList.add("Create new supervisor.");

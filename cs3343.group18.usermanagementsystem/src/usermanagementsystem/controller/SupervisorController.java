@@ -21,7 +21,7 @@ public class SupervisorController extends UserController {
     }
 
     /**
-     * Singleton UserController
+     * Singleton SupervisorController
      *
      * @param user User
      * @return instance SupervisorController

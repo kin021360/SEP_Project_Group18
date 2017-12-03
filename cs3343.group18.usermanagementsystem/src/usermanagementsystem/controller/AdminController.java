@@ -17,12 +17,22 @@ public class AdminController extends UserController {
     private int numOfBaseFunc;
     private static AdminController instance = new AdminController();
 
+    /**
+     * The constructor init the ViewDocController ref and choices description list.
+     */
     private AdminController() {
         super();
         numOfBaseFunc = funcChoicesDescriptions.size();
         ControllerHelper.initAdminChoicesDescriptions(funcChoicesDescriptions);
     }
 
+    /**
+     * Singleton AdminController
+     *
+     * @param admin admin User
+     * @return instance AdminController
+     * @throws ExControllerInitWithNull the input param cannot be null
+     */
     public static AdminController getInstance(User admin, Hashtable<String, User> users, Hashtable<String, Supervisor> supervisors) throws ExControllerInitWithNull {
         if (admin == null) throw new ExControllerInitWithNull();
         if (users == null || supervisors == null) throw new ExControllerInitWithNull();
@@ -32,6 +42,12 @@ public class AdminController extends UserController {
         return instance;
     }
 
+    /**
+     * For internal use
+     *
+     * @param userName user name
+     * @return User, return null if not found
+     */
     private User getUserOrSupervisor(String userName) {
         if (userName == null) return null;
         if (users.containsKey(userName)) {
@@ -42,6 +58,20 @@ public class AdminController extends UserController {
         return null;
     }
 
+    /**
+     * Create User accepted in all string params with no init permission
+     *
+     * @param userName     user name
+     * @param password     password
+     * @param gender       gender
+     * @param position     position
+     * @param email        email
+     * @param departmentOf department of
+     * @param isAdmin      isAdmin
+     * @return result message
+     * @throws ExInvaildEnumValue cannot parse string value into enum
+     * @throws ExIsNullOrEmpty    the param value cannot be empty string or null
+     */
     public String createUserAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
         if (userName != null && !users.containsKey(userName)) {
             User.UserBuilder builder = new User.UserBuilder();
@@ -58,6 +88,20 @@ public class AdminController extends UserController {
         return "User is already existed!";
     }
 
+    /**
+     * Create Supervisor accepted in all string params with no init permission
+     *
+     * @param userName     user name
+     * @param password     password
+     * @param gender       gender
+     * @param position     position
+     * @param email        email
+     * @param departmentOf department of
+     * @param isAdmin      isAdmin
+     * @return result message
+     * @throws ExInvaildEnumValue cannot parse string value into enum
+     * @throws ExIsNullOrEmpty    the param value cannot be empty string or null
+     */
     private String createSupervisorAndAdd(String userName, String password, String gender, String position, String email, String departmentOf, String isAdmin) throws ExInvaildEnumValue, ExIsNullOrEmpty {
         if (userName != null && !supervisors.containsKey(userName)) {
             Supervisor.SupervisorBuilder builder = new Supervisor.SupervisorBuilder();
@@ -74,6 +118,12 @@ public class AdminController extends UserController {
         return "Supervisor is already existed!";
     }
 
+    /**
+     * Try to remove User or Supervisor from this system
+     *
+     * @param userName user name
+     * @return result message
+     */
     private String removeUserOrSupervisor(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
@@ -87,6 +137,12 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * Upgrade a User to become Supervisor
+     *
+     * @param userName user name
+     * @return result message
+     */
     private String upgradeToSupervisor(String userName) {
         if (userName != null && users.containsKey(userName) && !supervisors.containsKey(userName)) {
             User u = users.get(userName);
@@ -97,6 +153,14 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * Add new permission into User
+     *
+     * @param userName   user name
+     * @param permission permission string name or id
+     * @return result message
+     * @throws ExInvaildEnumValue cannot parse string value into enum
+     */
     private String addUserPermission(String userName, String permission) throws ExInvaildEnumValue {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
@@ -106,6 +170,14 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * Remove User's permission
+     *
+     * @param userName   user name
+     * @param permission permission string name or id
+     * @return result message
+     * @throws ExInvaildEnumValue cannot parse string value into enum
+     */
     private String removeUserPermission(String userName, String permission) throws ExInvaildEnumValue {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
@@ -115,6 +187,9 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * @return all normal User details list in string
+     */
     private String getAllUserDetails() {
         String detailList = "All users details:\nUser Name      Gender   Email                   Position        My Department        My Supervisor\n";
         for (User u : users.values()) {
@@ -123,6 +198,9 @@ public class AdminController extends UserController {
         return detailList;
     }
 
+    /**
+     * @return all Supervisor details list in string
+     */
     private String getAllSupervisorDetails() {
         String detailList = "All supervisors details:\nUser Name      Gender   Email                   Position        My Department        My Supervisor\n";
         for (User u : supervisors.values()) {
@@ -131,10 +209,17 @@ public class AdminController extends UserController {
         return detailList;
     }
 
+    /**
+     * @return all User details list in string
+     */
     private String getAllPeopleDetails() {
         return getAllUserDetails() + "\n" + getAllSupervisorDetails();
     }
 
+    /**
+     * @param userName user name
+     * @return a User details
+     */
     public String getUserDetails(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
@@ -143,6 +228,10 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * @param userName user name
+     * @return a User's permissions details
+     */
     public String viewAUserPermission(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
@@ -151,6 +240,12 @@ public class AdminController extends UserController {
         return "User not found!";
     }
 
+    /**
+     * Reset a User's password value into '123456'
+     *
+     * @param userName user name
+     * @return result message
+     */
     private String resetUserPassword(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {

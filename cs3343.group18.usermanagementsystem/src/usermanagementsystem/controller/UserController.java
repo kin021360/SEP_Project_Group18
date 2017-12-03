@@ -116,7 +116,7 @@ public class UserController implements IController {
             case "2":
                 return changeMyPassword(values[0], values[1], values[2]);
             case "3":
-                return viewDocController.getDepartmentDoc(currentUser, values.length == 0 ? null : values[0]);
+                return getDepartmentDoc(values.length == 0 ? null : values[0]);
         }
         throw new ExInvalidChoice();
     }
