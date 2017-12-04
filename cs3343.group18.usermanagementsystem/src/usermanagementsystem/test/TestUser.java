@@ -211,5 +211,17 @@ public class TestUser {
         expected = userTest.assignSupervisor(null);
         assertEquals(false, expected);
     }
+
+    @Test
+    public void testUserBuild() throws ExIsNullOrEmpty {
+        User userTest;
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName("username");
+        userTest = builder.build();
+        assertEquals(null,userTest.getDepartmentOf());
+
+    }
+
+
 }
 
