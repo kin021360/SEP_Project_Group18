@@ -184,7 +184,7 @@ public class User implements IUserInfo, Comparable<User> {
      * @return boolean
      */
     public boolean assignSupervisor(ISupervisorInfo supervisor) {
-        if (this.supervisor == null) {
+        if (this.supervisor == null && supervisor != null) {
             this.supervisor = supervisor;
             return true;
         }
