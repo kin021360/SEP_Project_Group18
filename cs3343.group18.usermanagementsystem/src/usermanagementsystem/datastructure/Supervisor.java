@@ -3,6 +3,7 @@ package usermanagementsystem.datastructure;
 import java.util.Hashtable;
 
 import usermanagementsystem.datastructure_interface.*;
+import usermanagementsystem.exception.ExIsNullOrEmpty;
 
 /**
  * The data type Supervisor. It can be parsed by Gson from json
@@ -84,9 +85,11 @@ public class Supervisor extends User implements ISupervisorInfo {
          * The build method to build new Supervisor object
          *
          * @return Supervisor object
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
          */
         @Override
-        public Supervisor build() {
+        public Supervisor build() throws ExIsNullOrEmpty {
+            validation();
             return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         }
     }

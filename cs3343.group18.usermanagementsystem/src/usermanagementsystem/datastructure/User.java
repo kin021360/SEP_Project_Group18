@@ -347,18 +347,28 @@ public class User implements IUserInfo, Comparable<User> {
         }
 
         /**
-         * The build method to build new User object
+         * Validate important data field
          *
-         * @return User object
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
          */
-        public User build() throws ExIsNullOrEmpty {
-            //verify
+        protected void validation() throws ExIsNullOrEmpty {
             strIsNullOrEmpty("userName", userName);
             strIsNullOrEmpty("password", password);
             strIsNullOrEmpty("email", email);
             if (gender == null) throw new ExIsNullOrEmpty("gender");
             if (position == null) throw new ExIsNullOrEmpty("position");
             if (departmentOf == null) throw new ExIsNullOrEmpty("departmentOf");
+        }
+
+        /**
+         * The build method to build new User object
+         *
+         * @return User object
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
+         */
+        public User build() throws ExIsNullOrEmpty {
+            //verify
+            validation();
             return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         }
     }
