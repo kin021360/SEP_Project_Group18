@@ -242,7 +242,7 @@ public class User implements IUserInfo, Comparable<User> {
     public static class UserBuilder {
         String userName;
         String password;
-        long staffId;
+        long staffId = Calendar.getInstance().getTimeInMillis();
         String email;
         EnumGender gender;
         EnumPosition position;
@@ -359,7 +359,7 @@ public class User implements IUserInfo, Comparable<User> {
             if (gender == null) throw new ExIsNullOrEmpty("gender");
             if (position == null) throw new ExIsNullOrEmpty("position");
             if (departmentOf == null) throw new ExIsNullOrEmpty("departmentOf");
-            return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);
+            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         }
     }
 }
