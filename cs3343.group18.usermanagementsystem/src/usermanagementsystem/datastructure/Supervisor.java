@@ -80,6 +80,11 @@ public class Supervisor extends User implements ISupervisorInfo {
      * The object builder helps to create new Supervisor object. Inherits <b>UserBuilder</b>
      */
     public static class SupervisorBuilder extends UserBuilder {
+        /**
+         * The build method to build new Supervisor object
+         *
+         * @return Supervisor object
+         */
         @Override
         public Supervisor build() {
             return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);

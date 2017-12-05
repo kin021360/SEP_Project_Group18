@@ -29,7 +29,9 @@ public class AdminController extends UserController {
     /**
      * Singleton AdminController
      *
-     * @param admin admin User
+     * @param admin       admin User
+     * @param users       all User
+     * @param supervisors all Supervisor
      * @return instance AdminController
      * @throws ExControllerInitWithNull the input param cannot be null
      */

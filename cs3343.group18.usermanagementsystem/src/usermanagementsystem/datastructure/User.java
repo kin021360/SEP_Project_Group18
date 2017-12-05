@@ -247,7 +247,7 @@ public class User implements IUserInfo, Comparable<User> {
         EnumGender gender;
         EnumPosition position;
         EnumDepartment departmentOf;
-        boolean isAdmin;
+        boolean isAdmin = false;
         ISupervisorInfo supervisor = null;
 
         /**
@@ -346,13 +346,10 @@ public class User implements IUserInfo, Comparable<User> {
             return this;
         }
 
-//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
-//            this.supervisor = supervisor;
-//            return this;
-//        }
-
         /**
          * The build method to build new User object
+         *
+         * @return User object
          */
         public User build() {
             return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);
