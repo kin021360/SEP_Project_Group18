@@ -351,7 +351,14 @@ public class User implements IUserInfo, Comparable<User> {
          *
          * @return User object
          */
-        public User build() {
+        public User build() throws ExIsNullOrEmpty {
+            //verify
+            strIsNullOrEmpty("userName", userName);
+            strIsNullOrEmpty("password", password);
+            strIsNullOrEmpty("email", email);
+            if (gender == null) throw new ExIsNullOrEmpty("gender");
+            if (position == null) throw new ExIsNullOrEmpty("position");
+            if (departmentOf == null) throw new ExIsNullOrEmpty("departmentOf");
             return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);
         }
     }
