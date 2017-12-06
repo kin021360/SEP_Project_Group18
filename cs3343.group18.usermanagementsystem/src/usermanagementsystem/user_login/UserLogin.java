@@ -4,10 +4,9 @@ import usermanagementsystem.controller.AdminController;
 import usermanagementsystem.controller.IController;
 import usermanagementsystem.controller.SupervisorController;
 import usermanagementsystem.controller.UserController;
-import usermanagementsystem.dataaccess.*;
+import usermanagementsystem.dataaccess.UserDao;
 import usermanagementsystem.datastructure.Supervisor;
 import usermanagementsystem.datastructure.User;
-import usermanagementsystem.datastructure_interface.IUserInfo;
 import usermanagementsystem.exception.ExControllerInitWithNull;
 
 import java.util.Hashtable;
@@ -25,6 +24,7 @@ public class UserLogin {
     private UserLogin() {
         this.isLoggedIn = false;
         this.loggedInUser = null;
+        this.controller = null;
         // load users based on data.json
         this.userDao = new UserDao();
         // load User and Supervisor list(Hashtable) without mapping their Supervisor or Subordinate yet
@@ -55,28 +55,20 @@ public class UserLogin {
     private void clearLoginStatus() {
         this.isLoggedIn = false;
         this.loggedInUser = null;
+        this.controller.clear();
+        this.controller = null;
     }
 
-    public String getLoggedinUsername() {
+    public String getLoggedInUsername() {
         if (isLoggedIn) {
             return loggedInUser.getUserName();
         }
         return "";
     }
 
-    public String logoutProcess(String choice) {
-        switch (choice) {
-            case "y":
-                clearLoginStatus();
-                updateAndSave();
-                controller.clear();
-                controller = null;
-                return "Logged out!\n";
-            case "n":
-                return "";
-            default:
-                return "Please enter \"Y\" or \"N\"!\n";
-        }
+    public void logoutProcess() {
+        clearLoginStatus();
+        updateAndSave();
     }
 
     public IController login(String username, String password) {
@@ -86,11 +78,13 @@ public class UserLogin {
             isLoggedIn = true;
             try {
                 if (tempUser.isAdmin()) {
-                    return AdminController.getInstance(loggedInUser, users, supervisors);
+                    controller = AdminController.getInstance(loggedInUser, users, supervisors);
                 } else if (tempUser.isSupervisor()) {
-                    return SupervisorController.getInstance(loggedInUser);
+                    controller = SupervisorController.getInstance(loggedInUser);
+                } else {
+                    controller = UserController.getInstance(loggedInUser);
                 }
-                return UserController.getInstance(loggedInUser);
+                return controller;
             } catch (ExControllerInitWithNull e) {
                 return null;
             }
@@ -98,16 +92,7 @@ public class UserLogin {
         return null;
     }
 
-    public IUserInfo getLoggedInUserInfo() {
-        return loggedInUser;
-    }
-
     private void updateAndSave() {
         userDao.updateAndSave(users, supervisors);
-    }
-
-    public boolean checkUserExist(String username) {
-        User tempUser = getUserOrSupervisor(username);
-        return tempUser != null;
     }
 }

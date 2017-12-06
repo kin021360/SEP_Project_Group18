@@ -1,232 +1,93 @@
 package usermanagementsystem;
 
-import usermanagementsystem.Menu.Menus;
 import usermanagementsystem.controller.IController;
 import usermanagementsystem.user_login.UserLogin;
 
 import java.io.IOException;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
+    static void printHeader(String userName) {
+        System.out.println("+-----------------------------------+");
+        System.out.println("|                                   |");
+        System.out.println("|           Welcome ! " + String.format("%-14s|", userName));
+        System.out.println("|                                   |");
+        System.out.println("+-----------------------------------+");
+    }
 
-    public static void main(String[] args) {
-
+    public static void main(String[] args) throws IOException {
         // login status and get user information
         UserLogin loginObject = UserLogin.getInstance();
 
-        // interface (menu and options)
-        Menus menu = new Menus();
-
-        String username = "", password = "", newPw = "", confirmNewPw = "", choice = "", input = "";
-        int option;
-        boolean isAdmin, invalidOption = false;
         Scanner scannerObj = new Scanner(System.in);
 
         // keep program return to login or menu and other function
         while (true) {
-            IController controller = null;
             // before login
             if (!loginObject.getLoginStatus()) {
-                System.out.println("User Management System Login");
-                System.out.print("Username: ");
-                username = scannerObj.next();
-                System.out.print("Password: ");
-                password = scannerObj.next();
+                System.out.println("Welcome To User Management System!");
+                System.out.println("Please enter your choice:");
+                System.out.println("\t0) --- Login");
+                System.out.println("\t1) --- Exit");
+                String temp = scannerObj.next();
+                if (temp.equals("1")) break;
+                if (!temp.equals("0")) continue;
 
-                controller = loginObject.login(username, password);
+                System.out.print("Username: ");
+                String username = scannerObj.next();
+                System.out.print("Password: ");
+                String password = scannerObj.next();
+
+                IController controller = loginObject.login(username, password);
                 if (controller != null) {
-                    menu.printHeader();
+                    printHeader(loginObject.getLoggedInUsername());
+                    System.out.println("\t-1) --- Logout");
                     System.out.println(controller.getAllFunctionsDesc());
                     while (scannerObj.hasNext()) {
                         String ch = scannerObj.next();
-                        try {
-                            String firstMsg = controller.validateChoiceGetFuncDetail(ch);
-                            if (firstMsg.equals("")) {
-                                System.out.println(controller.choiceHandler(ch));
-                            } else {
-                                System.out.println(firstMsg);
-                                while (scannerObj.hasNextLine()) {
-                                    String line = scannerObj.nextLine();
-                                    if (line.equals("")) continue;
-                                    String[] values = line.split(" ");
-                                    System.out.println(controller.choiceHandler(ch, values));
-                                    break;
+                        if (!ch.equals("-1")) {
+                            try {
+                                String firstMsg = controller.validateChoiceGetFuncDetail(ch);
+                                if (firstMsg.equals("")) {
+                                    System.out.println(controller.choiceHandler(ch));
+                                } else {
+                                    System.out.println(firstMsg);
+                                    while (scannerObj.hasNextLine()) {
+                                        String line = scannerObj.nextLine();
+                                        if (line.equals("")) continue;
+                                        String[] values = line.split(" ");
+                                        System.out.println(controller.choiceHandler(ch, values));
+                                        break;
+                                    }
                                 }
+                            } catch (ArrayIndexOutOfBoundsException arrayEx) {
+                                System.out.println("Your input is missing some value. Please try again.");
+                            } catch (NumberFormatException numEx) {
+                                System.out.println("Invalid choice!");
+                            } catch (Exception ex) {
+                                System.out.println(ex.getMessage());
                             }
-                        } catch (ArrayIndexOutOfBoundsException arrayEx) {
-                            System.out.println("Your input is missing some value. Please try again.");
-//                            continue;
-                        } catch (Exception ex) {
-                            System.out.println(ex.getMessage());
-//                            continue;
+                            System.out.println("\nPlease press Enter to continue...");
+                            System.in.read();
+                            System.out.println("\t-1) --- Logout");
+                            System.out.println(controller.getAllFunctionsDesc());
+                        } else {
+                            System.out.print("Logout(Y)? ");
+                            if (scannerObj.next().matches("^[y|Y]$")) {
+                                loginObject.logoutProcess();
+                                System.out.println("Logged out!\n");
+                                break;
+                            } else {
+                                System.out.println("Invalid input! Cancel logout.\n");
+                                System.out.println("\t-1) --- Logout");
+                                System.out.println(controller.getAllFunctionsDesc());
+                            }
                         }
-//                        System.out.println(controller.getAllFunctionsDesc());
                     }
                 } else {
                     System.out.println("Invalid username or password!\n");
                 }
             }
-
-/*
-            // after login
-            if (loginObject.getLoginStatus()) {
-                isAdmin = loginObject.getLoggedInUserInfo().isAdmin();
-
-                menu.printHomeMenu();
-                if (isAdmin) {
-                    menu.printAdminHomeMenu();
-                }
-
-                try {
-                    System.out.print("Option: ");
-                    option = scannerObj.nextInt();
-
-                    // normal user options
-                    switch (option) {
-                        case 1:
-
-                            break;
-                        case 2:
-                            System.out.print("Enter old password: ");
-                            password = scannerObj.next();
-                            System.out.print("Enter new password: ");
-                            newPw = scannerObj.next();
-                            System.out.print("Confirm new password: ");
-                            confirmNewPw = scannerObj.next();
-//						loginObject.changeMyPw(password, newPw, confirmNewPw); //change current user password
-                            System.in.read();
-                            break;
-                        case 3:
-
-                            break;
-                        case 4:
-
-                            break;
-                        case 5:
-
-                            break;
-                        case 0:
-                            // logout
-                            while (!choice.equals("y") && !choice.equals("n")) {
-                                System.out.print("Logout(Y/N)? ");
-                                choice = scannerObj.next();
-
-                                String logoutMsg = loginObject.logoutProcess(choice.toLowerCase());
-                                if (logoutMsg != "") {
-                                    System.out.println(logoutMsg);
-                                }
-                            }
-                            choice = "";
-                            break;
-                        default:
-                            invalidOption = true;
-                            break;
-                    }
-
-                    // admin options
-                    if (isAdmin) {
-                        invalidOption = false;
-                        switch (option) {
-                            case 11: //
-                                System.out.print("Please enter username: ");
-                                username = scannerObj.next();
-//							loginObject.getUserInfo(username); //list a user info
-                                System.in.read();
-                                break;
-                            case 12:
-                                System.out.print("Please enter username: ");
-                                username = scannerObj.next();
-//							loginObject.listCurrentUserPermission(username); //list a user permission, can add or remove permission
-                                if (loginObject.checkUserExist(username)) {
-                                    menu.printPermissionMenu();
-
-                                    System.out.print("Option: ");
-                                    option = scannerObj.nextInt();
-//								loginObject.editUserPermission(option); //check any invalid option
-                                    if (option == 1) {
-//									try { //add permission
-//										System.out.print("Enter permission id to add: ");
-//										option = scannerObj.nextInt();
-//										loginObject.addUserPermission(username, option);
-//									} catch (ExInvaildEnumValue e) {
-//										System.out.print(e.toString());
-//									}
-                                    } else if (option == 2) {
-//									try { //remove permission
-//										System.out.print("Enter permission id to remove: ");
-//										option = scannerObj.nextInt();
-//										loginObject.removeUserPermission(username, option);
-//									} catch (ExInvaildEnumValue e) {
-//										System.out.print(e.toString());
-//									}
-                                    }
-                                }
-                                System.in.read();
-                                break;
-                            case 13:
-                                System.out.print("Please enter username: ");
-                                username = scannerObj.next();
-                                if (loginObject.checkUserExist(username)) {
-                                    System.out.print("Enter new password: ");
-                                    newPw = scannerObj.next();
-                                    System.out.print("Confirm new password: ");
-                                    confirmNewPw = scannerObj.next();
-//								loginObject.changeUserPw(username, newPw, confirmNewPw); //change a user password
-                                }
-                                System.in.read();
-                                break;
-                            case 14:
-
-                                break;
-                            case 15:
-
-                                break;
-                            default:
-                                invalidOption = true;
-                                break;
-                        }
-                    }
-
-                    if (invalidOption) {
-                        invalidOption = false;
-                        System.out.println("Invalid option!");
-                    }
-
-                } catch (InputMismatchException | IOException e) {
-                    // clear scanner for next option input
-                    scannerObj.nextLine();
-                    System.out.println("Invalid option!");
-                }
-            }
-*/
         }
-
-        // // TODO console input interface. No need un-do, re-do command <- very
-        // troublesome
-        // System.out.println("test main");
-        //
-        //
-        // //sample example to load users based on data.json
-        // UserDao userDao = new UserDao();
-        //
-        // //load User list(Hashtable) without mapping their Supervisor yet
-        // Hashtable<String, User> users = userDao.loadUsersWithoutSupervisor();
-        // System.out.println(users.get("abc").toString());
-        //
-        // //load Supervisor list(Hashtable) without mapping their
-        // Subordinate(下屬/normal user) yet
-        // Hashtable<String, Supervisor> supervisors =
-        // userDao.loadSupervisorsWithoutUser();
-        // System.out.println(supervisors.get("efg").toString());
-        //
-        // //Map User and Supervisor
-        // userDao.mapUserSupervisor(users, supervisors);
-        // System.out.println(users.get("abc").toString());
-        //
-        // users.get("abc").changePassword("999");
-        // supervisors.get("efg").changePassword("777");
-        // userDao.updateAndSave(users, supervisors);
-
     }
 }

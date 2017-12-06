@@ -1,6 +1,10 @@
 {
   "Technology": {
-    "qqq": "gsrhshhhhhrrrrgedgahha",
-    "ppp": "fsegaeahaehaehxxx564"
+    "cs3343": "Group 18",
+    "TeamMembers": "Phillip Wong\nNathan Lam\nJames Cheng\nAddis Ng\nChingNam Hang\nLeo Ip",
+    "Java": "Java is a general-purpose computer programming language that is concurrent, class-based, object-oriented, and specifically designed to have as few implementation dependencies as possible."
+  },
+  "HumanResource": {
+    "FYP2017": "Meeting time: 29/11/2017"
   }
 }
