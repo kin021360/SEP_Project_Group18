@@ -1,6 +1,41 @@
 {
   "users": [
     {
+      "userName": "admin",
+      "password": "123",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0",
+        "1"
+      ],
+      "staffId": 2046,
+      "email": "admin@admin.com",
+      "departmentOf": "0",
+      "isAdmin": true,
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 12,
+      "annualLeaveInfos": []
+    },
+    {
+      "userName": "test2",
+      "password": "123",
+      "gender": "1",
+      "position": "2",
+      "permissions": [],
+      "staffId": 1512570145159,
+      "email": "test2@test2.com",
+      "departmentOf": "2",
+      "isAdmin": false,
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 3,
+      "annualLeaveInfos": [
+        "9 1513008000000 1513699200000"
+      ]
+    },
+    {
       "userName": "abc",
       "password": "99",
       "gender": "0",
@@ -11,21 +46,44 @@
       "staffId": 1000,
       "email": "abc@abc.com",
       "departmentOf": "0",
-      "isAdmin": false
+      "isAdmin": false,
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 12,
+      "annualLeaveInfos": []
     },
     {
-      "userName": "james",
-      "password": "104",
+      "userName": "tt",
+      "password": "123",
       "gender": "0",
-      "position": "0",
-      "permissions": [
-        "0",
-        "1"
-      ],
-      "staffId": 104,
-      "email": "james@james.com",
-      "departmentOf": "0",
-      "isAdmin": true
+      "position": "3",
+      "permissions": [],
+      "staffId": 1512556929309,
+      "email": "tt@tt.com",
+      "departmentOf": "3",
+      "isAdmin": false,
+      "loginFailTime": 3,
+      "suspensionTimeStamp": 1512571782,
+      "annualLeave": 5,
+      "annualLeaveInfos": [
+        "4 1512921600000 1513180800000",
+        "3 1512662400000 1512835200000"
+      ]
+    },
+    {
+      "userName": "test",
+      "password": "123",
+      "gender": "0",
+      "position": "2",
+      "permissions": [],
+      "staffId": 1512547495518,
+      "email": "test@test.com",
+      "departmentOf": "2",
+      "isAdmin": false,
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 12,
+      "annualLeaveInfos": []
     }
   ],
   "supervisors": [
@@ -40,7 +98,11 @@
       "staffId": 2000,
       "email": "efg@efg.com",
       "departmentOf": "0",
-      "isAdmin": false
+      "isAdmin": false,
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 12,
+      "annualLeaveInfos": []
     }
   ],
   "userSupervisorMapping": {

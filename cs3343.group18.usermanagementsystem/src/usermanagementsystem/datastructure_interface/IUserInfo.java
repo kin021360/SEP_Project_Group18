@@ -1,5 +1,7 @@
 package usermanagementsystem.datastructure_interface;
 
+import java.util.HashSet;
+
 import usermanagementsystem.datastructure.*;
 
 /**
@@ -71,4 +73,29 @@ public interface IUserInfo {
      * @return boolean isSupervisor
      */
     boolean isSupervisor();
+    
+    /**
+     * @return User's number of login fail
+     */
+    int getLoginFailTime();
+    
+    /**
+     * @return User's suspension time stamp
+     */
+    long getSuspensionTimeStamp();
+    
+    /**
+     * @return User's annual Leave
+     */
+    int getAnnualLeave();
+    
+    /**
+     * @return User's annual leave information
+     */
+    String showAllAnnualLeaveInfos();
+    
+    /**
+     * @return User's suspension time stamp
+     */
+    HashSet<String> getAnnualLeaveInfos();
 }

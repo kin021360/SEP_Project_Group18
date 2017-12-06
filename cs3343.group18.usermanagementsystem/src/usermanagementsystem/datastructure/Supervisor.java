@@ -22,9 +22,12 @@ public class Supervisor extends User implements ISupervisorInfo {
      * @param departmentOf (EnumDepartment)
      * @param supervisor   (ISupervisorInfo)
      * @param isAdmin      (boolean)
+     * @param loginFailTime    		(Integer)
+     * @param suspensionTimeStamp   (long)
+     * @param annualLeave      		(Integer)
      */
-    protected Supervisor(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
-        super(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+    protected Supervisor(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin, int loginFailTime, long suspensionTimeStamp, int annualLeave) {
+        super(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin, loginFailTime, suspensionTimeStamp, annualLeave);
         subordinates = new Hashtable<>();
     }
 
@@ -82,7 +85,7 @@ public class Supervisor extends User implements ISupervisorInfo {
     public static class SupervisorBuilder extends UserBuilder {
         @Override
         public Supervisor build() {
-            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin, loginFailTime, suspensionTimeStamp, annualLeave);
         }
     }
 }
