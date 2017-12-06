@@ -36,6 +36,25 @@
       ]
     },
     {
+      "userName": "tt",
+      "password": "123",
+      "gender": "0",
+      "position": "3",
+      "permissions": [],
+      "staffId": 1512556929309,
+      "email": "tt@tt.com",
+      "departmentOf": "3",
+      "isAdmin": false,
+      "loginFailTime": 3,
+      "suspensionTimeStamp": 1512575202,
+      "annualLeave": 3,
+      "annualLeaveInfos": [
+        "4 1512921600000 1513180800000",
+        "3 1512662400000 1512835200000",
+        "2 1513699200000 1513785600000"
+      ]
+    },
+    {
       "userName": "abc",
       "password": "99",
       "gender": "0",
@@ -53,22 +72,19 @@
       "annualLeaveInfos": []
     },
     {
-      "userName": "tt",
+      "userName": "regina",
       "password": "123",
-      "gender": "0",
-      "position": "3",
+      "gender": "1",
+      "position": "1",
       "permissions": [],
-      "staffId": 1512556929309,
-      "email": "tt@tt.com",
-      "departmentOf": "3",
+      "staffId": 1512575106838,
+      "email": "regina@regina.com",
+      "departmentOf": "1",
       "isAdmin": false,
-      "loginFailTime": 3,
-      "suspensionTimeStamp": 1512571782,
-      "annualLeave": 5,
-      "annualLeaveInfos": [
-        "4 1512921600000 1513180800000",
-        "3 1512662400000 1512835200000"
-      ]
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 12,
+      "annualLeaveInfos": []
     },
     {
       "userName": "test",

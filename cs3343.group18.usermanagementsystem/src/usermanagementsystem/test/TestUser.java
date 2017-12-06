@@ -10,7 +10,6 @@ import static org.junit.Assert.assertEquals;
 
 public class TestUser {
 
-
     @Test
     public void testUserGetUserName() throws ExInvaildEnumValue, ExIsNullOrEmpty {
         User userTest;
@@ -57,7 +56,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserAddPermission() {
+    public void testUserAddPermission() throws ExIsNullOrEmpty {
         User userTest;
         User.UserBuilder builder = new User.UserBuilder();
         userTest = builder.build();
@@ -68,7 +67,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserRemovePermission() {
+    public void testUserRemovePermission() throws ExIsNullOrEmpty {
         User userTest;
         User.UserBuilder builder = new User.UserBuilder();
         userTest = builder.build();
@@ -80,7 +79,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserShowAllPermission() {
+    public void testUserShowAllPermission() throws ExIsNullOrEmpty {
         User userTest;
         String expected;
         User.UserBuilder builder = new User.UserBuilder();
@@ -92,7 +91,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserEamil() throws ExIsNullOrEmpty {
+    public void testUserEmail() throws ExIsNullOrEmpty {
         User userTest;
         String expected;
         User.UserBuilder builder = new User.UserBuilder();
@@ -104,7 +103,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserPosition() {
+    public void testUserPosition() throws ExIsNullOrEmpty {
         User userTest;
         EnumPosition expected;
         User.UserBuilder builder = new User.UserBuilder();
@@ -115,7 +114,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserDepartment() {
+    public void testUserDepartment() throws ExIsNullOrEmpty {
         User userTest;
         EnumDepartment expected;
         User.UserBuilder builder = new User.UserBuilder();
@@ -126,7 +125,7 @@ public class TestUser {
     }
 
     @Test
-    public void testUserIsAdmin() {
+    public void testUserIsAdmin() throws ExIsNullOrEmpty {
         User userTest;
         boolean expected;
         User.UserBuilder builder = new User.UserBuilder();
@@ -171,11 +170,11 @@ public class TestUser {
         Supervisor expected;
         User.UserBuilder builder = new User.UserBuilder();
         builder.userName("supervisor")
-        .departmentOf(EnumDepartment.Technology)
-        .password("abc")
-        .position(EnumPosition.ProductOwner)
-        .email("supervisor@test.com")
-        .isAdmin(true);
+                .departmentOf(EnumDepartment.Technology)
+                .password("abc")
+                .position(EnumPosition.ProductOwner)
+                .email("supervisor@test.com")
+                .isAdmin(true);
         userTest = builder.build();
         expected = userTest.toSupervisor();
         assertEquals(true, expected.isSupervisor());
@@ -196,6 +195,7 @@ public class TestUser {
         expected = userTest.assignSupervisor(userTest.toSupervisor());
         assertEquals(true, expected);
     }
+
     @Test
     public void testUserAssignSupervisor_2() throws ExIsNullOrEmpty {
         User userTest;
