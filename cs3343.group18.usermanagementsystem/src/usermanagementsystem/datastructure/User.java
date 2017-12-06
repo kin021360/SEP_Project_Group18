@@ -184,7 +184,7 @@ public class User implements IUserInfo, Comparable<User> {
      * @return boolean
      */
     public boolean assignSupervisor(ISupervisorInfo supervisor) {
-        if (this.supervisor == null) {
+        if (this.supervisor == null && supervisor != null) {
             this.supervisor = supervisor;
             return true;
         }
@@ -242,12 +242,12 @@ public class User implements IUserInfo, Comparable<User> {
     public static class UserBuilder {
         String userName;
         String password;
-        long staffId;
+        long staffId = Calendar.getInstance().getTimeInMillis();
         String email;
         EnumGender gender;
         EnumPosition position;
         EnumDepartment departmentOf;
-        boolean isAdmin;
+        boolean isAdmin = false;
         ISupervisorInfo supervisor = null;
 
         /**
@@ -346,16 +346,30 @@ public class User implements IUserInfo, Comparable<User> {
             return this;
         }
 
-//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
-//            this.supervisor = supervisor;
-//            return this;
-//        }
+        /**
+         * Validate important data field
+         *
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
+         */
+        protected void validation() throws ExIsNullOrEmpty {
+            strIsNullOrEmpty("userName", userName);
+            strIsNullOrEmpty("password", password);
+            strIsNullOrEmpty("email", email);
+            if (gender == null) throw new ExIsNullOrEmpty("gender");
+            if (position == null) throw new ExIsNullOrEmpty("position");
+            if (departmentOf == null) throw new ExIsNullOrEmpty("departmentOf");
+        }
 
         /**
          * The build method to build new User object
+         *
+         * @return User object
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
          */
-        public User build() {
-            return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);
+        public User build() throws ExIsNullOrEmpty {
+            //verify
+            validation();
+            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         }
     }
 }
