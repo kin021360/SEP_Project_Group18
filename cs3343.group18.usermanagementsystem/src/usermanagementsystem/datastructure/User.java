@@ -54,11 +54,8 @@ public class User implements IUserInfo, Comparable<User> {
      * @param departmentOf (EnumDepartment)
      * @param supervisor   (ISupervisorInfo)
      * @param isAdmin      (boolean)
-     * @param loginFailTime    		(Integer)
-     * @param suspensionTimeStamp   (long)
-     * @param annualLeave      		(Integer)
      */
-    protected User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin, int loginFailTime, long suspensionTimeStamp, int annualLeave) {
+    protected User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
         this.userName = userName;
         this.password = password;
         this.gender = gender;
@@ -68,8 +65,8 @@ public class User implements IUserInfo, Comparable<User> {
         this.departmentOf = departmentOf;
         this.supervisor = supervisor;
         this.isAdmin = isAdmin;
-        this.loginFailTime = loginFailTime;
-        this.suspensionTimeStamp = suspensionTimeStamp;
+        this.loginFailTime = 0;
+        this.suspensionTimeStamp = 0;
         this.annualLeave = 12;
         this.annualLeaveInfos = new HashSet<>();
         this.permissions = new HashSet<>();
@@ -336,7 +333,7 @@ public class User implements IUserInfo, Comparable<User> {
      * @return Supervisor
      */
     public Supervisor toSupervisor() {
-        return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin, loginFailTime, suspensionTimeStamp, annualLeave);
+        return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
     }
 
     @Override
@@ -363,9 +360,6 @@ public class User implements IUserInfo, Comparable<User> {
         EnumGender gender;
         EnumPosition position;
         EnumDepartment departmentOf;
-        int loginFailTime;
-        long suspensionTimeStamp;
-        int annualLeave;
         boolean isAdmin = false;
         ISupervisorInfo supervisor = null;
 
@@ -464,39 +458,6 @@ public class User implements IUserInfo, Comparable<User> {
             this.isAdmin = isAdmin;
             return this;
         }
-
-        /**
-         * The loginFailTime setter of UserBuilder
-         *
-         * @param  
-         * @return UserBuilder
-         */
-        public UserBuilder loginFailTime() {
-            this.loginFailTime = 0;
-            return this;
-        }
-        
-        /**
-         * The suspensionTimeStamp setter of UserBuilder
-         *
-         * @param  
-         * @return UserBuilder
-         */
-        public UserBuilder suspensionTimeStamp() {
-            this.suspensionTimeStamp = 0;
-            return this;
-        }
-        
-        /**
-         * The annualLeave setter of UserBuilder
-         *
-         * @param  
-         * @return UserBuilder
-         */
-        public UserBuilder annualLeave() {
-            this.annualLeave = 12;
-            return this;
-        }
         
 //        public UserBuilder supervisor(ISupervisorInfo supervisor) {
 //            this.supervisor = supervisor;
@@ -526,7 +487,7 @@ public class User implements IUserInfo, Comparable<User> {
         public User build() throws ExIsNullOrEmpty {
             //verify
             validation();
-            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin, loginFailTime, suspensionTimeStamp, annualLeave);
+            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
         }
     }
 }
