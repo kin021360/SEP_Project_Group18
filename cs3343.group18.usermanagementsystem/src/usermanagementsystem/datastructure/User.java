@@ -2,7 +2,9 @@ package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.Expose;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 import usermanagementsystem.datastructure_interface.*;
@@ -30,6 +32,14 @@ public class User implements IUserInfo, Comparable<User> {
     private EnumDepartment departmentOf;
     @Expose
     private boolean isAdmin;
+    @Expose
+    private int loginFailTime;
+    @Expose
+    private long suspensionTimeStamp;
+    @Expose
+    private int annualLeave;
+    @Expose
+    private HashSet<String> annualLeaveInfos;
     private ISupervisorInfo supervisor;
 
     /**
@@ -55,6 +65,10 @@ public class User implements IUserInfo, Comparable<User> {
         this.departmentOf = departmentOf;
         this.supervisor = supervisor;
         this.isAdmin = isAdmin;
+        this.loginFailTime = 0;
+        this.suspensionTimeStamp = 0;
+        this.annualLeave = 12;
+        this.annualLeaveInfos = new HashSet<>();
         this.permissions = new HashSet<>();
     }
 
@@ -177,6 +191,105 @@ public class User implements IUserInfo, Comparable<User> {
         return supervisor;
     }
 
+    /**
+     * @return User's number of login fail
+     */
+    @Override
+    public int getLoginFailTime() {
+		return loginFailTime;    	
+    }
+    
+    /**
+     * @return User's suspension time stamp
+     */
+    @Override
+    public long getSuspensionTimeStamp() {
+		return suspensionTimeStamp;    	
+    }
+    
+    /**
+     * @return User's number of annual leave
+     */
+    @Override
+    public int getAnnualLeave() {
+		return annualLeave;
+    }
+    
+    /**
+     * Increase User's number of login fail
+     *
+     * @param loginFailTime loginFailTime
+     */
+    public void setLoginFailTime(int loginFailTime) {
+        this.loginFailTime = loginFailTime;
+    }
+    
+    /**
+     * Set User's suspension time stamp
+     *
+     * @param suspensionTimeStamp suspensionTimeStamp
+     */
+    public void setSuspensionTimeStamp(long suspensionTimeStamp) {
+        this.suspensionTimeStamp = suspensionTimeStamp;
+    }
+    
+    /**
+     * Set User's number of annual leave
+     *
+     * @param annualLeave annualLeave
+     */
+    public void setAnnualLeave(int annualLeave) {
+        this.annualLeave += annualLeave;
+    }
+    
+    /**
+     * Add more annual leave information into User
+     *
+     * @param annualLeaveInfo AnnualLeaveInfo
+     * @return 
+     * @return boolean
+     */
+    public boolean addAnnualLeaveInfo(AnnualLeaveInfo annualLeaveInfo, String annualLeaveInfoString) {
+    	this.annualLeave -= annualLeaveInfo.getDayOfAnnualLeave();
+    	return annualLeaveInfos.add(annualLeaveInfoString);
+    }
+    
+    /**
+     * @return User's annual leave information
+     */
+    @Override
+    public String showAllAnnualLeaveInfos() {
+        String temp = "";
+        temp += String.format("%s%15s%15s\n", "Day(s)", "Start Date", "End Date");
+        if(annualLeaveInfos.size() > 0) {
+	        for (String annualLeaveInfo : annualLeaveInfos) {
+	        	String[] infoArray = annualLeaveInfo.split(" ");
+	        	Date startDate = new Date(Long.parseLong(infoArray[1]));
+	    		Date endDate = new Date(Long.parseLong(infoArray[2]));
+	    		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+	    		String startDateFormat = sdf.format(startDate);
+	    		String endDateFormat = sdf.format(endDate);
+	            temp += String.format("%s%20s%17s\n", infoArray[0], startDateFormat, endDateFormat);
+	        }
+        }else {
+        	temp = "You have no annual leave!";
+        }
+        return temp;
+    }
+    
+    /**
+     * @return User's annual leave information
+     */
+    @Override
+    public HashSet<String> getAnnualLeaveInfos() {
+		return annualLeaveInfos;    	
+    }
+    
+//    public boolean addPermission(EnumPermission permission) {
+//        return permissions.add(permission);
+//    }
+//    
+    
     /**
      * Assign Supervisor for User if User have no Supervisor
      *
@@ -345,8 +458,13 @@ public class User implements IUserInfo, Comparable<User> {
             this.isAdmin = isAdmin;
             return this;
         }
+        
+//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
+//            this.supervisor = supervisor;
+//            return this;
+//        }
 
-        /**
+		/**
          * Validate important data field
          *
          * @throws ExIsNullOrEmpty important data field cannot be null or empty

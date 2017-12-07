@@ -16,6 +16,8 @@ class ControllerHelper {
         descriptionList.add("Print my details.");
         descriptionList.add("Change my password.");
         descriptionList.add("View my department document.");
+        descriptionList.add("Request annual leave.");
+        descriptionList.add("List requested annual leave.");
     }
 
     /**
