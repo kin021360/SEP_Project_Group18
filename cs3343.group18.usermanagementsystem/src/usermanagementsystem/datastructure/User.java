@@ -246,7 +246,6 @@ public class User implements IUserInfo, Comparable<User> {
      * Add more annual leave information into User
      *
      * @param annualLeaveInfo AnnualLeaveInfo
-     * @return 
      * @return boolean
      */
     public boolean addAnnualLeaveInfo(AnnualLeaveInfo annualLeaveInfo, String annualLeaveInfoString) {
@@ -453,11 +452,6 @@ public class User implements IUserInfo, Comparable<User> {
             this.isAdmin = isAdmin;
             return this;
         }
-        
-//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
-//            this.supervisor = supervisor;
-//            return this;
-//        }
 
 		/**
          * Validate important data field

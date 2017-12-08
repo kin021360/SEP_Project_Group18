@@ -43,7 +43,7 @@ public class UserController implements IController {
     }
 
     private String getMyDetails() {
-        return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + currentUser.toString();
+        return ControllerHelper.userDetailsHeader + "\n" + currentUser.toString();
     }
 
     /**
