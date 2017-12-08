@@ -4,6 +4,9 @@ import usermanagementsystem.dataaccess.*;
 import usermanagementsystem.datastructure.*;
 import usermanagementsystem.controller.*;
 
+
+import org.junit.Test;
+
 import java.io.BufferedInputStream;
 import java.util.Hashtable;
 import java.util.Scanner;
@@ -34,4 +37,5 @@ public class TestController {
 //            System.out.println(stdin.next());
 //        }
     }
+
 }

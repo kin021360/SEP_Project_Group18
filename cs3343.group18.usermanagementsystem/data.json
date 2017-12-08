@@ -26,8 +26,7 @@
       "email": "james@james.com",
       "departmentOf": "0",
       "isAdmin": true
-    }
-  ],
+    }  ],
   "supervisors": [
     {
       "userName": "efg",
