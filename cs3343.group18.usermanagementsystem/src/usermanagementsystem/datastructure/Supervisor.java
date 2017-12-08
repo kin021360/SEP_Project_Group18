@@ -30,6 +30,13 @@ public class Supervisor extends User implements ISupervisorInfo {
     }
 
     /**
+     * Default constructor
+     */
+    protected Supervisor() {
+        subordinates = new Hashtable<>();
+    }
+
+    /**
      * Check the name that who is my subordinate or not
      *
      * @param subordinateName subordinate name

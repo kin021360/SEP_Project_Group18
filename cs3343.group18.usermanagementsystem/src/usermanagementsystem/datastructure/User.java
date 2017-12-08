@@ -73,6 +73,13 @@ public class User implements IUserInfo, Comparable<User> {
     }
 
     /**
+     * Default constructor
+     */
+    protected User() {
+
+    }
+
+    /**
      * @return the user name
      */
     @Override
@@ -196,25 +203,25 @@ public class User implements IUserInfo, Comparable<User> {
      */
     @Override
     public int getLoginFailTime() {
-		return loginFailTime;    	
+        return loginFailTime;
     }
-    
+
     /**
      * @return User's suspension time stamp
      */
     @Override
     public long getSuspensionTimeStamp() {
-		return suspensionTimeStamp;    	
+        return suspensionTimeStamp;
     }
-    
+
     /**
      * @return User's number of annual leave
      */
     @Override
     public int getAnnualLeave() {
-		return annualLeave;
+        return annualLeave;
     }
-    
+
     /**
      * Increase User's number of login fail
      *
@@ -223,7 +230,7 @@ public class User implements IUserInfo, Comparable<User> {
     public void setLoginFailTime(int loginFailTime) {
         this.loginFailTime = loginFailTime;
     }
-    
+
     /**
      * Set User's suspension time stamp
      *
@@ -232,7 +239,7 @@ public class User implements IUserInfo, Comparable<User> {
     public void setSuspensionTimeStamp(long suspensionTimeStamp) {
         this.suspensionTimeStamp = suspensionTimeStamp;
     }
-    
+
     /**
      * Set User's number of annual leave
      *
@@ -241,7 +248,7 @@ public class User implements IUserInfo, Comparable<User> {
     public void setAnnualLeave(int annualLeave) {
         this.annualLeave += annualLeave;
     }
-    
+
     /**
      * Add more annual leave information into User
      *
@@ -249,10 +256,10 @@ public class User implements IUserInfo, Comparable<User> {
      * @return boolean
      */
     public boolean addAnnualLeaveInfo(AnnualLeaveInfo annualLeaveInfo, String annualLeaveInfoString) {
-    	this.annualLeave -= annualLeaveInfo.getDayOfAnnualLeave();
-    	return annualLeaveInfos.add(annualLeaveInfoString);
+        this.annualLeave -= annualLeaveInfo.getDayOfAnnualLeave();
+        return annualLeaveInfos.add(annualLeaveInfoString);
     }
-    
+
     /**
      * @return User's annual leave information
      */
@@ -260,30 +267,30 @@ public class User implements IUserInfo, Comparable<User> {
     public String showAllAnnualLeaveInfos() {
         String temp = "";
         temp += String.format("%s%15s%15s\n", "Day(s)", "Start Date", "End Date");
-        if(annualLeaveInfos.size() > 0) {
-	        for (String annualLeaveInfo : annualLeaveInfos) {
-	        	String[] infoArray = annualLeaveInfo.split(" ");
-	        	Date startDate = new Date(Long.parseLong(infoArray[1]));
-	    		Date endDate = new Date(Long.parseLong(infoArray[2]));
-	    		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    		String startDateFormat = sdf.format(startDate);
-	    		String endDateFormat = sdf.format(endDate);
-	            temp += String.format("%s%20s%17s\n", infoArray[0], startDateFormat, endDateFormat);
-	        }
-        }else {
-        	temp = "You have no annual leave!";
+        if (annualLeaveInfos.size() > 0) {
+            for (String annualLeaveInfo : annualLeaveInfos) {
+                String[] infoArray = annualLeaveInfo.split(" ");
+                Date startDate = new Date(Long.parseLong(infoArray[1]));
+                Date endDate = new Date(Long.parseLong(infoArray[2]));
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String startDateFormat = sdf.format(startDate);
+                String endDateFormat = sdf.format(endDate);
+                temp += String.format("%s%20s%17s\n", infoArray[0], startDateFormat, endDateFormat);
+            }
+        } else {
+            temp = "You have no annual leave!";
         }
         return temp;
     }
-    
+
     /**
      * @return User's annual leave information
      */
     @Override
     public HashSet<String> getAnnualLeaveInfos() {
-		return annualLeaveInfos;    	
+        return annualLeaveInfos;
     }
-    
+
     /**
      * Assign Supervisor for User if User have no Supervisor
      *
@@ -327,7 +334,23 @@ public class User implements IUserInfo, Comparable<User> {
      * @return Supervisor
      */
     public Supervisor toSupervisor() {
-        return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+        User tSupervisor = new Supervisor();
+        //construct manually
+        tSupervisor.userName = userName;
+        tSupervisor.password = password;
+        tSupervisor.gender = gender;
+        tSupervisor.position = position;
+        tSupervisor.staffId = staffId;
+        tSupervisor.email = email;
+        tSupervisor.departmentOf = departmentOf;
+        tSupervisor.supervisor = supervisor;
+        tSupervisor.isAdmin = isAdmin;
+        tSupervisor.loginFailTime = loginFailTime;
+        tSupervisor.suspensionTimeStamp = suspensionTimeStamp;
+        tSupervisor.annualLeave = annualLeave;
+        tSupervisor.annualLeaveInfos = annualLeaveInfos;
+        tSupervisor.permissions = permissions;
+        return (Supervisor) tSupervisor;
     }
 
     @Override
@@ -453,7 +476,7 @@ public class User implements IUserInfo, Comparable<User> {
             return this;
         }
 
-		/**
+        /**
          * Validate important data field
          *
          * @throws ExIsNullOrEmpty important data field cannot be null or empty
