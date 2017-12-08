@@ -140,7 +140,7 @@ public class UserController implements IController {
             case "3":
                 return "Please enter the document name or enter 'all' to show all documents:";
             case "4":
-            	return "Current day(s) of annual leave: " + currentUser.getAnnualLeave() + "\nPlease enter 'day(s) of annual leave', 'start date(dd-mm-yyyy)':";
+            		return "Current day(s) of annual leave: " + currentUser.getAnnualLeave() + "\nPlease enter 'day(s) of annual leave', 'start date(dd-mm-yyyy)':";
             case "5":
                 return "";
         }
@@ -167,9 +167,9 @@ public class UserController implements IController {
             case "3":
                 return getDepartmentDoc(values.length == 0 ? null : values[0]);
             case "4":
-            	return requestAnnualLeave(values[0], values[1]);
+            		return requestAnnualLeave(values[0], values[1]);
             case "5":
-            	return getMyAnnualLeaveInfo();
+            		return getMyAnnualLeaveInfo();
         }
         throw new ExInvalidChoice();
     }
