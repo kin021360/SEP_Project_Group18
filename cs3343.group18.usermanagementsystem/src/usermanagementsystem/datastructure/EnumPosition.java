@@ -5,7 +5,7 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExInvalidPosition;
 
 /**
- * Created by nathanlam on 24/10/2017.
+ * The Enum of Position
  */
 public enum EnumPosition {
     @SerializedName("0")
@@ -21,14 +21,22 @@ public enum EnumPosition {
 
     private int positionId;
 
-    private EnumPosition(int id) {
+    EnumPosition(int id) {
         this.positionId = id;
     }
 
+    /**
+     * @return the id of Position
+     */
     public int getId() {
         return positionId;
     }
 
+    /**
+     * @param eString Position name or id in string
+     * @return EnumPosition
+     * @throws ExInvaildEnumValue invalid Enum value
+     */
     public static EnumPosition parse(String eString) throws ExInvaildEnumValue {
         try {
             int id = Integer.parseInt(eString);
@@ -42,6 +50,11 @@ public enum EnumPosition {
         }
     }
 
+    /**
+     * @param id Position int id
+     * @return EnumPosition
+     * @throws ExInvaildEnumValue invalid Enum value
+     */
     public static EnumPosition parse(int id) throws ExInvaildEnumValue {
         EnumPosition[] e = EnumPosition.values();
         if (id > -1 && id < e.length) {
@@ -50,6 +63,9 @@ public enum EnumPosition {
         throw new ExInvalidPosition("Position id " + id);
     }
 
+    /**
+     * @return list of Position name and id in string
+     */
     public static String listAll() {
         String temp = "Name of Position       Id\n";
         for (EnumPosition e : EnumPosition.values()) {

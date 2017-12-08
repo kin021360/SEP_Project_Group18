@@ -5,7 +5,7 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExInvalidGender;
 
 /**
- * Created by Nathan on 27/10/2017.
+ * The Enum of Gender
  */
 public enum EnumGender {
     @SerializedName("0")
@@ -15,14 +15,22 @@ public enum EnumGender {
 
     private int genderId;
 
-    private EnumGender(int id) {
+    EnumGender(int id) {
         this.genderId = id;
     }
 
+    /**
+     * @return the id of Gender
+     */
     public int getId() {
         return genderId;
     }
 
+    /**
+     * @param eString Gender name or id in string
+     * @return EnumGender
+     * @throws ExInvaildEnumValue invalid Enum value
+     */
     public static EnumGender parse(String eString) throws ExInvaildEnumValue {
         try {
             int id = Integer.parseInt(eString);
@@ -36,6 +44,11 @@ public enum EnumGender {
         }
     }
 
+    /**
+     * @param id Gender int id
+     * @return EnumGender
+     * @throws ExInvaildEnumValue invalid Enum value
+     */
     public static EnumGender parse(int id) throws ExInvaildEnumValue {
         EnumGender[] e = EnumGender.values();
         if (id > -1 && id < e.length) {
@@ -44,6 +57,9 @@ public enum EnumGender {
         throw new ExInvalidGender("Gender id " + id);
     }
 
+    /**
+     * @return list of Gender name and id in string
+     */
     public static String listAll() {
         String temp = "Name of Gender       Id\n";
         for (EnumGender e : EnumGender.values()) {

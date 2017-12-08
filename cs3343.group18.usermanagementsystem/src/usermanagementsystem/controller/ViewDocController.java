@@ -7,23 +7,35 @@ import usermanagementsystem.datastructure.EnumPermission;
 import usermanagementsystem.datastructure_interface.IUserInfo;
 
 /**
- * Created by Nathan Lam on 18/11/2017.
+ * The Controller class handle viewing Department's document.
  */
 class ViewDocController {
     private static ViewDocController instance = new ViewDocController();
+    //Set this controller check the Permission level for ViewDocument
     private static EnumPermission requiredPermission = EnumPermission.ViewDocument;
-    private JsonDao jsonDao;
     private JsonObject document;
 
+    /**
+     * The constructor init JsonDao and get the document content from "document.json".
+     */
     private ViewDocController() {
-        jsonDao = new JsonDao();
+        JsonDao jsonDao = new JsonDao();
         document = jsonDao.readJsonFile("document.json");
     }
 
+    /**
+     * Singleton ViewDocController
+     *
+     * @return instance ViewDocController
+     */
     static ViewDocController getInstance() {
         return instance;
     }
 
+    /**
+     * @param department EnumDepartment
+     * @return JsonObject for that Department
+     */
     private JsonObject getObjectByDepartment(EnumDepartment department) {
         JsonElement temp = document.get(department.toString());
         if (temp != null) {
@@ -32,6 +44,13 @@ class ViewDocController {
         return null;
     }
 
+    /**
+     * Get User's Department document, if docName with value 'all', return all document content from the User's Department
+     *
+     * @param user    IUserInfo
+     * @param docName docName
+     * @return document content
+     */
     String getDepartmentDoc(IUserInfo user, String docName) {
         if (user.hasPermission(requiredPermission)) {
             JsonObject docObject = getObjectByDepartment(user.getDepartmentOf());
