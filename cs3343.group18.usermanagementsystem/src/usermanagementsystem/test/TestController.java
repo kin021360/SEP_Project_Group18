@@ -20,14 +20,14 @@ public class TestController {
         UserController userController = SupervisorController.getInstance(supervisors.get("efg"));
 //        System.out.println(userController.getMyDetails());
 
-        AdminController adminController = AdminController.getInstance(users.get("james"), users, supervisors);
+        AdminController adminController = AdminController.getInstance(users.get("admin"), users, supervisors);
         adminController.createUserAndAdd("qqq", "111", "Male", EnumPosition.Programmer.toString(), "qqqq@q.com", EnumDepartment.Technology.toString(), "false");
 
-        System.out.println(adminController.getDepartmentDoc("qqq"));
+        System.out.println(adminController.getUserDetails("test2"));
 
         System.out.println(adminController.getAllFunctionsDesc());
         String[] r = new String[]{"abc"};
-        System.out.println(adminController.choiceHandler("10", "abc"));
+//        System.out.println(adminController.choiceHandler("10", "abc"));
 
 //        Scanner stdin = new Scanner(System.in);
 //        while (stdin.hasNext()) {

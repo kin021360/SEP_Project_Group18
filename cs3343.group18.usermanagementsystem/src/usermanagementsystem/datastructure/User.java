@@ -377,7 +377,7 @@ public class User implements IUserInfo, Comparable<User> {
 
     @Override
     public String toString() {
-        return String.format("%-15s%-9s%-24s%-16s%-21s%s", userName, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? null : supervisor.getUserName());
+        return String.format("%-15s%-17s%-9s%-24s%-20s%-21s%s", userName, staffId, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? "-" : supervisor.getUserName());
     }
 
     @Override
