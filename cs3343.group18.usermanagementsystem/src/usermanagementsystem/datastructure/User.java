@@ -73,6 +73,28 @@ public class User implements IUserInfo, Comparable<User> {
     }
 
     /**
+     * The constructor create User object instance by UserBuilder
+     *
+     * @param builder UserBuilder
+     */
+    protected User(UserBuilder builder) {
+        this.userName = builder.userName;
+        this.password = builder.password;
+        this.gender = builder.gender;
+        this.position = builder.position;
+        this.staffId = builder.staffId;
+        this.email = builder.email;
+        this.departmentOf = builder.departmentOf;
+        this.supervisor = builder.supervisor;
+        this.isAdmin = builder.isAdmin;
+        this.loginFailTime = 0;
+        this.suspensionTimeStamp = 0;
+        this.annualLeave = 12;
+        this.annualLeaveInfos = new HashSet<>();
+        this.permissions = new HashSet<>();
+    }
+
+    /**
      * Default constructor
      */
     protected User() {
@@ -370,15 +392,15 @@ public class User implements IUserInfo, Comparable<User> {
      * The object builder helps to create new User object.
      */
     public static class UserBuilder {
-        String userName;
-        String password;
-        long staffId = Calendar.getInstance().getTimeInMillis();
-        String email;
-        EnumGender gender;
-        EnumPosition position;
-        EnumDepartment departmentOf;
-        boolean isAdmin = false;
-        ISupervisorInfo supervisor = null;
+        private String userName;
+        private String password;
+        private long staffId = Calendar.getInstance().getTimeInMillis();
+        private String email;
+        private EnumGender gender;
+        private EnumPosition position;
+        private EnumDepartment departmentOf;
+        private boolean isAdmin = false;
+        private ISupervisorInfo supervisor = null;
 
         /**
          * Check the string value is null or empty
@@ -499,7 +521,7 @@ public class User implements IUserInfo, Comparable<User> {
         public User build() throws ExIsNullOrEmpty {
             //verify
             validation();
-            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+            return new User(this);
         }
     }
 }

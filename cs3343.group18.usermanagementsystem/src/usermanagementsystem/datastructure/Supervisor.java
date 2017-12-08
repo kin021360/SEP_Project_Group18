@@ -30,6 +30,16 @@ public class Supervisor extends User implements ISupervisorInfo {
     }
 
     /**
+     * The constructor create Supervisor object instance by SupervisorBuilder
+     *
+     * @param builder SupervisorBuilder
+     */
+    private Supervisor(SupervisorBuilder builder) {
+        super(builder);
+        subordinates = new Hashtable<>();
+    }
+
+    /**
      * Default constructor
      */
     protected Supervisor() {
@@ -97,7 +107,7 @@ public class Supervisor extends User implements ISupervisorInfo {
         @Override
         public Supervisor build() throws ExIsNullOrEmpty {
             validation();
-            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+            return new Supervisor(this);
         }
     }
 }
