@@ -11,4 +11,11 @@ public interface ISupervisorInfo extends IUserInfo {
      * @return boolean
      */
     boolean isMySubordinate(String subordinate);
+
+    /**
+     * Get Subordinates Details List
+     *
+     * @return String result list
+     */
+    String getMySubordinatesDetails();
 }

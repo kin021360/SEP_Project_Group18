@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * The helper class include the centralized methods for Controller classes to use
  */
 class ControllerHelper {
-    static final String userDetailsHeader = "User Name      Staff Id         Gender   Email                   Position            My Department        My Supervisor\n=========      ========         ======   =====                   ========            =============        =============";
+    static final String userDetailsHeader = "User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================";
 
     /**
      * For UserController initialization

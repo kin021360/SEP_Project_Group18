@@ -58,6 +58,20 @@ public class Supervisor extends User implements ISupervisorInfo {
     }
 
     /**
+     * Get Subordinates Details List
+     *
+     * @return String result list
+     */
+    @Override
+    public String getMySubordinatesDetails() {
+        String result = "";
+        for (IUserInfo u : subordinates.values()) {
+            result += u.toString() + "\n";
+        }
+        return result;
+    }
+
+    /**
      * @param subordinate IUserInfo
      */
     public void addSubordinate(IUserInfo subordinate) {
