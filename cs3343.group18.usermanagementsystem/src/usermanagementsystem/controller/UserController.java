@@ -46,13 +46,6 @@ public class UserController implements IController {
         return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + currentUser.toString();
     }
 
-//    public String canIDo(EnumPermission permission) {
-//        if (currentUser.hasPermission(permission)){
-//            return "Yes, you can!";
-//        }
-//        return "No, you don't have this permission";
-//    }
-
     /**
      * Change current user's password
      *
@@ -131,8 +124,6 @@ public class UserController implements IController {
     @Override
     public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
         switch (choice) {
-//            case "0":
-//                return "";
             case "1":
                 return "";
             case "2":
@@ -158,8 +149,6 @@ public class UserController implements IController {
     @Override
     public String choiceHandler(String choice, String... values) throws Exception {
         switch (choice) {
-//            case "0":
-//                return getAllFunctionsDesc();
             case "1":
                 return getMyDetails();
             case "2":

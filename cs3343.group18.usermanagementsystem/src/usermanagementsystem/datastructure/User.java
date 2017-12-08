@@ -285,11 +285,6 @@ public class User implements IUserInfo, Comparable<User> {
 		return annualLeaveInfos;    	
     }
     
-//    public boolean addPermission(EnumPermission permission) {
-//        return permissions.add(permission);
-//    }
-//    
-    
     /**
      * Assign Supervisor for User if User have no Supervisor
      *
