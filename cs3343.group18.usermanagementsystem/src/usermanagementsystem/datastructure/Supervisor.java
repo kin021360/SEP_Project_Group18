@@ -3,6 +3,7 @@ package usermanagementsystem.datastructure;
 import java.util.Hashtable;
 
 import usermanagementsystem.datastructure_interface.*;
+import usermanagementsystem.exception.ExIsNullOrEmpty;
 
 /**
  * The data type Supervisor. It can be parsed by Gson from json
@@ -29,6 +30,23 @@ public class Supervisor extends User implements ISupervisorInfo {
     }
 
     /**
+     * The constructor create Supervisor object instance by SupervisorBuilder
+     *
+     * @param builder SupervisorBuilder
+     */
+    private Supervisor(SupervisorBuilder builder) {
+        super(builder);
+        subordinates = new Hashtable<>();
+    }
+
+    /**
+     * Default constructor
+     */
+    protected Supervisor() {
+        subordinates = new Hashtable<>();
+    }
+
+    /**
      * Check the name that who is my subordinate or not
      *
      * @param subordinateName subordinate name
@@ -40,22 +58,47 @@ public class Supervisor extends User implements ISupervisorInfo {
     }
 
     /**
-     * @param subordinate IUserInfo
+     * Get Subordinates Details List
+     *
+     * @return String result list
      */
-    public void addSubordinate(IUserInfo subordinate) {
-        if (subordinates == null) {
-            subordinates = new Hashtable<>();
+    @Override
+    public String getMySubordinatesDetails() {
+        String result = "";
+        for (IUserInfo u : subordinates.values()) {
+            result += u.toString() + "\n";
         }
-        subordinates.put(subordinate.getUserName(), subordinate);
+        return result;
     }
 
     /**
-     * Remove my subordinate by name
+     * @param subordinate IUserInfo
+     * @return boolean
+     */
+    public boolean addSubordinate(IUserInfo subordinate) {
+        if (subordinates == null) {
+            subordinates = new Hashtable<>();
+        }
+        if (!subordinates.containsKey(subordinate.getUserName())) {
+            subordinates.put(subordinate.getUserName(), subordinate);
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Remove subordinate by name
      *
      * @param subordinateName subordinate name
+     * @return boolean
      */
-    public void removeSubordinate(String subordinateName) {
-        subordinates.remove(subordinateName);
+    public boolean removeSubordinate(String subordinateName) {
+        if (subordinates.containsKey(subordinateName)) {
+            subordinates.remove(subordinateName);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -80,9 +123,16 @@ public class Supervisor extends User implements ISupervisorInfo {
      * The object builder helps to create new Supervisor object. Inherits <b>UserBuilder</b>
      */
     public static class SupervisorBuilder extends UserBuilder {
+        /**
+         * The build method to build new Supervisor object
+         *
+         * @return Supervisor object
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
+         */
         @Override
-        public Supervisor build() {
-            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+        public Supervisor build() throws ExIsNullOrEmpty {
+            validation();
+            return new Supervisor(this);
         }
     }
 }

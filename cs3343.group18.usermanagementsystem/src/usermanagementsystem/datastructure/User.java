@@ -2,7 +2,9 @@ package usermanagementsystem.datastructure;
 
 import com.google.gson.annotations.Expose;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 
 import usermanagementsystem.datastructure_interface.*;
@@ -30,6 +32,14 @@ public class User implements IUserInfo, Comparable<User> {
     private EnumDepartment departmentOf;
     @Expose
     private boolean isAdmin;
+    @Expose
+    private int loginFailTime;
+    @Expose
+    private long suspensionTimeStamp;
+    @Expose
+    private int annualLeave;
+    @Expose
+    private HashSet<String> annualLeaveInfos;
     private ISupervisorInfo supervisor;
 
     /**
@@ -55,7 +65,40 @@ public class User implements IUserInfo, Comparable<User> {
         this.departmentOf = departmentOf;
         this.supervisor = supervisor;
         this.isAdmin = isAdmin;
+        this.loginFailTime = 0;
+        this.suspensionTimeStamp = 0;
+        this.annualLeave = 12;
+        this.annualLeaveInfos = new HashSet<>();
         this.permissions = new HashSet<>();
+    }
+
+    /**
+     * The constructor create User object instance by UserBuilder
+     *
+     * @param builder UserBuilder
+     */
+    protected User(UserBuilder builder) {
+        this.userName = builder.userName;
+        this.password = builder.password;
+        this.gender = builder.gender;
+        this.position = builder.position;
+        this.staffId = builder.staffId;
+        this.email = builder.email;
+        this.departmentOf = builder.departmentOf;
+        this.supervisor = builder.supervisor;
+        this.isAdmin = builder.isAdmin;
+        this.loginFailTime = 0;
+        this.suspensionTimeStamp = 0;
+        this.annualLeave = 12;
+        this.annualLeaveInfos = new HashSet<>();
+        this.permissions = new HashSet<>();
+    }
+
+    /**
+     * Default constructor
+     */
+    protected User() {
+
     }
 
     /**
@@ -178,13 +221,107 @@ public class User implements IUserInfo, Comparable<User> {
     }
 
     /**
+     * @return User's number of login fail
+     */
+    @Override
+    public int getLoginFailTime() {
+        return loginFailTime;
+    }
+
+    /**
+     * @return User's suspension time stamp
+     */
+    @Override
+    public long getSuspensionTimeStamp() {
+        return suspensionTimeStamp;
+    }
+
+    /**
+     * @return User's number of annual leave
+     */
+    @Override
+    public int getAnnualLeave() {
+        return annualLeave;
+    }
+
+    /**
+     * Increase User's number of login fail
+     *
+     * @param loginFailTime loginFailTime
+     */
+    public void setLoginFailTime(int loginFailTime) {
+        this.loginFailTime = loginFailTime;
+    }
+
+    /**
+     * Set User's suspension time stamp
+     *
+     * @param suspensionTimeStamp suspensionTimeStamp
+     */
+    public void setSuspensionTimeStamp(long suspensionTimeStamp) {
+        this.suspensionTimeStamp = suspensionTimeStamp;
+    }
+
+    /**
+     * Set User's number of annual leave
+     *
+     * @param annualLeave annualLeave
+     */
+    public void setAnnualLeave(int annualLeave) {
+        this.annualLeave += annualLeave;
+    }
+
+    /**
+     * Add more annual leave information into User
+     *
+     * @param annualLeaveInfo       AnnualLeaveInfo
+     * @param annualLeaveInfoString annualLeaveInfo in String
+     * @return boolean
+     */
+    public boolean addAnnualLeaveInfo(AnnualLeaveInfo annualLeaveInfo, String annualLeaveInfoString) {
+        this.annualLeave -= annualLeaveInfo.getDayOfAnnualLeave();
+        return annualLeaveInfos.add(annualLeaveInfoString);
+    }
+
+    /**
+     * @return User's annual leave information
+     */
+    @Override
+    public String showAllAnnualLeaveInfos() {
+        String temp = "";
+        temp += String.format("%s%15s%15s\n", "Day(s)", "Start Date", "End Date");
+        if (annualLeaveInfos.size() > 0) {
+            for (String annualLeaveInfo : annualLeaveInfos) {
+                String[] infoArray = annualLeaveInfo.split(" ");
+                Date startDate = new Date(Long.parseLong(infoArray[1]));
+                Date endDate = new Date(Long.parseLong(infoArray[2]));
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String startDateFormat = sdf.format(startDate);
+                String endDateFormat = sdf.format(endDate);
+                temp += String.format("%s%20s%17s\n", infoArray[0], startDateFormat, endDateFormat);
+            }
+        } else {
+            temp = "You have no annual leave!";
+        }
+        return temp;
+    }
+
+    /**
+     * @return User's annual leave information
+     */
+    @Override
+    public HashSet<String> getAnnualLeaveInfos() {
+        return annualLeaveInfos;
+    }
+
+    /**
      * Assign Supervisor for User if User have no Supervisor
      *
      * @param supervisor ISupervisorInfo
      * @return boolean
      */
     public boolean assignSupervisor(ISupervisorInfo supervisor) {
-        if (this.supervisor == null) {
+        if (this.supervisor == null && supervisor != null) {
             this.supervisor = supervisor;
             return true;
         }
@@ -220,12 +357,28 @@ public class User implements IUserInfo, Comparable<User> {
      * @return Supervisor
      */
     public Supervisor toSupervisor() {
-        return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+        User tSupervisor = new Supervisor();
+        //construct manually
+        tSupervisor.userName = userName;
+        tSupervisor.password = password;
+        tSupervisor.gender = gender;
+        tSupervisor.position = position;
+        tSupervisor.staffId = staffId;
+        tSupervisor.email = email;
+        tSupervisor.departmentOf = departmentOf;
+        tSupervisor.supervisor = supervisor;
+        tSupervisor.isAdmin = isAdmin;
+        tSupervisor.loginFailTime = loginFailTime;
+        tSupervisor.suspensionTimeStamp = suspensionTimeStamp;
+        tSupervisor.annualLeave = annualLeave;
+        tSupervisor.annualLeaveInfos = annualLeaveInfos;
+        tSupervisor.permissions = permissions;
+        return (Supervisor) tSupervisor;
     }
 
     @Override
     public String toString() {
-        return String.format("%-15s%-9s%-24s%-16s%-21s%s", userName, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? null : supervisor.getUserName());
+        return String.format("%-15s%-17s%-9s%-24s%-20s%-18s%s", userName, staffId, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? "-" : supervisor.getUserName());
     }
 
     @Override
@@ -240,15 +393,15 @@ public class User implements IUserInfo, Comparable<User> {
      * The object builder helps to create new User object.
      */
     public static class UserBuilder {
-        String userName;
-        String password;
-        long staffId;
-        String email;
-        EnumGender gender;
-        EnumPosition position;
-        EnumDepartment departmentOf;
-        boolean isAdmin;
-        ISupervisorInfo supervisor = null;
+        private String userName;
+        private String password;
+        private long staffId = Calendar.getInstance().getTimeInMillis();
+        private String email;
+        private EnumGender gender;
+        private EnumPosition position;
+        private EnumDepartment departmentOf;
+        private boolean isAdmin = false;
+        private ISupervisorInfo supervisor = null;
 
         /**
          * Check the string value is null or empty
@@ -346,16 +499,30 @@ public class User implements IUserInfo, Comparable<User> {
             return this;
         }
 
-//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
-//            this.supervisor = supervisor;
-//            return this;
-//        }
+        /**
+         * Validate important data field
+         *
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
+         */
+        protected void validation() throws ExIsNullOrEmpty {
+            strIsNullOrEmpty("userName", userName);
+            strIsNullOrEmpty("password", password);
+            strIsNullOrEmpty("email", email);
+            if (gender == null) throw new ExIsNullOrEmpty("gender");
+            if (position == null) throw new ExIsNullOrEmpty("position");
+            if (departmentOf == null) throw new ExIsNullOrEmpty("departmentOf");
+        }
 
         /**
          * The build method to build new User object
+         *
+         * @return User object
+         * @throws ExIsNullOrEmpty important data field cannot be null or empty
          */
-        public User build() {
-            return new User(userName, password, gender, position, Calendar.getInstance().getTimeInMillis(), email, departmentOf, supervisor, isAdmin);
+        public User build() throws ExIsNullOrEmpty {
+            //verify
+            validation();
+            return new User(this);
         }
     }
 }
