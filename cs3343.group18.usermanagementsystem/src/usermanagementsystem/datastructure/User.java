@@ -43,36 +43,6 @@ public class User implements IUserInfo, Comparable<User> {
     private ISupervisorInfo supervisor;
 
     /**
-     * The constructor create User object instance by following params
-     *
-     * @param userName     (String)
-     * @param password     (String)
-     * @param gender       (EnumGender)
-     * @param position     (EnumPosition)
-     * @param staffId      (long)
-     * @param email        (String)
-     * @param departmentOf (EnumDepartment)
-     * @param supervisor   (ISupervisorInfo)
-     * @param isAdmin      (boolean)
-     */
-    protected User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
-        this.userName = userName;
-        this.password = password;
-        this.gender = gender;
-        this.position = position;
-        this.staffId = staffId;
-        this.email = email;
-        this.departmentOf = departmentOf;
-        this.supervisor = supervisor;
-        this.isAdmin = isAdmin;
-        this.loginFailTime = 0;
-        this.suspensionTimeStamp = 0;
-        this.annualLeave = 12;
-        this.annualLeaveInfos = new HashSet<>();
-        this.permissions = new HashSet<>();
-    }
-
-    /**
      * The constructor create User object instance by UserBuilder
      *
      * @param builder UserBuilder
@@ -268,7 +238,7 @@ public class User implements IUserInfo, Comparable<User> {
      * @param annualLeave annualLeave
      */
     public void setAnnualLeave(int annualLeave) {
-        this.annualLeave += annualLeave;
+        this.annualLeave = annualLeave;
     }
 
     /**
@@ -383,7 +353,13 @@ public class User implements IUserInfo, Comparable<User> {
 
     @Override
     public int compareTo(User another) {
-        return this.userName.compareTo(another.userName);
+        int dist = this.userName.compareTo(another.userName);
+        if (dist == 0) {
+            return 0;
+        } else if (dist > 0) {
+            return 1;
+        }
+        return -1;
     }
 
     //https://codereview.stackexchange.com/questions/127391/simple-builder-pattern-implementation-for-building-immutable-objects
