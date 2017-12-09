@@ -12,24 +12,6 @@ public class Supervisor extends User implements ISupervisorInfo {
     private Hashtable<String, IUserInfo> subordinates;
 
     /**
-     * The constructor create Supervisor object instance by following params
-     *
-     * @param userName     (String)
-     * @param password     (String)
-     * @param gender       (EnumGender)
-     * @param position     (EnumPosition)
-     * @param staffId      (long)
-     * @param email        (String)
-     * @param departmentOf (EnumDepartment)
-     * @param supervisor   (ISupervisorInfo)
-     * @param isAdmin      (boolean)
-     */
-    protected Supervisor(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
-        super(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
-        subordinates = new Hashtable<>();
-    }
-
-    /**
      * The constructor create Supervisor object instance by SupervisorBuilder
      *
      * @param builder SupervisorBuilder
