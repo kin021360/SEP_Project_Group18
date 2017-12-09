@@ -4,11 +4,14 @@ import usermanagementsystem.datastructure.*;
 import usermanagementsystem.exception.ExControllerInitWithNull;
 import usermanagementsystem.exception.ExInvalidChoice;
 
+import java.util.Hashtable;
+
 /**
  * The Controller class for Supervisor.
  */
 public class SupervisorController extends UserController {
     private static SupervisorController instance = new SupervisorController();
+    private Hashtable<String, User> users;
     private int numOfBaseFunc;
 
     /**
@@ -27,9 +30,10 @@ public class SupervisorController extends UserController {
      * @return instance SupervisorController
      * @throws ExControllerInitWithNull the input param cannot be null
      */
-    public static SupervisorController getInstance(User user) throws ExControllerInitWithNull {
-        if (user == null) throw new ExControllerInitWithNull();
+    public static SupervisorController getInstance(User user, Hashtable<String, User> users) throws ExControllerInitWithNull {
+        if (user == null || users == null) throw new ExControllerInitWithNull();
         instance.currentUser = user;
+        instance.users = users;
         return instance;
     }
 
@@ -46,6 +50,46 @@ public class SupervisorController extends UserController {
         return userName + " is not your subordinate.";
     }
 
+    private String getMySubordinatesDetails() {
+        String details = ((Supervisor) currentUser).getMySubordinatesDetails();
+        if (!details.equals("")) {
+            return "All subordinate details:\n" + ControllerHelper.userDetailsHeader + "\n" + details;
+        }
+        return "You do not have any subordinate";
+    }
+
+    /**
+     * Add subordinate by name
+     *
+     * @param subordinateName subordinate name
+     */
+    private String addSubordinate(String subordinateName) {
+        User userToAdd = users.get(subordinateName);
+        if (userToAdd != null) {
+            if (((Supervisor) currentUser).addSubordinate(userToAdd)) {
+                userToAdd.unassignSupervisor();
+                userToAdd.assignSupervisor((Supervisor) currentUser);
+                return "Add subordinate successfully!";
+            }
+            return "Subordinate already existed!";
+        }
+        return "User not found!";
+    }
+
+    /**
+     * Remove subordinate by name
+     *
+     * @param subordinateName subordinate name
+     * @return result message
+     */
+    private String removeSubordinate(String subordinateName) {
+        if (((Supervisor) currentUser).removeSubordinate(subordinateName)) {
+            users.get(subordinateName).unassignSupervisor();
+            return "Remove subordinate successfully!";
+        }
+        return "Subordinate not found!";
+    }
+
     /**
      * Validate the choice and get choice detail
      *
@@ -59,6 +103,12 @@ public class SupervisorController extends UserController {
         switch (ch - numOfBaseFunc) {
             case 0:
                 return "Please enter the user name:";
+            case 1:
+                return "Please enter the user name:";
+            case 2:
+                return "Please enter the user name:";
+            case 3:
+                return "";
         }
         return super.validateChoiceGetFuncDetail(choice);
     }
@@ -77,7 +127,22 @@ public class SupervisorController extends UserController {
         switch (ch - numOfBaseFunc) {
             case 0:
                 return isMySubordinate(values[0]);
+            case 1:
+                return addSubordinate(values[0]);
+            case 2:
+                return removeSubordinate(values[0]);
+            case 3:
+                return getMySubordinatesDetails();
         }
         return super.choiceHandler(choice, values);
+    }
+
+    /**
+     * Clear current user session in controller
+     */
+    @Override
+    public void clear() {
+        super.clear();
+        users = null;
     }
 }

@@ -97,7 +97,7 @@ public class UserLogin {
 				if (tempUser.isAdmin()) {
 					controller = AdminController.getInstance(loggedInUser, users, supervisors);
 				} else if (tempUser.isSupervisor()) {
-					controller = SupervisorController.getInstance(loggedInUser);
+					controller = SupervisorController.getInstance(loggedInUser, users);
 				} else {
 					controller = UserController.getInstance(loggedInUser);
 				}

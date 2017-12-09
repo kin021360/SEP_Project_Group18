@@ -73,21 +73,32 @@ public class Supervisor extends User implements ISupervisorInfo {
 
     /**
      * @param subordinate IUserInfo
+     * @return boolean
      */
-    public void addSubordinate(IUserInfo subordinate) {
+    public boolean addSubordinate(IUserInfo subordinate) {
         if (subordinates == null) {
             subordinates = new Hashtable<>();
         }
-        subordinates.put(subordinate.getUserName(), subordinate);
+        if (!subordinates.containsKey(subordinate.getUserName())) {
+            subordinates.put(subordinate.getUserName(), subordinate);
+            return true;
+        }
+        return false;
     }
 
+
     /**
-     * Remove my subordinate by name
+     * Remove subordinate by name
      *
      * @param subordinateName subordinate name
+     * @return boolean
      */
-    public void removeSubordinate(String subordinateName) {
-        subordinates.remove(subordinateName);
+    public boolean removeSubordinate(String subordinateName) {
+        if (subordinates.containsKey(subordinateName)) {
+            subordinates.remove(subordinateName);
+            return true;
+        }
+        return false;
     }
 
     /**

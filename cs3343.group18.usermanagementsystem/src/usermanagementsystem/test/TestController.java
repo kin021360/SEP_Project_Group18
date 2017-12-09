@@ -25,7 +25,7 @@ public class TestController {
 
         System.out.println(adminController.getUserDetails("test2"));
 
-        System.out.println(adminController.getAllFunctionsDesc());
+        System.out.println(supervisors.get("efg").getMySubordinatesDetails());
         String[] r = new String[]{"abc"};
 //        System.out.println(adminController.choiceHandler("10", "abc"));
 

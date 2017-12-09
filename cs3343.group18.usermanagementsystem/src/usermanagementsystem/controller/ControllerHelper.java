@@ -29,6 +29,9 @@ class ControllerHelper {
      */
     static void initSupervisorChoicesDescriptions(ArrayList<String> descriptionList) {
         descriptionList.add("Check a user who is my subordinate or not.");
+        descriptionList.add("Add the User to be my subordinate");
+        descriptionList.add("Remove the User from my subordinate list");
+        descriptionList.add("List all of my subordinates");
     }
 
     /**
