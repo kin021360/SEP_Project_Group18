@@ -170,6 +170,7 @@ public class TestUser {
         Supervisor expected;
         User.UserBuilder builder = new User.UserBuilder();
         builder.userName("supervisor")
+                .gender(EnumGender.Male)
                 .departmentOf(EnumDepartment.Technology)
                 .password("abc")
                 .position(EnumPosition.ProductOwner)
@@ -177,6 +178,7 @@ public class TestUser {
                 .isAdmin(true);
         userTest = builder.build();
         expected = userTest.toSupervisor();
+        assertEquals(userTest.toString(), expected.toString());
         assertEquals(true, expected.isSupervisor());
     }
 

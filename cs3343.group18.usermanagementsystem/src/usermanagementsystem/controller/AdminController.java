@@ -193,7 +193,7 @@ public class AdminController extends UserController {
      * @return all normal User details list in string
      */
     private String getAllUserDetails() {
-        String detailList = "All users details:\nUser Name      Gender   Email                   Position        My Department        My Supervisor\n";
+        String detailList = "All users details:\n" + ControllerHelper.userDetailsHeader + "\n";
         for (User u : users.values()) {
             detailList += u.toString() + "\n";
         }
@@ -204,7 +204,7 @@ public class AdminController extends UserController {
      * @return all Supervisor details list in string
      */
     private String getAllSupervisorDetails() {
-        String detailList = "All supervisors details:\nUser Name      Gender   Email                   Position        My Department        My Supervisor\n";
+        String detailList = "All supervisors details:\n" + ControllerHelper.userDetailsHeader + "\n";
         for (User u : supervisors.values()) {
             detailList += u.toString() + "\n";
         }
@@ -225,7 +225,7 @@ public class AdminController extends UserController {
     public String getUserDetails(String userName) {
         User u = getUserOrSupervisor(userName);
         if (u != null) {
-            return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + u.toString();
+            return ControllerHelper.userDetailsHeader + "\n" + u.toString();
         }
         return "User not found!";
     }
