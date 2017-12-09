@@ -26,7 +26,8 @@ public class SupervisorController extends UserController {
     /**
      * Singleton SupervisorController
      *
-     * @param user User
+     * @param user  User
+     * @param users all User
      * @return instance SupervisorController
      * @throws ExControllerInitWithNull the input param cannot be null
      */
@@ -62,6 +63,7 @@ public class SupervisorController extends UserController {
      * Add subordinate by name
      *
      * @param subordinateName subordinate name
+     * @return result message
      */
     private String addSubordinate(String subordinateName) {
         User userToAdd = users.get(subordinateName);
