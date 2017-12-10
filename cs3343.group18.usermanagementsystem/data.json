@@ -6,8 +6,8 @@
       "gender": "0",
       "position": "0",
       "permissions": [
-        "1",
-        "0"
+        "0",
+        "1"
       ],
       "staffId": 2046,
       "email": "admin@admin.com",
@@ -36,6 +36,23 @@
       ]
     },
     {
+      "userName": "abc",
+      "password": "99",
+      "gender": "0",
+      "position": "0",
+      "permissions": [
+        "0"
+      ],
+      "staffId": 1000,
+      "email": "abc@abc.com",
+      "departmentOf": "0",
+      "isAdmin": false,
+      "loginFailTime": 0,
+      "suspensionTimeStamp": 0,
+      "annualLeave": 12,
+      "annualLeaveInfos": []
+    },
+    {
       "userName": "tt",
       "password": "123",
       "gender": "0",
@@ -54,23 +71,6 @@
         "1 1514476800000 1514476800000",
         "2 1513699200000 1513785600000"
       ]
-    },
-    {
-      "userName": "abc",
-      "password": "99",
-      "gender": "0",
-      "position": "0",
-      "permissions": [
-        "0"
-      ],
-      "staffId": 1000,
-      "email": "abc@abc.com",
-      "departmentOf": "0",
-      "isAdmin": false,
-      "loginFailTime": 0,
-      "suspensionTimeStamp": 0,
-      "annualLeave": 12,
-      "annualLeaveInfos": []
     },
     {
       "userName": "regina",
