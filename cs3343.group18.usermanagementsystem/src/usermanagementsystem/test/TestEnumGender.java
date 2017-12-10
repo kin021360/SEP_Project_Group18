@@ -1,81 +1,55 @@
 package usermanagementsystem.test;
 
-
 import org.junit.Test;
 import usermanagementsystem.datastructure.EnumGender;
 import usermanagementsystem.exception.ExInvaildEnumValue;
 
 import static org.junit.Assert.assertEquals;
 
-
 public class TestEnumGender {
     @Test
     public void test_EnumGender_parse_int1() throws ExInvaildEnumValue {
-        EnumGender expected;
-        expected = EnumGender.parse(1);
+        EnumGender expected = EnumGender.parse(1);
         assertEquals(EnumGender.Female, expected);
-
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void test_EnumGender_parse_int2() throws ExInvaildEnumValue {
-        EnumGender expected = EnumGender.Female;
-
-        try {
-            expected = EnumGender.parse(-2);
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(EnumGender.Female, expected);
-
+        EnumGender.parse(-2);
     }
 
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void test_EnumGender_parse_int3() throws ExInvaildEnumValue {
-        EnumGender expected = EnumGender.Female;
-
-        try {
-            expected = EnumGender.parse(5);
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(EnumGender.Female, expected);
+        EnumGender.parse(1000);
     }
 
 
     @Test
     public void test_EnumGender_parse_string1() throws ExInvaildEnumValue {
-        EnumGender expected;
-        expected = EnumGender.parse("1");
-        assertEquals(EnumGender.Female, expected);
-
+        EnumGender expected = EnumGender.parse("Male");
+        assertEquals(EnumGender.Male, expected);
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void test_EnumGender_parse_string2() throws ExInvaildEnumValue {
-        EnumGender expected = null;
-
-        try {
-            expected = EnumGender.parse("Female");
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(EnumGender.Female, expected);
-
+        EnumGender.parse("XXXXX");
     }
 
     @Test
     public void test_EnumGender_parse_string3() throws ExInvaildEnumValue {
-        EnumGender expected = EnumGender.Male;
+        EnumGender expected = EnumGender.parse("1");
+        assertEquals(EnumGender.Female, expected);
+    }
 
-        try {
-            expected = EnumGender.parse("3");
-        } catch (ExInvaildEnumValue e) {
+    @Test(expected = ExInvaildEnumValue.class)
+    public void test_EnumGender_Parse_string4() throws ExInvaildEnumValue {
+        EnumGender.parse("-2");
+    }
 
-        }
-        assertEquals(EnumGender.Male, expected);
-
+    @Test(expected = ExInvaildEnumValue.class)
+    public void test_EnumGender_parse_string5() throws ExInvaildEnumValue {
+        EnumGender.parse("1000");
     }
 
 

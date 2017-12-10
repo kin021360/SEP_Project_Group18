@@ -4,7 +4,11 @@ import usermanagementsystem.datastructure.*;
 import usermanagementsystem.exception.ExControllerInitWithNull;
 import usermanagementsystem.exception.ExInvalidChoice;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashSet;
 
 /**
  * The base Controller class for normal user.
@@ -39,15 +43,8 @@ public class UserController implements IController {
     }
 
     private String getMyDetails() {
-        return "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + currentUser.toString();
+        return ControllerHelper.userDetailsHeader + "\n" + currentUser.toString();
     }
-
-//    public String canIDo(EnumPermission permission) {
-//        if (currentUser.hasPermission(permission)){
-//            return "Yes, you can!";
-//        }
-//        return "No, you don't have this permission";
-//    }
 
     /**
      * Change current user's password
@@ -76,6 +73,53 @@ public class UserController implements IController {
         return viewDocController.getDepartmentDoc(currentUser, optionalDocName);
     }
 
+
+    private String requestAnnualLeave(String dayOfAnnualLeave, String startDateStr) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
+            Date startDate = sdf.parse(startDateStr);
+            Date endDate = new Date(startDate.getTime() + ((Long.parseLong(dayOfAnnualLeave) - 1) * 24 * 60 * 60) * 1000);
+            String currDateStr = sdf.format(new Date());
+            Date currDate = sdf.parse(currDateStr);
+            String currYear = sdfy.format(currDate);
+            String startYear = sdfy.format(startDate);
+
+            HashSet<String> annualLeaveInfos = currentUser.getAnnualLeaveInfos();
+            for (String annualLeaveInfo : annualLeaveInfos) {
+                String[] infoArray = annualLeaveInfo.split(" ");
+                Date checkStartDate = new Date(Long.parseLong(infoArray[1]));
+                Date checkEndDate = new Date(Long.parseLong(infoArray[2]));
+                if (startDate.getTime() >= checkStartDate.getTime() && startDate.getTime() <= checkEndDate.getTime()) {
+                    return "Start date is overlap with another annual leave!";
+                }
+            }
+            if (Integer.parseInt(dayOfAnnualLeave) > currentUser.getAnnualLeave()) {
+                return "Exceeded the quota! You only have " + currentUser.getAnnualLeave() + " day(s) of annual leave!";
+            } else if (Integer.parseInt(dayOfAnnualLeave) < 1) {
+                return "Invalid day(s) of annual leave!";
+            } else if (startDateStr.length() != 10) {
+                return "Invalid start date format!";
+            } else if (startDate.getTime() < currDate.getTime()) {
+                return "Start date earlier than current date!";
+            } else if (Integer.parseInt(startYear) > Integer.parseInt(currYear)) {
+                return "The year should be current year only!!";
+            }
+            AnnualLeaveInfo annualLeaveInfo = new AnnualLeaveInfo(Integer.parseInt(dayOfAnnualLeave), startDate, endDate);
+            currentUser.addAnnualLeaveInfo(annualLeaveInfo, annualLeaveInfo.toString());
+            return "Annual leave(s) requested!";
+        } catch (NumberFormatException e) {
+            return "Invalid day(s) of annual leave!";
+        } catch (ParseException e) {
+
+            return "Invalid start date";
+        }
+    }
+
+    private String getMyAnnualLeaveInfo() {
+        return "Annual Leave Information\n" + currentUser.showAllAnnualLeaveInfos();
+    }
+
     /**
      * Validate the choice and get choice detail
      *
@@ -86,14 +130,16 @@ public class UserController implements IController {
     @Override
     public String validateChoiceGetFuncDetail(String choice) throws ExInvalidChoice {
         switch (choice) {
-//            case "0":
-//                return "";
             case "1":
                 return "";
             case "2":
                 return "Please enter your 'old-password', 'new-password' and 'confirm-new-password':";
             case "3":
                 return "Please enter the document name or enter 'all' to show all documents:";
+            case "4":
+                return "Current day(s) of annual leave: " + currentUser.getAnnualLeave() + "\nPlease enter 'day(s) of annual leave', 'start date(dd-mm-yyyy)':";
+            case "5":
+                return "";
         }
         throw new ExInvalidChoice();
     }
@@ -109,14 +155,16 @@ public class UserController implements IController {
     @Override
     public String choiceHandler(String choice, String... values) throws Exception {
         switch (choice) {
-//            case "0":
-//                return getAllFunctionsDesc();
             case "1":
                 return getMyDetails();
             case "2":
                 return changeMyPassword(values[0], values[1], values[2]);
             case "3":
                 return getDepartmentDoc(values.length == 0 ? null : values[0]);
+            case "4":
+                return requestAnnualLeave(values[0], values[1]);
+            case "5":
+                return getMyAnnualLeaveInfo();
         }
         throw new ExInvalidChoice();
     }

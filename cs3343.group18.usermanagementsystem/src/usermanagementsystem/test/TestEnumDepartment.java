@@ -9,92 +9,57 @@ import usermanagementsystem.exception.ExInvaildEnumValue;
 
 public class TestEnumDepartment {
 
-	@Test
-	public void testEnumDepartment_Parse_int1() throws ExInvaildEnumValue {
-		EnumDepartment expected = null;
-		try {
-			expected = EnumDepartment.parse(1);
+    @Test
+    public void testEnumDepartment_Parse_int1() throws ExInvaildEnumValue {
+        EnumDepartment expected = EnumDepartment.parse(1);
+        assertEquals(EnumDepartment.HumanResource, expected);
+    }
 
-		} catch (ExInvaildEnumValue e) {
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumDepartment_Parse_int2() throws ExInvaildEnumValue {
+        EnumDepartment.parse(-2);
+    }
 
-		}
-		assertEquals(EnumDepartment.HumanResource, expected);
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumDepartment_Parse_int3() throws ExInvaildEnumValue {
+        EnumDepartment.parse(1000);
+    }
 
-	}
+    @Test
+    public void testEnumDepartment_Parse_string1() throws ExInvaildEnumValue {
+        EnumDepartment expected = EnumDepartment.parse("HumanResource");
+        assertEquals(EnumDepartment.HumanResource, expected);
+    }
 
-	@Test
-	public void testEnumDepartment_Parse_int2() throws ExInvaildEnumValue {
-		EnumDepartment expected = EnumDepartment.Finance;
-		try {
-			expected = EnumDepartment.parse(-2);
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumDepartment_Parse_string2() throws ExInvaildEnumValue {
+        EnumDepartment.parse("XXXXXXXXXXX");
+    }
 
-		} catch (ExInvaildEnumValue e) {
+    @Test
+    public void testEnumDepartment_Parse_string3() throws ExInvaildEnumValue {
+        EnumDepartment expected = EnumDepartment.parse("1");
+        assertEquals(EnumDepartment.HumanResource, expected);
+    }
 
-		}
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumDepartment_Parse_string4() throws ExInvaildEnumValue {
+        EnumDepartment.parse("-2");
+    }
 
-		assertEquals(EnumDepartment.Finance, expected);
-	}
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumDepartment_Parse_string5() throws ExInvaildEnumValue {
+        EnumDepartment.parse("1000");
+    }
 
-	@Test
-	public void testEnumDepartment_Parse_int3() throws ExInvaildEnumValue {
-		EnumDepartment expected = EnumDepartment.Finance;
-		try {
-			expected = EnumDepartment.parse(10);
+    @Test
+    public void testListAll() {
 
-		} catch (ExInvaildEnumValue e) {
-
-		}
-
-		assertEquals(EnumDepartment.Finance, expected);
-	}
-
-	@Test
-	public void testEnumDepartment_Parse_string1() throws ExInvaildEnumValue {
-		EnumDepartment expected = null;
-		try {
-			expected = EnumDepartment.parse("HumanResource");
-		} catch (ExInvaildEnumValue e) {
-
-		}
-
-		assertEquals(EnumDepartment.HumanResource, expected);
-	}
-	
-	@Test
-	public void testEnumDepartment_Parse_string2() throws ExInvaildEnumValue {
-		EnumDepartment expected = null;
-		try {
-			expected = EnumDepartment.parse("2");
-		} catch (ExInvaildEnumValue e) {
-
-		}
-
-		assertEquals(EnumDepartment.Finance, expected);
-	}
-
-	@Test
-	public void testEnumDepartment_Parse_string3() throws ExInvaildEnumValue {
-		EnumDepartment expected = null;
-		try {
-			expected = EnumDepartment.parse("10");
-
-		} catch (ExInvaildEnumValue e) {
-
-		}
-
-		assertEquals(null, expected);
-	}
-	
-	@Test
-	public void testListAll() {
-		
-		String result = "Name of Department       Id\n";
+        String result = "Name of Department       Id\n";
         for (EnumDepartment expected : EnumDepartment.values()) {
             result += String.format("%18s  ---  %2d\n", expected.toString(), expected.getId());
         }
 
-		assertEquals(EnumDepartment.listAll(), result);
-	}
-	
-	
+        assertEquals(EnumDepartment.listAll(), result);
+    }
 }
