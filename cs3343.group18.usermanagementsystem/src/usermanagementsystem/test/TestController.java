@@ -688,7 +688,7 @@ public class TestController {
 		assertEquals(expect, result);
 
 		// String userName, String password, EnumGender gender, EnumPosition position,
-		// long staffId, String email, EnumDeparßtment departmentOf, ISupervisorInfo
+		// long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo
 		// supervisor, boolean isAdmin
 	}
 
