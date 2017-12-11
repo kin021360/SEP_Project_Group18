@@ -571,7 +571,7 @@ public class TestController_Leo {
 	public void testSupervisorValidateChoiceGetFuncDetail_8() throws ExInvalidChoice {
 		UserLogin userLogin = UserLogin.getInstance();
 		IController user = userLogin.login("efg", "666");
-		String result = user.validateChoiceGetFuncDetail("7");
+		String result = user.validateChoiceGetFuncDetail("11");
 	}
 
 //	@Test
@@ -601,9 +601,9 @@ public class TestController_Leo {
 	public void testUserChoiceHandler_2() throws Exception {
 		UserLogin userLogin = UserLogin.getInstance();
 		IController user = userLogin.login("abc", "99");
-		String result = user.choiceHandler("1", null);
-		String expect = "User Name      Gender   Email                   Position        My Department        My Supervisor\n"
-				+ "abc            Male     abc@abc.com             Programmer      Technology           efg";
+		String result = user.choiceHandler("1");
+		String expect = "User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n"
+				+ "abc            1000             Male     abc@abc.com             Programmer          Technology        efg";
 
 		// "\t " + i + ") --- " + funcChoicesDescriptions.get(i) + "\n";
 		assertEquals(expect, result);
@@ -696,7 +696,7 @@ public class TestController_Leo {
 	public void testUserChoiceHandler_7() throws Exception {
 		UserLogin userLogin = UserLogin.getInstance();
 		IController user = userLogin.login("abc", "999");
-		String result = user.choiceHandler("5", null);
+		String result = user.choiceHandler("5");
 		String expect = "Annual Leave Information\n" + 
 				"You have no annual leave!";
 		assertEquals(expect, result);
@@ -707,7 +707,7 @@ public class TestController_Leo {
 	public void testUserChoiceHandler_8() throws Exception {
 		UserLogin userLogin = UserLogin.getInstance();
 		IController user = userLogin.login("abc", "999");
-		String result = user.choiceHandler("6", null);
+		String result = user.choiceHandler("6");
 	}
 
 	@Test
@@ -874,9 +874,9 @@ public class TestController_Leo {
 	public void testSupervisorChoiceHandler_1() throws Exception {
 		UserLogin userLogin = UserLogin.getInstance();
 		IController user = userLogin.login("efg", "666");
-		String result = user.choiceHandler("1", null);
-		String expect = "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + 
-				"efg            Male     efg@efg.com             Programmer      Technology           null";
+		String result = user.choiceHandler("1");
+		String expect = "User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n" + 
+				"efg            2000             Male     efg@efg.com             Programmer          Technology        -";
 
 		// "\t " + i + ") --- " + funcChoicesDescriptions.get(i) + "\n";
 		assertEquals(expect, result);
@@ -960,9 +960,9 @@ public class TestController_Leo {
 	public void testAdminChoiceHandler_2() throws Exception {
 		UserLogin userLogin = UserLogin.getInstance();
 		IController user = userLogin.login("admin", "123");
-		String result = user.choiceHandler("1", null);
-		String expect = "User Name      Gender   Email                   Position        My Department        My Supervisor\n" + 
-				"admin          Male     admin@admin.com         Programmer      Technology           null";
+		String result = user.choiceHandler("1");
+		String expect = "User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n" + 
+				"admin          2046             Male     admin@admin.com         Programmer          Technology        -";
 
 		// "\t " + i + ") --- " + funcChoicesDescriptions.get(i) + "\n";
 		assertEquals(expect, result);
@@ -1280,19 +1280,20 @@ public class TestController_Leo {
 		// email, String departmentOf, String isAdmin
 		String[] testInput = {};
 		String result = user.choiceHandler("13", testInput);
-		String expect = "All users details:\n" + 
-				"User Name      Gender   Email                   Position        My Department        My Supervisor\n" + 
-				"admin          Male     admin@admin.com         Programmer      Technology           null\n" + 
-				"Woman          Female   Woman@mail.com          Saler           Marketing            null\n" + 
-				"test2          Female   test2@test2.com         Engineer        Finance              null\n" + 
-				"tt             Male     tt@tt.com               QualityAssuranceMarketing            null\n" + 
-				"abc            Male     abc@abc.com             Programmer      Technology           efg\n" + 
-				"Leo            Male     testing@mail.com        Programmer      Technology           null\n" + 
-				"regina         Female   regina@regina.com       Saler           HumanResource        null\n" + 
-				"test           Male     test@test.com           Engineer        Finance              null\n" + 
-				"";
+		String expect1 = "All users details:\n" +
+				"User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n" + 
+				"admin          2046             Male     admin@admin.com         Programmer          Technology        -\n";
+		String expect2=
+				"test2          1512570145159    Female   test2@test2.com         Engineer            Finance           -\n" +
+				"tt             1512556929309    Male     tt@tt.com               QualityAssurance    Marketing         -\n" +
+				"abc            1000             Male     abc@abc.com             Programmer          Technology        efg\n";
+		String expect3=
+				"regina         1512575106838    Female   regina@regina.com       Saler               HumanResource     -\n" +
+				"test           1512547495518    Male     test@test.com           Engineer            Finance           -\n";
 		assertNotNull(result);
-		assertEquals(expect, result);
+		assertTrue(result.contains(expect1));
+		assertTrue(result.contains(expect2));
+		assertTrue(result.contains(expect3));
 	}
 
 	@Test
@@ -1304,13 +1305,10 @@ public class TestController_Leo {
 		String[] testInput = {};
 		String result = user.choiceHandler("14", testInput);
 		String expect = "All supervisors details:\n" + 
-				"User Name      Gender   Email                   Position        My Department        My Supervisor\n" + 
-				"efg            Male     efg@efg.com             Programmer      Technology           null\n" + 
-				"cde            Male     testing@mail.com        Programmer      Technology           null\n" + 
-				"" + 
-				"";
+				"User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n" + 
+				"efg            2000             Male     efg@efg.com             Programmer          Technology        -\n";
 		assertNotNull(result);
-		assertEquals(expect, result);
+		assertTrue(result.contains(expect));
 	}
 
 	@Test
@@ -1321,24 +1319,24 @@ public class TestController_Leo {
 		// email, String departmentOf, String isAdmin
 		String[] testInput = {};
 		String result = user.choiceHandler("15", testInput);
-		String expect = "All users details:\n" + 
-				"User Name      Gender   Email                   Position        My Department        My Supervisor\n" + 
-				"admin          Male     admin@admin.com         Programmer      Technology           null\n" + 
-				"Woman          Female   Woman@mail.com          Saler           Marketing            null\n" + 
-				"test2          Female   test2@test2.com         Engineer        Finance              null\n" + 
-				"tt             Male     tt@tt.com               QualityAssuranceMarketing            null\n" + 
-				"abc            Male     abc@abc.com             Programmer      Technology           efg\n" + 
-				"Leo            Male     testing@mail.com        Programmer      Technology           null\n" + 
-				"regina         Female   regina@regina.com       Saler           HumanResource        null\n" + 
-				"test           Male     test@test.com           Engineer        Finance              null\n" + 
+		String expect1 = "All users details:\n" +
+				"User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n" + 
+				"admin          2046             Male     admin@admin.com         Programmer          Technology        -\n";
+		String expect2=
+				"test2          1512570145159    Female   test2@test2.com         Engineer            Finance           -\n" +
+				"tt             1512556929309    Male     tt@tt.com               QualityAssurance    Marketing         -\n" +
+				"abc            1000             Male     abc@abc.com             Programmer          Technology        efg\n";
+		String expect3=
+				"regina         1512575106838    Female   regina@regina.com       Saler               HumanResource     -\n" +
+				"test           1512547495518    Male     test@test.com           Engineer            Finance           -\n" +
 				"\n" + 
 				"All supervisors details:\n" + 
-				"User Name      Gender   Email                   Position        My Department        My Supervisor\n" + 
-				"efg            Male     efg@efg.com             Programmer      Technology           null\n" + 
-				"cde            Male     testing@mail.com        Programmer      Technology           null\n" + 
-				"";
+				"User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n" + 
+				"efg            2000             Male     efg@efg.com             Programmer          Technology        -\n";
 		assertNotNull(result);
-		assertEquals(expect, result);
+		assertTrue(result.contains(expect1));
+		assertTrue(result.contains(expect2));
+		assertTrue(result.contains(expect3));
 	}
 
 	@Test
@@ -1347,10 +1345,10 @@ public class TestController_Leo {
 		IController user = userLogin.login("admin", "123");
 		// String userName, String password, String gender, String position, String
 		// email, String departmentOf, String isAdmin
-		String[] testInput = { "Leo" };
+		String[] testInput = { "regina" };
 		String result = user.choiceHandler("16", testInput);
-		String expect = "User Name      Gender   Email                   Position        My Department        My Supervisor\n"
-				+ "Leo            Male     testing@mail.com        Programmer      Technology           null";
+		String expect = "User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================\n"
+				+ "regina         1512575106838    Female   regina@regina.com       Saler               HumanResource     -";
 		assertNotNull(result);
 		assertEquals(expect, result);
 	}
@@ -1364,20 +1362,6 @@ public class TestController_Leo {
 		String[] testInput = { "ddd" };
 		String result = user.choiceHandler("16", testInput);
 		String expect = "User not found!";
-		assertNotNull(result);
-		assertEquals(expect, result);
-	}
-
-	@Test
-	public void testAdminChoiceHandler_29() throws Exception {
-		UserLogin userLogin = UserLogin.getInstance();
-		IController user = userLogin.login("admin", "123");
-		// String userName, String password, String gender, String position, String
-		// email, String departmentOf, String isAdmin
-		String[] testInput = { "Leo" };
-		String result = user.choiceHandler("16", testInput);
-		String expect = "User Name      Gender   Email                   Position        My Department        My Supervisor\n"
-				+ "Leo            Male     testing@mail.com        Programmer      Technology           null";
 		assertNotNull(result);
 		assertEquals(expect, result);
 	}
