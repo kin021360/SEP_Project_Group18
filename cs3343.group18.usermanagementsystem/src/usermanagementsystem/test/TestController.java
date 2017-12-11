@@ -19,7 +19,7 @@ import usermanagementsystem.datastructure_interface.ISupervisorInfo;
 import usermanagementsystem.exception.ExInvalidChoice;
 import usermanagementsystem.user_login.UserLogin;
 
-public class TestController_Leo {
+public class TestController {
 
 	@Test
 	public void testUserGetAllFunctionDesc() {
