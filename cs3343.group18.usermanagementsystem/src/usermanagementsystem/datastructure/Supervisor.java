@@ -12,23 +12,19 @@ public class Supervisor extends User implements ISupervisorInfo {
     private Hashtable<String, IUserInfo> subordinates;
 
     /**
-     * The constructor create Supervisor object instance by following params
+     * The constructor create Supervisor object instance by SupervisorBuilder
      *
-     * @param userName     (String)
-     * @param password     (String)
-     * @param gender       (EnumGender)
-     * @param position     (EnumPosition)
-     * @param staffId      (long)
-     * @param email        (String)
-     * @param departmentOf (EnumDepartment)
-     * @param supervisor   (ISupervisorInfo)
-     * @param isAdmin      (boolean)
-     * @param loginFailTime    		(Integer)
-     * @param suspensionTimeStamp   (long)
-     * @param annualLeave      		(Integer)
+     * @param builder SupervisorBuilder
      */
-    protected Supervisor(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
-        super(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+    private Supervisor(SupervisorBuilder builder) {
+        super(builder);
+        subordinates = new Hashtable<>();
+    }
+
+    /**
+     * Default constructor
+     */
+    protected Supervisor() {
         subordinates = new Hashtable<>();
     }
 
@@ -44,22 +40,47 @@ public class Supervisor extends User implements ISupervisorInfo {
     }
 
     /**
-     * @param subordinate IUserInfo
+     * Get Subordinates Details List
+     *
+     * @return String result list
      */
-    public void addSubordinate(IUserInfo subordinate) {
-        if (subordinates == null) {
-            subordinates = new Hashtable<>();
+    @Override
+    public String getMySubordinatesDetails() {
+        String result = "";
+        for (IUserInfo u : subordinates.values()) {
+            result += u.toString() + "\n";
         }
-        subordinates.put(subordinate.getUserName(), subordinate);
+        return result;
     }
 
     /**
-     * Remove my subordinate by name
+     * @param subordinate IUserInfo
+     * @return boolean
+     */
+    public boolean addSubordinate(IUserInfo subordinate) {
+        if (subordinates == null) {
+            subordinates = new Hashtable<>();
+        }
+        if (!subordinates.containsKey(subordinate.getUserName())) {
+            subordinates.put(subordinate.getUserName(), subordinate);
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
+     * Remove subordinate by name
      *
      * @param subordinateName subordinate name
+     * @return boolean
      */
-    public void removeSubordinate(String subordinateName) {
-        subordinates.remove(subordinateName);
+    public boolean removeSubordinate(String subordinateName) {
+        if (subordinates.containsKey(subordinateName)) {
+            subordinates.remove(subordinateName);
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -93,7 +114,7 @@ public class Supervisor extends User implements ISupervisorInfo {
         @Override
         public Supervisor build() throws ExIsNullOrEmpty {
             validation();
-            return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+            return new Supervisor(this);
         }
     }
 }

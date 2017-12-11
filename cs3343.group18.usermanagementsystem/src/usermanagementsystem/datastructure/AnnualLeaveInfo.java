@@ -21,23 +21,23 @@ public class AnnualLeaveInfo {
 		return dayOfAnnualLeave;
 	}
 
-	public void setDayOfAnnualLeave(int dayOfAnnualLeave) {
-		this.dayOfAnnualLeave = dayOfAnnualLeave;
-	}
-
-	public Date getstartDate() {
-		return startDate;
-	}
-
-	public void setstartDate(Date startDate) {
-		this.startDate = startDate;
-	}
-
-	public Date getendDate() {
-		return endDate;
-	}
-
-	public void setendDate(Date endDate) {
-		this.endDate = endDate;
-	}
+//	public void setDayOfAnnualLeave(int dayOfAnnualLeave) {
+//		this.dayOfAnnualLeave = dayOfAnnualLeave;
+//	}
+//
+//	public Date getstartDate() {
+//		return startDate;
+//	}
+//
+//	public void setstartDate(Date startDate) {
+//		this.startDate = startDate;
+//	}
+//
+//	public Date getendDate() {
+//		return endDate;
+//	}
+//
+//	public void setendDate(Date endDate) {
+//		this.endDate = endDate;
+//	}
 }

@@ -40,7 +40,7 @@ public class TestUserLogin {
 	@Test
 	public void test_UserLogin03() throws Exception {
 		UserLogin user = UserLogin.getInstance();
-		IController login = user.login("james", "104");
+		IController login = user.login("admin", "123");
 		assertNotNull(login);
 		assertTrue(login instanceof AdminController);
 	}
@@ -92,9 +92,9 @@ public class TestUserLogin {
 	@Test
 	public void test_UserLogin10() throws Exception {
 		UserLogin user = UserLogin.getInstance();
-		IController login = user.login("james", "104");
+		IController login = user.login("admin", "123");
 		String name = user.getLoggedInUsername();
-		assertEquals("james", name);
+		assertEquals("admin", name);
 	}
 
 }

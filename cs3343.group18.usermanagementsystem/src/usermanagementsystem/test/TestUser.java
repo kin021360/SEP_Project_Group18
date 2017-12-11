@@ -2,214 +2,340 @@ package usermanagementsystem.test;
 
 import org.junit.Test;
 import usermanagementsystem.datastructure.*;
-import usermanagementsystem.exception.ExInvaildEnumValue;
 import usermanagementsystem.exception.ExIsNullOrEmpty;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class TestUser {
+    private String userName = "t1";
+    private String password = "123abc";
+    private String email = "zzzz@zzz.com";
+    private EnumGender gender = EnumGender.Male;
+    private EnumPosition position = EnumPosition.Engineer;
+    private EnumDepartment department = EnumDepartment.Technology;
 
-    @Test
-    public void testUserGetUserName() throws ExInvaildEnumValue, ExIsNullOrEmpty {
-        User userTest;
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserOnlyUserName() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        builder.userName("tester");
-        userTest = builder.build();
-        String expected = userTest.getUserName();
-        assertEquals("tester", expected);
+        builder.userName(userName)
+                .build();
+    }
 
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserOnlyPassword() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.password(password)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserOnlyEmail() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.email(email)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserOnlyGender() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.gender(gender)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserOnlyPosition() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.position(position)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserOnlyDepartment() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.departmentOf(department)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithEmptyString1() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName("");
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithEmptyString2() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.password("");
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithEmptyString3() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.email("");
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithNullValue1() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName(null);
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithNullValue2() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.password(null);
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithNullValue3() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.email(null);
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithNullValue4() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(null)
+                .position(position)
+                .departmentOf(department)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithNullValue5() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(null)
+                .departmentOf(department)
+                .build();
+    }
+
+    @Test(expected = ExIsNullOrEmpty.class)
+    public void testBuildUserWithNullValue6() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(null)
+                .build();
     }
 
     @Test
-    public void testUserCheckPassword() throws ExInvaildEnumValue, ExIsNullOrEmpty {
-        User userTest;
+    public void testBuildUser() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        builder.password("abcabc");
-        userTest = builder.build();
-        boolean expected = userTest.checkPassword("abcabc");
-        assertEquals(true, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User expected = builder.build();
 
+        assertEquals(userName, expected.getUserName());
+        assertTrue(expected.checkPassword(password));
+        assertFalse(expected.checkPassword("qqqqqqqqqq"));
+        assertEquals(email, expected.getEmail());
+        assertEquals(gender, expected.getGender());
+        assertEquals(position, expected.getPosition());
+        assertEquals(department, expected.getDepartmentOf());
+        assertTrue(expected.getStaffId() > 0);
+        assertNull(expected.getSupervisorInfo());
+        assertFalse(expected.isAdmin());
+        assertFalse(expected.isSupervisor());
+        assertEquals(0, expected.getLoginFailTime());
+        assertEquals(0, expected.getSuspensionTimeStamp());
+        assertEquals(12, expected.getAnnualLeave());
+        assertEquals(0, expected.getAnnualLeaveInfos().size());
+
+        //admin
+        expected = builder.isAdmin(true).build();
+        assertTrue(expected.isAdmin());
     }
 
     @Test
-    public void testUserGetGender() throws ExInvaildEnumValue, ExIsNullOrEmpty {
-        User userTest;
+    public void testUserPassword() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        builder.gender(EnumGender.Male);
-        userTest = builder.build();
-        EnumGender expected = userTest.getGender();
-        assertEquals(EnumGender.Male, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
 
+        String expectedPW = "ppp123";
+        assertFalse(u.checkPassword(expectedPW));
+        u.changePassword(expectedPW);
+        assertTrue(u.checkPassword(expectedPW));
     }
 
     @Test
-    public void testUserChangePassword() throws ExInvaildEnumValue, ExIsNullOrEmpty {
-        User userTest;
+    public void testUserSetLoginSuspension() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        builder.password("abcabc");
-        userTest = builder.build();
-        userTest.changePassword("edgedg");
-        boolean expected = userTest.checkPassword("edgedg");
-        assertEquals(true, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
 
+        u.setLoginFailTime(3);
+        assertEquals(3, u.getLoginFailTime());
+        u.setSuspensionTimeStamp(1000);
+        assertEquals(1000, u.getSuspensionTimeStamp());
     }
 
     @Test
-    public void testUserAddPermission() throws ExIsNullOrEmpty {
-        User userTest;
+    public void testUserAnnualLeave() throws ExIsNullOrEmpty, ParseException {
         User.UserBuilder builder = new User.UserBuilder();
-        userTest = builder.build();
-        userTest.addPermission(EnumPermission.ListUsers);
-        boolean expected = userTest.hasPermission(EnumPermission.ListUsers);
-        assertEquals(true, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
+        u.setAnnualLeave(14);
 
+        assertEquals("You have no annual leave!", u.showAllAnnualLeaveInfos());
+        AnnualLeaveInfo al = new AnnualLeaveInfo(14, new SimpleDateFormat("dd-MM-yyyy").parse("02-11-2017"), new SimpleDateFormat("dd-MM-yyyy").parse("15-11-2017"));
+        assertTrue(u.addAnnualLeaveInfo(al, al.toString()));
+        assertFalse(u.addAnnualLeaveInfo(al, al.toString()));
+
+        assertTrue(u.showAllAnnualLeaveInfos().contains("14"));
+        assertTrue(u.showAllAnnualLeaveInfos().contains("02-11-2017"));
+        assertTrue(u.showAllAnnualLeaveInfos().contains("15-11-2017"));
     }
 
     @Test
-    public void testUserRemovePermission() throws ExIsNullOrEmpty {
-        User userTest;
+    public void testUserPermission() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        userTest = builder.build();
-        userTest.addPermission(EnumPermission.ListUsers);
-        userTest.removePermission(EnumPermission.ListUsers);
-        boolean expected = userTest.hasPermission(EnumPermission.ListUsers);
-        assertEquals(false, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
+        EnumPermission expectedPermission = EnumPermission.ViewDocument;
 
-    }
+        assertEquals("", u.showAllPermissions());
+        assertFalse(u.hasPermission(expectedPermission));
 
-    @Test
-    public void testUserShowAllPermission() throws ExIsNullOrEmpty {
-        User userTest;
-        String expected;
-        User.UserBuilder builder = new User.UserBuilder();
-        userTest = builder.build();
-        userTest.addPermission(EnumPermission.ListUsers);
-        expected = userTest.showAllPermissions();
-        String result = "         ListUsers  ---   1" + "\n";
-        assertEquals(result, expected);
-    }
+        assertTrue(u.addPermission(expectedPermission));
+        assertFalse(u.addPermission(expectedPermission));
 
-    @Test
-    public void testUserEmail() throws ExIsNullOrEmpty {
-        User userTest;
-        String expected;
-        User.UserBuilder builder = new User.UserBuilder();
-        builder.email("abc@test.com");
-        userTest = builder.build();
-        expected = userTest.getEmail();
-        String result = "abc@test.com";
-        assertEquals(result, expected);
-    }
+        assertTrue(u.hasPermission(expectedPermission));
+        assertTrue(u.showAllPermissions().contains(expectedPermission.name()));
 
-    @Test
-    public void testUserPosition() throws ExIsNullOrEmpty {
-        User userTest;
-        EnumPosition expected;
-        User.UserBuilder builder = new User.UserBuilder();
-        builder.position(EnumPosition.ProductOwner);
-        userTest = builder.build();
-        expected = userTest.getPosition();
-        assertEquals(EnumPosition.ProductOwner, expected);
-    }
-
-    @Test
-    public void testUserDepartment() throws ExIsNullOrEmpty {
-        User userTest;
-        EnumDepartment expected;
-        User.UserBuilder builder = new User.UserBuilder();
-        builder.departmentOf(EnumDepartment.Sales);
-        userTest = builder.build();
-        expected = userTest.getDepartmentOf();
-        assertEquals(EnumDepartment.Sales, expected);
-    }
-
-    @Test
-    public void testUserIsAdmin() throws ExIsNullOrEmpty {
-        User userTest;
-        boolean expected;
-        User.UserBuilder builder = new User.UserBuilder();
-        builder.isAdmin(true);
-        userTest = builder.build();
-        expected = userTest.isAdmin();
-        assertEquals(true, expected);
-    }
-
-    @Test
-    public void testUserStrIsNullOrEmpty_1() throws ExIsNullOrEmpty {
-        User.UserBuilder builder = new User.UserBuilder();
-        String expected = null;
-        try {
-            builder.userName("");
-
-        } catch (ExIsNullOrEmpty e) {
-            expected = e.getMessage();
-        }
-
-        assertEquals("userName is null or empty", expected);
-    }
-
-    @Test
-    public void testUserStrIsNullOrEmpty_2() throws ExIsNullOrEmpty {
-
-        User.UserBuilder builder = new User.UserBuilder();
-        String expected = null;
-        try {
-            builder.userName(null);
-
-        } catch (ExIsNullOrEmpty e) {
-            expected = e.getMessage();
-        }
-
-        assertEquals("userName is null or empty", expected);
+        assertFalse(u.removePermission(EnumPermission.ListUsers));
+        assertTrue(u.removePermission(expectedPermission));
+        assertFalse(u.hasPermission(expectedPermission));
+        assertEquals("", u.showAllPermissions());
     }
 
     @Test
     public void testUserToSupervisor() throws ExIsNullOrEmpty {
-        User userTest;
-        Supervisor expected;
         User.UserBuilder builder = new User.UserBuilder();
-        builder.userName("supervisor")
-                .departmentOf(EnumDepartment.Technology)
-                .password("abc")
-                .position(EnumPosition.ProductOwner)
-                .email("supervisor@test.com")
-                .isAdmin(true);
-        userTest = builder.build();
-        expected = userTest.toSupervisor();
-        assertEquals(true, expected.isSupervisor());
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
+        u.addPermission(EnumPermission.ListUsers);
+
+        Supervisor expected = u.toSupervisor();
+        assertEquals(userName, expected.getUserName());
+        assertTrue(expected.checkPassword(password));
+        assertEquals(email, expected.getEmail());
+        assertEquals(gender, expected.getGender());
+        assertEquals(position, expected.getPosition());
+        assertEquals(department, expected.getDepartmentOf());
+        assertEquals(u.getStaffId(), expected.getStaffId());
+        assertNull(expected.getSupervisorInfo());
+        assertFalse(expected.isAdmin());
+        assertEquals(0, expected.getLoginFailTime());
+        assertEquals(0, expected.getSuspensionTimeStamp());
+        assertEquals(12, expected.getAnnualLeave());
+        assertEquals(0, expected.getAnnualLeaveInfos().size());
+        assertTrue(expected.hasPermission(EnumPermission.ListUsers));
     }
 
     @Test
-    public void testUserAssignSupervisor_1() throws ExIsNullOrEmpty {
-        User userTest;
-        boolean expected;
+    public void testUserAssignUnAssignSupervisor() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        builder.userName("supervisor")
-                .departmentOf(EnumDepartment.Technology)
-                .password("abc")
-                .position(EnumPosition.ProductOwner)
-                .email("supervisor@test.com")
-                .isAdmin(true);
-        userTest = builder.build();
-        expected = userTest.assignSupervisor(userTest.toSupervisor());
-        assertEquals(true, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
+        Supervisor s = builder.userName("pppp").build().toSupervisor();
+
+        assertFalse(u.assignSupervisor(null));
+        assertTrue(u.assignSupervisor(s));
+
+        assertFalse(u.assignSupervisor(s));
+        u.unassignSupervisor();
+        assertTrue(u.assignSupervisor(s));
     }
 
     @Test
-    public void testUserAssignSupervisor_2() throws ExIsNullOrEmpty {
-        User userTest;
-        boolean expected;
+    public void testUserToString() throws ExIsNullOrEmpty {
         User.UserBuilder builder = new User.UserBuilder();
-        builder.userName("supervisor")
-                .departmentOf(EnumDepartment.Technology)
-                .password("abc")
-                .position(EnumPosition.ProductOwner)
-                .email("supervisor@test.com")
-                .isAdmin(true);
-        userTest = builder.build();
-        expected = userTest.assignSupervisor(null);
-        assertEquals(false, expected);
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+        User u = builder.build();
+
+        assertTrue(u.toString().contains(userName));
+        assertTrue(u.toString().contains("" + u.getStaffId()));
+        assertTrue(u.toString().contains(gender.name()));
+        assertTrue(u.toString().contains(email));
+        assertTrue(u.toString().contains(position.name()));
+        assertTrue(u.toString().contains(department.name()));
+        assertTrue(u.toString().contains("-"));
+        Supervisor s = builder.userName("pppp").build().toSupervisor();
+        u.assignSupervisor(s);
+        assertTrue(u.toString().contains(s.getUserName()));
     }
+
+    @Test
+    public void testUserCompare() throws ExIsNullOrEmpty {
+        User.UserBuilder builder = new User.UserBuilder();
+        builder.userName(userName)
+                .password(password)
+                .email(email)
+                .gender(gender)
+                .position(position)
+                .departmentOf(department);
+
+        User origin = builder.build();
+        assertEquals(0, origin.compareTo(origin));
+
+        User smaller = builder.userName("t0").build();
+        assertEquals(1, origin.compareTo(smaller));
+
+        User bigger = builder.userName("t2").build();
+        assertEquals(-1, origin.compareTo(bigger));
+    }
+
 }
-

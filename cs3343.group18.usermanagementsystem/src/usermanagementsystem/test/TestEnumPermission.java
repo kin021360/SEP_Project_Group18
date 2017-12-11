@@ -10,78 +10,45 @@ public class TestEnumPermission {
 
     @Test
     public void testEnumPermission_Parse_int1() throws ExInvaildEnumValue {
-        EnumPermission expected = null;
-        try {
-            expected = EnumPermission.parse(1);
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
+        EnumPermission expected = EnumPermission.parse(1);
         assertEquals(EnumPermission.ListUsers, expected);
-
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void testEnumPermission_Parse_int2() throws ExInvaildEnumValue {
-        EnumPermission expected = null;
-        try {
-            expected = EnumPermission.parse(-1);
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(null, expected);
-
+        EnumPermission.parse(-1);
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void testEnumPermission_Parse_int3() throws ExInvaildEnumValue {
-        EnumPermission expected = null;
-        try {
-            expected = EnumPermission.parse(10);
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(null, expected);
-
+        EnumPermission.parse(1000);
     }
+
     @Test
     public void testEnumPermission_Parse_string1() throws ExInvaildEnumValue {
-        EnumPermission expected = null;
-        try {
-            expected = EnumPermission.parse("1");
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
+        EnumPermission expected = EnumPermission.parse("ListUsers");
         assertEquals(EnumPermission.ListUsers, expected);
-
     }
 
-    @Test
+    @Test(expected = ExInvaildEnumValue.class)
     public void testEnumPermission_Parse_string2() throws ExInvaildEnumValue {
-        EnumPermission expected = null;
-        try {
-            expected = EnumPermission.parse("-1");
-
-        } catch (ExInvaildEnumValue e) {
-
-        }
-        assertEquals(null, expected);
-
+        EnumPermission.parse("XXXX");
     }
+
     @Test
     public void testEnumPermission_Parse_string3() throws ExInvaildEnumValue {
-        EnumPermission expected = null;
-        try {
-            expected = EnumPermission.parse("10");
+        EnumPermission expected = EnumPermission.parse("1");
+        assertEquals(EnumPermission.ListUsers, expected);
+    }
 
-        } catch (ExInvaildEnumValue e) {
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumPermission_Parse_string4() throws ExInvaildEnumValue {
+        EnumPermission.parse("-1");
+    }
 
-        }
-        assertEquals(null, expected);
-
+    @Test(expected = ExInvaildEnumValue.class)
+    public void testEnumPermission_Parse_string5() throws ExInvaildEnumValue {
+        EnumPermission.parse("1000");
     }
 
     @Test

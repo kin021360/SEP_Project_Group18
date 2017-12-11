@@ -6,6 +6,8 @@ import java.util.ArrayList;
  * The helper class include the centralized methods for Controller classes to use
  */
 class ControllerHelper {
+    static final String userDetailsHeader = "User Name      Staff Id         Gender   Email                   Position            Department        Assigned Supervisor\n=========      ========         ======   =====                   ========            ==========        ===================";
+
     /**
      * For UserController initialization
      *
@@ -27,6 +29,9 @@ class ControllerHelper {
      */
     static void initSupervisorChoicesDescriptions(ArrayList<String> descriptionList) {
         descriptionList.add("Check a user who is my subordinate or not.");
+        descriptionList.add("Add the User to be my subordinate");
+        descriptionList.add("Remove the User from my subordinate list");
+        descriptionList.add("List all of my subordinates");
     }
 
     /**

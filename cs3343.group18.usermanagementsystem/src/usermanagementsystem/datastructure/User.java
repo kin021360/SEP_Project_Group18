@@ -43,33 +43,32 @@ public class User implements IUserInfo, Comparable<User> {
     private ISupervisorInfo supervisor;
 
     /**
-     * The constructor create User object instance by following params
+     * The constructor create User object instance by UserBuilder
      *
-     * @param userName     (String)
-     * @param password     (String)
-     * @param gender       (EnumGender)
-     * @param position     (EnumPosition)
-     * @param staffId      (long)
-     * @param email        (String)
-     * @param departmentOf (EnumDepartment)
-     * @param supervisor   (ISupervisorInfo)
-     * @param isAdmin      (boolean)
+     * @param builder UserBuilder
      */
-    protected User(String userName, String password, EnumGender gender, EnumPosition position, long staffId, String email, EnumDepartment departmentOf, ISupervisorInfo supervisor, boolean isAdmin) {
-        this.userName = userName;
-        this.password = password;
-        this.gender = gender;
-        this.position = position;
-        this.staffId = staffId;
-        this.email = email;
-        this.departmentOf = departmentOf;
-        this.supervisor = supervisor;
-        this.isAdmin = isAdmin;
+    protected User(UserBuilder builder) {
+        this.userName = builder.userName;
+        this.password = builder.password;
+        this.gender = builder.gender;
+        this.position = builder.position;
+        this.staffId = builder.staffId;
+        this.email = builder.email;
+        this.departmentOf = builder.departmentOf;
+        this.supervisor = builder.supervisor;
+        this.isAdmin = builder.isAdmin;
         this.loginFailTime = 0;
         this.suspensionTimeStamp = 0;
         this.annualLeave = 12;
         this.annualLeaveInfos = new HashSet<>();
         this.permissions = new HashSet<>();
+    }
+
+    /**
+     * Default constructor
+     */
+    protected User() {
+
     }
 
     /**
@@ -196,25 +195,25 @@ public class User implements IUserInfo, Comparable<User> {
      */
     @Override
     public int getLoginFailTime() {
-		return loginFailTime;    	
+        return loginFailTime;
     }
-    
+
     /**
      * @return User's suspension time stamp
      */
     @Override
     public long getSuspensionTimeStamp() {
-		return suspensionTimeStamp;    	
+        return suspensionTimeStamp;
     }
-    
+
     /**
      * @return User's number of annual leave
      */
     @Override
     public int getAnnualLeave() {
-		return annualLeave;
+        return annualLeave;
     }
-    
+
     /**
      * Increase User's number of login fail
      *
@@ -223,7 +222,7 @@ public class User implements IUserInfo, Comparable<User> {
     public void setLoginFailTime(int loginFailTime) {
         this.loginFailTime = loginFailTime;
     }
-    
+
     /**
      * Set User's suspension time stamp
      *
@@ -232,28 +231,28 @@ public class User implements IUserInfo, Comparable<User> {
     public void setSuspensionTimeStamp(long suspensionTimeStamp) {
         this.suspensionTimeStamp = suspensionTimeStamp;
     }
-    
+
     /**
      * Set User's number of annual leave
      *
      * @param annualLeave annualLeave
      */
     public void setAnnualLeave(int annualLeave) {
-        this.annualLeave += annualLeave;
+        this.annualLeave = annualLeave;
     }
-    
+
     /**
      * Add more annual leave information into User
      *
-     * @param annualLeaveInfo AnnualLeaveInfo
-     * @return 
+     * @param annualLeaveInfo       AnnualLeaveInfo
+     * @param annualLeaveInfoString annualLeaveInfo in String
      * @return boolean
      */
     public boolean addAnnualLeaveInfo(AnnualLeaveInfo annualLeaveInfo, String annualLeaveInfoString) {
-    	this.annualLeave -= annualLeaveInfo.getDayOfAnnualLeave();
-    	return annualLeaveInfos.add(annualLeaveInfoString);
+        this.annualLeave -= annualLeaveInfo.getDayOfAnnualLeave();
+        return annualLeaveInfos.add(annualLeaveInfoString);
     }
-    
+
     /**
      * @return User's annual leave information
      */
@@ -261,35 +260,30 @@ public class User implements IUserInfo, Comparable<User> {
     public String showAllAnnualLeaveInfos() {
         String temp = "";
         temp += String.format("%s%15s%15s\n", "Day(s)", "Start Date", "End Date");
-        if(annualLeaveInfos.size() > 0) {
-	        for (String annualLeaveInfo : annualLeaveInfos) {
-	        	String[] infoArray = annualLeaveInfo.split(" ");
-	        	Date startDate = new Date(Long.parseLong(infoArray[1]));
-	    		Date endDate = new Date(Long.parseLong(infoArray[2]));
-	    		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    		String startDateFormat = sdf.format(startDate);
-	    		String endDateFormat = sdf.format(endDate);
-	            temp += String.format("%s%20s%17s\n", infoArray[0], startDateFormat, endDateFormat);
-	        }
-        }else {
-        	temp = "You have no annual leave!";
+        if (annualLeaveInfos.size() > 0) {
+            for (String annualLeaveInfo : annualLeaveInfos) {
+                String[] infoArray = annualLeaveInfo.split(" ");
+                Date startDate = new Date(Long.parseLong(infoArray[1]));
+                Date endDate = new Date(Long.parseLong(infoArray[2]));
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                String startDateFormat = sdf.format(startDate);
+                String endDateFormat = sdf.format(endDate);
+                temp += String.format("%s%20s%17s\n", infoArray[0], startDateFormat, endDateFormat);
+            }
+        } else {
+            temp = "You have no annual leave!";
         }
         return temp;
     }
-    
+
     /**
      * @return User's annual leave information
      */
     @Override
     public HashSet<String> getAnnualLeaveInfos() {
-		return annualLeaveInfos;    	
+        return annualLeaveInfos;
     }
-    
-//    public boolean addPermission(EnumPermission permission) {
-//        return permissions.add(permission);
-//    }
-//    
-    
+
     /**
      * Assign Supervisor for User if User have no Supervisor
      *
@@ -333,17 +327,39 @@ public class User implements IUserInfo, Comparable<User> {
      * @return Supervisor
      */
     public Supervisor toSupervisor() {
-        return new Supervisor(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+        User tSupervisor = new Supervisor();
+        //construct manually
+        tSupervisor.userName = userName;
+        tSupervisor.password = password;
+        tSupervisor.gender = gender;
+        tSupervisor.position = position;
+        tSupervisor.staffId = staffId;
+        tSupervisor.email = email;
+        tSupervisor.departmentOf = departmentOf;
+        tSupervisor.supervisor = supervisor;
+        tSupervisor.isAdmin = isAdmin;
+        tSupervisor.loginFailTime = loginFailTime;
+        tSupervisor.suspensionTimeStamp = suspensionTimeStamp;
+        tSupervisor.annualLeave = annualLeave;
+        tSupervisor.annualLeaveInfos = annualLeaveInfos;
+        tSupervisor.permissions = permissions;
+        return (Supervisor) tSupervisor;
     }
 
     @Override
     public String toString() {
-        return String.format("%-15s%-9s%-24s%-16s%-21s%s", userName, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? null : supervisor.getUserName());
+        return String.format("%-15s%-17s%-9s%-24s%-20s%-18s%s", userName, staffId, gender.name(), email, position.name(), departmentOf.name(), supervisor == null ? "-" : supervisor.getUserName());
     }
 
     @Override
     public int compareTo(User another) {
-        return this.userName.compareTo(another.userName);
+        int dist = this.userName.compareTo(another.userName);
+        if (dist == 0) {
+            return 0;
+        } else if (dist > 0) {
+            return 1;
+        }
+        return -1;
     }
 
     //https://codereview.stackexchange.com/questions/127391/simple-builder-pattern-implementation-for-building-immutable-objects
@@ -353,15 +369,15 @@ public class User implements IUserInfo, Comparable<User> {
      * The object builder helps to create new User object.
      */
     public static class UserBuilder {
-        String userName;
-        String password;
-        long staffId = Calendar.getInstance().getTimeInMillis();
-        String email;
-        EnumGender gender;
-        EnumPosition position;
-        EnumDepartment departmentOf;
-        boolean isAdmin = false;
-        ISupervisorInfo supervisor = null;
+        private String userName;
+        private String password;
+        private long staffId = Calendar.getInstance().getTimeInMillis();
+        private String email;
+        private EnumGender gender;
+        private EnumPosition position;
+        private EnumDepartment departmentOf;
+        private boolean isAdmin = false;
+        private ISupervisorInfo supervisor = null;
 
         /**
          * Check the string value is null or empty
@@ -458,13 +474,8 @@ public class User implements IUserInfo, Comparable<User> {
             this.isAdmin = isAdmin;
             return this;
         }
-        
-//        public UserBuilder supervisor(ISupervisorInfo supervisor) {
-//            this.supervisor = supervisor;
-//            return this;
-//        }
 
-		/**
+        /**
          * Validate important data field
          *
          * @throws ExIsNullOrEmpty important data field cannot be null or empty
@@ -487,7 +498,7 @@ public class User implements IUserInfo, Comparable<User> {
         public User build() throws ExIsNullOrEmpty {
             //verify
             validation();
-            return new User(userName, password, gender, position, staffId, email, departmentOf, supervisor, isAdmin);
+            return new User(this);
         }
     }
 }
